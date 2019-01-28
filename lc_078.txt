@@ -1,0 +1,26 @@
+// 排列组合模版
+// 背诵
+public List<List<Integer>> subsets(int[] nums) {
+    // 数组空处理
+ 	if (nums == null || nums.length == 0) {
+ 		return null; 
+ 	}
+ 	List<List<Integer>> res = new ArrayList<List<Integer>>();
+ 	List<Integer> list = new ArrayList<Integer>();
+ 	helper(res, list, nums, 0);
+ 	return res;
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] nums, int index) {
+    // list必须新建list，不然结果都为空
+	res.add(new ArrayList<Integer>(list));
+    // 进入子结点集合
+	for (int i = index ; i < nums.length; i++) {
+        // 记录深度遍历的当前结果
+		list.add(nums[i]);
+        // 进入下一子结点集合
+		helper(res, list, nums, i + 1);
+        // 弹出最后一个深度遍历结点，进入上一层遍历
+		list.remove(list.size() - 1);
+	}
+}

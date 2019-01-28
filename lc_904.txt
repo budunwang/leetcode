@@ -1,0 +1,25 @@
+904.Fruit Into Baskets
+抄的。
+public int totalFruit(int[] tree) {
+    int res = 0;
+    int first = 0;
+    int second = 0;
+    int n_second = 0;
+    int cur_length = 0;
+    for (int t : tree) {
+        if (t != first && t != second) {
+            cur_length = n_second + 1;
+        } else {
+            cur_length++;
+        }
+        if (t == second) {
+            n_second++;
+        } else {
+            n_second = 1;
+            first = second;
+            second = t;
+        }
+        res = Math.max(res, cur_length);
+    }
+    return res;
+}

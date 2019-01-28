@@ -1,0 +1,28 @@
+28.Implement strStr()
+public int strStr(String haystack, String needle) {
+    int p = 0;
+    char[] hs = haystack.toCharArray();
+    char[] ns = needle.toCharArray();
+    if (ns.length == 0) {
+        return 0;
+    } else if (hs.length == 0) {
+        return -1;
+    }
+    while (p < hs.length) {
+        int p_h = p;
+        int p_n = 0;
+        while (hs[p_h] == ns[p_n]) {
+            p_h++;
+            p_n++;
+            if (p_n == ns.length) {
+                return p;
+            }
+            if (p_h >= hs.length) {
+                return -1;
+            }
+        }
+        p++;
+        p_n = 0;
+    }
+    return -1;
+}

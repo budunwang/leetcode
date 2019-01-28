@@ -1,0 +1,22 @@
+853.Car Fleet
+数学题。
+按距离排序，如果所需时间大于更短距离的时间，则为一个fleet。
+public int carFleet(int target, int[] position, int[] speed) {
+    int length = position.length;
+    int res = 0;
+    if (length == 0) {
+        return res;
+    }
+    Map<Integer, Double> map = new TreeMap<Integer, Double>();
+    for (int i = 0; i < length; i++) {
+        map.put(target - position[i], (double)(target - position[i]) / speed[i]);
+    }
+    double cur = 0;
+    for (double time : map.values()) {
+        if (time > cur) {
+            res++;
+            cur = time;
+        }
+    }
+    return res;
+}   

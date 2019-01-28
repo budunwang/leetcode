@@ -1,0 +1,20 @@
+64.Minimum Path Sum
+动态规划。
+public int minPathSum(int[][] grid) {
+    if (grid.length == 0 || grid[0].length == 0) {
+        return 0;
+    }
+    int row = grid.length;
+    int col = grid[0].length;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
+            int top = i == 0 ? Integer.MAX_VALUE : grid[i - 1][j];
+            int left = j == 0 ? Integer.MAX_VALUE : grid[i][j - 1];
+            grid[i][j] += Math.min(top, left);
+        }
+    }
+    return grid[row - 1][col - 1];
+}

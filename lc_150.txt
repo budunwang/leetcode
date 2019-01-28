@@ -1,0 +1,22 @@
+150.Evaluate Reverse Polish Notation
+public int evalRPN(String[] tokens) {
+    Stack<Integer> stack = new Stack<Integer>();
+    for (String token : tokens) {
+        if (!token.equals("+") && !token.equals("-") && !token.equals("*") && !token.equals("/")) {
+            stack.push(Integer.valueOf(token));
+        } else {
+            int num_2 = stack.pop();
+            int num_1 = stack.pop();
+            if (token.equals("+")) {
+                stack.push(num_1 + num_2);
+            } else if (token.equals("-")) {
+                stack.push(num_1 - num_2);
+            } else if (token.equals("*")) {
+                stack.push(num_1 * num_2);
+            } else if (token.equals("/")) {
+                stack.push(num_1 / num_2);
+            }  
+        }
+    }
+    return stack.pop();
+}

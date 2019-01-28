@@ -1,0 +1,33 @@
+public int numJewelsInStones(String J, String S) {
+    if(J == null || S == null) {
+		return 0;
+	}
+	int res = 0;
+    Set<Character> set = new HashSet<Character>();
+	for(char c: J.toCharArray()) {
+		set.add(c);
+	}
+	for(char c: S.toCharArray()) {
+        if(set.contains(c)) {
+			res++;
+		}
+	}
+	return res;
+}
+
+var numJewelsInStones = function(J, S) {
+	if(J == null || S == null) {
+		return 0;
+	}
+	var res = 0;
+	var set = [];
+	for(var i = 0; i < J.length; i++) {
+		set[J.charAt(i)] = 0;
+	}
+	for(var i = 0; i < S.length; i++) {
+		if(set[S.charAt(i)] !== undefined) {
+			res++;
+		}
+	}
+	return res;
+};

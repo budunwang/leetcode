@@ -1,0 +1,56 @@
+894.All Possible Full Binary Trees
+求出左枝集合，求出右枝集合。
+排列组合左右枝。
+解法一
+public List<TreeNode> allPossibleFBT(int N) {
+    List<TreeNode> list = new ArrayList<TreeNode>();
+    if (N == 1) {
+        list.add(new TreeNode(0));
+        return list;
+    }
+    List<TreeNode> l_l = new ArrayList<TreeNode>();
+    List<TreeNode> l_r = new ArrayList<TreeNode>();
+    for (int i = 1; i < N; i = i + 2) {
+        l_l = allPossibleFBT(i);
+        l_r = allPossibleFBT(N - 1 - i);
+        for (TreeNode l : l_l) {
+            for (TreeNode r : l_r) {
+                TreeNode treeNode = new TreeNode(0);
+                treeNode.left = l;
+                treeNode.right = r;
+                list.add(treeNode);
+            }
+        }
+    }
+    return list;
+}
+
+解法二
+左枝集合与右枝集合有重复解，可以使用map记录。
+public Map<Integer, List<TreeNode>> map = new HashMap<Integer, List<TreeNode>>();
+public List<TreeNode> allPossibleFBT(int N) {
+    if (map.containsKey(N)) {
+        return map.get(N);
+    }
+    List<TreeNode> list = new ArrayList<TreeNode>();
+    if (N == 1) {
+        list.add(new TreeNode(0));
+        return list;
+    }
+    List<TreeNode> l_l = new ArrayList<TreeNode>();
+    List<TreeNode> l_r = new ArrayList<TreeNode>();
+    for (int i = 1; i < N; i = i + 2) {
+        l_l = allPossibleFBT(i);
+        l_r = allPossibleFBT(N - 1 - i);
+        for (TreeNode l : l_l) {
+            for (TreeNode r : l_r) {
+                TreeNode treeNode = new TreeNode(0);
+                treeNode.left = l;
+                treeNode.right = r;
+                list.add(treeNode);
+            }
+        }
+    }
+    map.put(N, list);
+    return list;
+}

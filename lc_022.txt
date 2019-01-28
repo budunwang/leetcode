@@ -1,0 +1,21 @@
+22.Generate Parentheses
+深度搜索。
+收敛条件是字符串长度等于n*2。
+public List<String> generateParenthesis(int n) {
+    List<String> list = new ArrayList<String>();
+    dfs(list, "", n, 0, 0);
+    return list;
+}
+
+public void dfs(List<String> res, String str, int n, int left, int right) {
+    if (str.length() == n * 2) {
+        res.add(str);
+        return;
+    }
+    if (left < n) {
+        dfs(res, str + "(", n, left + 1, right);
+    }
+    if (left <= n && right < left) {
+        dfs(res, str + ")", n, left, right + 1);
+    }
+}

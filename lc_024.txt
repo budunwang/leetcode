@@ -1,0 +1,16 @@
+24.Swap Nodes in Pairs
+结点替换。
+注意遍历结点的使用。
+public ListNode swapPairs(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode res = dummy;
+    while (dummy.next != null && dummy.next.next != null) {
+        ListNode tmp = dummy.next.next;
+        dummy.next.next = tmp.next;
+        tmp.next = dummy.next;
+        dummy.next = tmp;
+        dummy = tmp.next;
+    }
+    return res.next;
+}

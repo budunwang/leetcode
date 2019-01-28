@@ -1,0 +1,27 @@
+public int maxIncreaseKeepingSkyline(int[][] grid) {
+    int colNum = grid[0].length;
+    int rowNum = grid.length;
+
+    int [] rowArr = new int[colNum];
+    int [] colArr = new int[rowNum];
+
+    for (int row = 0; row < rowNum; row++) {
+        for (int col = 0; col < colNum; col++) {
+            if (grid[row][col] >= colArr[row]) {
+                colArr[row] = grid[row][col];
+            }
+            if (grid[row][col] >= rowArr[col]) {
+                rowArr[col] = grid[row][col];
+            }
+        }
+    }
+
+    int res = 0;
+    for (int row = 0; row < rowNum; row++) {
+        for (int col = 0; col < colNum; col++) {
+            res += Math.min(rowArr[col], colArr[row]) - grid[row][col];
+        }
+    }
+
+    return res;
+}

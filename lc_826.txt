@@ -1,0 +1,56 @@
+826.Most Profit Assigning Work
+解法一
+超时。
+public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+    int res = 0;
+    Map<Integer, Integer> map = new TreeMap<Integer, Integer>(Collections.reverseOrder());
+    for (int i = 0; i < profit.length; i++) {
+        if (map.get(profit[i]) == null) {
+            map.put(profit[i], difficulty[i]);
+        } else {
+            int curDif = map.get(profit[i]);
+            if (difficulty[i] <= curDif) {
+                map.put(profit[i], difficulty[i]);
+            }
+        }
+    }
+    for (int i = 0; i < worker.length; i++) {
+        int worker_dif = worker[i];
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() <= worker_dif) {
+                res += entry.getKey();
+                break;
+            }
+        }       
+    }
+    return res;
+}
+
+解法二
+注意相同difficulty对应的profit不唯一。
+floorEntry的使用。
+public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+    int res = 0;
+    TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+    for (int i = 0; i < difficulty.length; i++) {
+        if (map.get(difficulty[i]) == null) {
+            map.put(difficulty[i], profit[i]);
+        } else {
+            map.put(difficulty[i], Math.max(map.get(difficulty[i]), profit[i]));
+        }
+    }
+    int max = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        max = Math.max(max, entry.getValue());
+        map.put(entry.getKey(), max);
+    }
+    Map.Entry<Integer, Integer> entry = null;
+    for (int i = 0; i < worker.length; i++) {
+        int worker_dif = worker[i];
+        entry = map.floorEntry(worker_dif);
+        if (entry != null) {
+            res += entry.getValue();
+        }    
+    }
+    return res;
+}

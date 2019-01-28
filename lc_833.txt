@@ -1,0 +1,30 @@
+833.Find And Replace in String
+寻找比较同时实现替换。
+替换时需要记录先前替换时产生的位置偏移。
+注意indexes并非顺序，需要使用treemap进行排序处理。
+
+public String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
+    String res = S;
+    int length = indexes.length;
+    int jump = 0;
+    TreeMap<Integer, ArrayList<String>> map = new TreeMap<Integer, ArrayList<String>>();
+    for (int i = 0; i < length; i++) {
+        ArrayList<String> arr = new ArrayList<String>();
+        arr.add(sources[i]);
+        arr.add(targets[i]);
+        map.put(indexes[i], arr);
+    }
+    for (Map.Entry<Integer, ArrayList<String>> entry : map.entrySet()) {
+        int index = entry.getKey();
+        String source = entry.getValue().get(0);
+        String target = entry.getValue().get(1);
+        String s = S.substring(index, index + source.length());
+        if (s.equals(source)) {
+            String start = res.substring(0, index + jump);
+            String end = res.substring(index + jump + source.length(), res.length());
+            res = start + target + end;
+            jump += target.length() - source.length();
+        }
+    }
+    return res;
+}

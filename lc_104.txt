@@ -1,0 +1,31 @@
+104.Maximum Depth of Binary Tree
+public int maxDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    int res = 0;
+    while(queue.size() != 0) {
+        int length = queue.size();
+        for (int i = 0; i < length; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+        }
+        res++;
+    }
+    return res;
+}
+
+
+public int maxDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}

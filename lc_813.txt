@@ -1,0 +1,24 @@
+813.Largest Sum of Averages
+动态规划。
+public double largestSumOfAverages(int[] A, int K) {
+    if (A.length == 0) {
+        return 0;
+    }
+    int length = A.length;
+    double[] sum = new double[length + 1];
+    double[][] d = new double[length][K + 1];
+    for (int i = 1; i < length + 1; i++) {
+        sum[i] = sum[i - 1] + A[i - 1];
+        d[i - 1][1] = sum[i] / i;
+    }
+    for (int k = 2; k <= K; k++) {
+        for (int i = 0; i < length; i++) {
+            double maxSum = 0;
+            for (int j = 0; j < i; j++) {
+                maxSum = Double.max(maxSum, d[j][k - 1] + (sum[i + 1] - sum[j + 1]) / (i - j));
+            }
+            d[i][k] = maxSum;
+        }
+    }
+    return d[length - 1][K];
+}

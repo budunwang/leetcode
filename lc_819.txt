@@ -1,0 +1,27 @@
+public String mostCommonWord(String paragraph, String[] banned) {
+    if(paragraph == null || banned == null) {
+		return "";
+	}
+	String [] words = paragraph.toLowerCase().split("[ !?',;.]+");
+	Map<String, Integer> map = new HashMap<String, Integer>();
+	int maxNum = 0;
+	String res = "";
+	for(String word: words) {
+		if(Arrays.asList(banned).indexOf(word) == -1) {
+    		if(map.containsKey(word)) {
+    			int num = map.get(word) + 1;
+                map.put(word, num);
+    			if(num >= maxNum) {
+    				maxNum = num;
+    				res = word;
+    			}
+    		} else {
+    			map.put(word, 0);
+                if(maxNum == 0) {
+                    res = word;
+                }
+    		}
+		}
+	}
+	return res;
+}

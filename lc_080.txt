@@ -1,0 +1,21 @@
+80.Remove Duplicates from Sorted Array II
+两指针法。
+满足当前位不等于下一位或下下一位即符合要求，向下遍历。
+注意将最后两位补位。
+public int removeDuplicates(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int head = 0;
+    int length = nums.length;
+    for (int i = 0; i < length - 2; i++) {
+        if (nums[i] != nums[i + 1] || nums[i] != nums[i + 2]) {
+            nums[head++] = nums[i];
+        }
+    }
+    if (length > 1) {
+        nums[head++] = nums[length - 2];
+    }
+    nums[head++] = nums[length - 1];
+    return head;
+}

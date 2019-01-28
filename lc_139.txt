@@ -1,0 +1,37 @@
+139.Word Break
+深度搜索超时。
+public boolean wordBreak(String s, List<String> wordDict) {
+    return dfs(s, wordDict, 0);
+}
+
+public boolean dfs(String s, List<String> wordDict, int index) {
+    int length = s.length();    
+    if (index == length) {
+        return true;
+    }
+    boolean res = false;
+    for (String word : wordDict) {
+        int new_index = index + word.length();
+        if (new_index <= length && s.substring(index, new_index).equals(word)) {
+            res = res || dfs(s, wordDict, new_index);
+        }
+    }
+    return res;
+}
+
+动态规划。
+public boolean wordBreak(String s, List<String> wordDict) {
+    int length = s.length();
+    boolean[] dp = new boolean[length + 1];
+    dp[0] = true;
+    for (int i = 1; i <= length; i++) {
+        for (String word : wordDict) {
+            int index = i - word.length();
+            if (index >= 0 && dp[index] && s.substring(index, i).equals(word)) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[length];
+}

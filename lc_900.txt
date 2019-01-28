@@ -1,0 +1,22 @@
+900.RLE Iterator
+public int[] arr;
+public int index;
+
+public RLEIterator(int[] A) {
+    arr = A;
+    index = 0;
+}
+
+public int next(int n) {
+    for (int i = index; i < arr.length; i = i + 2) {
+        if (arr[i] >= n) {
+            arr[i] = arr[i] - n;
+            index = i;
+            return arr[i + 1];
+        } else {
+            n = n - arr[i];
+            arr[i] = 0;
+        }
+    }
+    return -1;
+}

@@ -1,0 +1,26 @@
+38.Count and Say
+public String countAndSay(int n) {
+    if (n == 1) {
+        return "1";
+    }
+    String num = "1";
+    for (int i = 0; i < n - 1; i++) {
+        num = count(num);
+    }
+    return num;
+}
+
+public String count(String s) {
+    char[] chars = new String(s + "#").toCharArray();
+    int count = 0;
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < chars.length; i++) {
+        if (i > 0 && chars[i] != chars[i - 1]) {
+            sb.append(count + "" + chars[i - 1]);
+            count = 1;
+        } else {
+            count++;
+        }
+    }
+    return sb.toString();
+}

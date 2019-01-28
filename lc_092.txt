@@ -1,0 +1,29 @@
+92.Reverse Linked List II
+与206类似。
+需要记录起始点位置，保证链表在逆转后不丢失。
+逆转链表解法与206一样。
+public ListNode reverseBetween(ListNode head, int m, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode start = dummy;
+    ListNode node = start.next;
+    int count = 1;
+    while (head != null) {
+        if (count < m) {
+            start = head;
+            node = start.next;
+            head = head.next;
+            count++;
+        } else if (count == m) {
+            for (int i = m; i < n; i++) {
+                ListNode tmp = head.next;
+                head.next = tmp.next;
+                tmp.next = node;
+                node = tmp;
+                start.next = tmp;
+            }
+            break;
+        }
+    }
+    return dummy.next;
+}

@@ -1,0 +1,6 @@
+908.Smallest Range I
+public int smallestRangeI(int[] A, int K) {
+    Arrays.sort(A);
+    int diff = A[A.length - 1] - K - (A[0] + K);
+    return diff < 0 ? 0 : diff ;
+}

@@ -1,0 +1,31 @@
+859.Buddy Strings
+注意相同字符超过两个也符合交换定义。
+public boolean buddyStrings(String A, String B) {
+    int l_a = A.length();
+    int l_b = B.length();
+    if (l_a != l_b) {
+        return false;
+    }
+    char[] cs_a = new char[26];
+    char[] cs_b = new char[26];
+    int count = 0;
+    boolean same = false;
+    for (int i = 0; i < l_a; i++) {
+        char c_a = A.charAt(i);
+        char c_b = B.charAt(i);
+        cs_a[c_a - 'a']++;
+        cs_b[c_b - 'a']++;
+        if (c_a != c_b) {
+            count++;
+        }
+        same = same || (cs_a[c_a - 'a'] > 1);
+    }
+    boolean res = true;
+    for (int i = 0; i < 26; i++) {
+        res = res & (cs_a[i] == cs_b[i]);
+    }
+    if (res && (count == 2 || (count == 0 && same))) {
+        return true;
+    }
+    return false;
+}

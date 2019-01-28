@@ -1,0 +1,20 @@
+812.Largest Triangle Area
+暴力解法。
+注意面积计算公式。
+public double largestTriangleArea(int[][] points) {
+    int pointNum = points.length;
+    double res = 0;
+    for (int i = 0; i < pointNum - 2; i++) {
+        for (int j = i + 1; j < pointNum - 1; j++) {
+            for (int k = j + 1; k < pointNum; k++) {
+                double area = getArea(points[i][0], points[i][1], points[j][0], points[j][1], points[k][0], points[k][1]);
+                res = Math.max(res, area);
+            }
+        }
+    }
+    return res;
+}
+
+public double getArea(int point_1_x, int point_1_y, int point_2_x, int point_2_y, int point_3_x, int point_3_y) {
+    return Math.abs((point_1_x * (point_2_y - point_3_y) + point_2_x * (point_3_y - point_1_y) + point_3_x * (point_1_y - point_2_y)) / 2.0);
+}

@@ -1,0 +1,45 @@
+752.
+// BFS
+// 去除0000开始节点
+// 记录访问过的节点，避免再次访问
+public int openLock(String[] deadends, String target) {
+    if (target == null || target.length() == 0) {
+        return 0;
+    }
+    int res = 0;
+    Queue<String> queue = new LinkedList<>();
+    Set<String> deadendsSet = new HashSet<String>(Arrays.asList(deadends));
+    Set<String> visited = new HashSet<String>();
+    queue.add("0000");
+    visited.add("0000");
+    int level = 0;
+    while (!queue.isEmpty()) {
+        int length = queue.size();
+        while (length > 0) {
+            String node = queue.poll();
+            if (deadendsSet.contains(node)) {
+                length--;
+                continue;
+            }
+            if (target.equals(node)) {
+                return level;
+            }
+            for (int j = 0; j < 4; j++) {
+                char c = node.charAt(j);
+                String str1 = node.substring(0, j) + (c == '9' ? 0 : (c - '0' + 1)) + node.substring(j + 1);
+                String str2 = node.substring(0, j) + (c == '0' ? 9 : (c - '0' - 1)) + node.substring(j + 1);
+                if (!visited.contains(str1) && !deadendsSet.contains(str1)) {
+                    queue.add(str1);
+                    visited.add(str1);
+                }
+                if (!visited.contains(str2) && !deadendsSet.contains(str2)) {
+                    queue.add(str2);
+                    visited.add(str2);
+                }    
+            }
+            length--;
+        }
+        level++;
+    }
+    return -1;
+}

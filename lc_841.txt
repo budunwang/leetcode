@@ -1,0 +1,34 @@
+841.Keys and Rooms
+广度遍历。
+获得当前room能前往的key。
+如果所有key都已经获取，则判断是否访问过全部room。
+如果有key没有被获取，则继续向下层访问。
+注意第一个room没有key的情况。
+
+public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+    Set<Integer> visited = new HashSet<Integer>();
+    Queue<Integer> queue = new LinkedList<Integer>();
+    List<Integer> keys = rooms.get(0);
+    if (keys.size() == 0) {
+        return rooms.size() == 1;
+    }
+    queue.add(0);
+    visited.add(0);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        boolean isLoop = true;
+        for (int i = 0; i < size; i++) {
+            keys = rooms.get(queue.poll());
+            for (Integer key : keys) {
+                if (visited.add(key)) {
+                    queue.add(key);
+                    isLoop = false;
+                }
+            }
+        }
+        if (isLoop) {
+            return rooms.size() == visited.size();
+        }
+    }
+    return false;
+}

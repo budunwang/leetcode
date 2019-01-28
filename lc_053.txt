@@ -1,0 +1,17 @@
+53.Maximum Subarray
+动态规划。
+当前和小于0，重新设置起始位置。
+当前和大于等于0，累加和。
+public int maxSubArray(int[] nums) {
+    int sum = Integer.MIN_VALUE;
+    int cur_sum = 0;
+    for (int i = 0; i < nums.length; i++) {
+        if (cur_sum < 0) {
+            cur_sum = nums[i];
+        } else {
+            cur_sum += nums[i];
+        }
+        sum = Math.max(sum, cur_sum);
+    }
+    return sum;
+}

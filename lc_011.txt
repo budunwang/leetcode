@@ -1,0 +1,20 @@
+11.Container With Most Water
+两指针法。
+初始值为最左与最右。
+只有一种可能会大于初始值，就是找出相对短的一边向下递进。
+相对长的一边向下递进，结果只会更小。
+
+public int maxArea(int[] height) {
+    int left = 0;
+    int right = height.length - 1;
+    int max = 0;
+    while (left < right) {
+        max = Math.max(max, Math.min(height[left], height[right]) * (right - left));
+        if (height[left] < height[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return max;
+}

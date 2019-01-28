@@ -1,0 +1,33 @@
+395.
+分治
+以频率低于k的结点为中心点，向左右分治获取子串的长度。
+public int longestSubstring(String s, int k) {
+    if (s == null || s.length() == 0) {
+        return 0;
+    }
+    int res = 0;
+    res = helper(s, 0, s.length(), k);
+    return res;
+}
+
+public int helper(String s, int start, int end, int k) {
+    if (end - start < k) {
+        return 0;
+    }
+    int [] count = new int[26];
+    for (int i = start; i < end; i++) {
+        count[s.charAt(i) - 'a']++;
+    }
+    for (int i = 0; i < 26; i++) {
+        // 频率低于k的字母
+        if (count[i] < k && count[i] > 0) {
+            for (int j = start; j < end; j++) {
+                // 频率低于k的结点位置
+                if(s.charAt(j) == i + 'a') {
+                    return Math.max(helper(s, start, j, k), helper(s, j + 1, end, k));          
+                }
+            }
+        }
+    }
+    return end - start;
+}

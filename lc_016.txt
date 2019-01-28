@@ -1,0 +1,44 @@
+16.3Sum Closest
+3Sum拓展。
+记录距离。
+public int threeSumClosest(int[] nums, int target) {
+    if (nums == null || nums.length <= 2) {
+        return 0;
+    }
+    int res = nums[0] + nums[1] + nums[2];
+    int dis = Math.abs(res - target);
+    Arrays.sort(nums);
+    for (int i = 0; i < nums.length; i++) {
+        if (i != 0 && nums[i] == nums[i - 1]) {
+            continue;
+        }
+        int left = i + 1;
+        int right = nums.length - 1;
+        while (left < right) {
+            int sum = nums[left] + nums[right] + nums[i];
+            if (sum == target) {
+                return target;
+            } else if (sum > target) {
+                if (dis > Math.abs(sum - target)) {
+                    dis = Math.abs(sum - target);
+                    res = sum;
+                }
+                while (left < right && nums[right] == nums[right - 1]) {
+                    right--;
+                }
+                right--;
+            } else {
+                if (dis > Math.abs(sum - target)) {
+                    dis = Math.abs(sum - target);
+                    res = sum;
+                }
+                while (left < right && nums[left] == nums[left + 1]) {
+                    left++;
+                }
+                left++;
+            }
+
+        }
+    }
+    return res;
+}

@@ -1,0 +1,18 @@
+806.Number of Lines To Write String
+public int[] numberOfLines(int[] widths, String S) {
+    if (S.equals("")) {
+        return new int[2];
+    }
+    int[] res = new int[2];
+    char[] cs = S.toCharArray();
+    res[0] = 1;
+    for (char c : cs) {
+        if (widths[c - 'a'] + res[1] > 100) {
+            res[0]++;
+            res[1] = widths[c - 'a'];
+        } else {
+            res[1] += widths[c - 'a'];
+        }
+    }
+    return res;
+}

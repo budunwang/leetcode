@@ -1,0 +1,16 @@
+67.Add Binary
+public String addBinary(String a, String b) {
+    int length_a = a.length();
+    int length_b = b.length();
+    int length = Math.max(length_a, length_b);
+    int c = 0;
+    String res = "";
+    for (int i = 1; i <= length; i++) {
+        int n_a = i > length_a ? 0 : a.charAt(length_a - i) - '0';
+        int n_b = i > length_b ? 0 : b.charAt(length_b - i) - '0';
+        int sum = (n_a + n_b + c) % 2;
+        c = (n_a + n_b + c) / 2;
+        res = sum + res;
+    }
+    return c == 1 ? c + res : res;   
+}

@@ -1,0 +1,36 @@
+127.Word Ladder
+广度搜索。
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    if (beginWord == "" || endWord == "" || wordList.size() == 0) {
+        return 0;
+    }
+    Set<String> set = new HashSet<String>(wordList);
+    Set<String> visit = new HashSet<String>();
+    Queue<String> queue = new LinkedList<String>();
+    int res = 1;
+    visit.add(beginWord);
+    queue.add(beginWord);
+    while (!queue.isEmpty()) {
+        int length = queue.size();
+        res++;
+        for (int i = 0; i < length; i++) {
+            String str = queue.poll();
+            int str_length = str.length();
+            if (str.equals(endWord)) {
+                return res - 1;
+            }
+            for (int j = 0; j < str_length; j++) {
+                char[] cs = str.toCharArray();
+                for (int k = 0; k < 26; k++) {
+                    cs[j] = (char)('a' + k);
+                    String str_new = new String(cs);
+                    if (set.contains(str_new) && !visit.contains(str_new)) {
+                        visit.add(str_new);
+                        queue.add(str_new);
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}

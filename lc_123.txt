@@ -1,0 +1,26 @@
+123.Best Time to Buy and Sell Stock III
+解法一
+将求数列两次的最大值，拆分为求两个子数列的最大值的和。
+注意是最多两次，所以也必须计算一次的最大值。
+public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+        return 0;
+    }
+    int sum = 0;
+    for (int i = 1; i < prices.length - 1; i++) {
+        sum = Math.max(sum, maxProfitHelper(prices, 0, i) + maxProfitHelper(prices, i, prices.length));
+    }
+    return Math.max(sum, maxProfitHelper(prices, 0, prices.length));
+}
+
+public int maxProfitHelper(int[] prices, int start, int end) {
+    int sum = 0;
+    int num = prices[start];
+    for (int i = start + 1; i < end; i++) {
+        if (num > prices[i]) {
+            num = prices[i];
+        }
+        sum = Math.max(sum, prices[i] - num);
+    }
+    return sum;
+}

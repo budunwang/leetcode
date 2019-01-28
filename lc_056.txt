@@ -1,0 +1,21 @@
+56.Merge Intervals
+先排序，后合并。
+public List<Interval> merge(List<Interval> intervals) {
+    if (intervals.size() < 1) {
+        return new ArrayList<Interval>();
+    }
+    intervals.sort((e1, e2) -> {
+        return Integer.compare(e1.start, e2.start);
+    });
+    List<Interval> list = new ArrayList<Interval>();
+    list.add(intervals.get(0));
+    for (Interval interval : intervals) {
+        Interval cur = list.get(list.size() - 1);
+        if (interval.start > cur.end) {
+            list.add(interval);
+        } else if (interval.end > cur.end) {
+            cur.end = interval.end;
+        }
+    }
+    return list;
+}

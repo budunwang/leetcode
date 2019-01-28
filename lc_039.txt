@@ -1,0 +1,93 @@
+// 同78
+// 排列组合
+// dfs收敛条件是等于target，终止条件是大于target
+// 难点在于如何避免重复解
+// 先对数组进行排序
+// 在筛选子结点时，去除比当前最后一个数小的结点
+// 这样就可以保证所得的结果是顺序的，即不重复的解
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+	if (candidates == null || candidates.length == 0) {
+		return null;
+	}
+	List<List<Integer>> res  = new ArrayList<List<Integer>>();
+	List<Integer> list = new ArrayList<Integer>();
+	Arrays.sort(candidates);
+	helper(res, list, candidates, target, 0);
+	return res;       
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] candidates, int target, int sum) {
+	// dfs收敛条件
+	if (sum == target) {
+		res.add(new ArrayList<Integer>(list));
+		return;
+	}
+	// dfs终止条件
+	if (sum > target) {
+		return;
+	}
+	for (int i = 0; i < candidates.length; i++) {
+		// 去除比最后一个数小的结点
+        if (list.size() > 0 && candidates[i] < list.get(list.size() - 1)) continue;
+		list.add(candidates[i]);
+		helper(res, list, candidates, target, sum + candidates[i]);
+		list.remove(list.size() - 1);
+	}
+}
+
+
+// 相同解法2
+// 优化子结点筛选方法
+// 总保证子结点集合不小于父结点
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    if (candidates == null || candidates.length == 0) {
+        return null;
+    }
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    List<Integer> list = new ArrayList<Integer>();
+    Arrays.sort(candidates);
+    helper(res, list, candidates, target, 0);
+    return res;
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] candidates, int remain, int index) {
+    if (remain == 0) {
+        res.add(new ArrayList<Integer>(list));
+        return;
+    }
+    if (remain < 0) {
+        return;
+    }
+    for (int i = index; i < candidates.length; i++) {
+        list.add(candidates[i]);
+        helper(res, list, candidates, remain - candidates[i], i);
+        list.remove(list.size() - 1);
+    }
+}
+
+
+// 相同解法3
+// 优化循环条件
+// 直接去除大于结果的结点
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    if (candidates == null || candidates.length == 0) {
+        return null;
+    }
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    List<Integer> list = new ArrayList<Integer>();
+    Arrays.sort(candidates);
+    helper(res, list, candidates, target, 0);
+    return res;
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] candidates, int remain, int index) {
+    if (remain == 0) {
+        res.add(new ArrayList<Integer>(list));
+        return;
+    }
+    for (int i = index; i < candidates.length && candidates[i] <= remain; i++) {
+        list.add(candidates[i]);
+        helper(res, list, candidates, remain - candidates[i], i);
+        list.remove(list.size() - 1);
+    }
+}

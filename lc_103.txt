@@ -1,0 +1,31 @@
+103.Binary Tree Zigzag Level Order Traversal
+public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    if (root == null) {
+        return new ArrayList<List<Integer>>();
+    }
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    int level = 0;
+    while(queue.size() != 0) {
+        List<Integer> list = new ArrayList<Integer>();
+        int length = queue.size();
+        for (int i = 0; i < length; i++) {
+            TreeNode treeNode = queue.poll();
+            if (level % 2 == 0) {
+                list.add(treeNode.val);
+            } else {
+                list.add(0, treeNode.val);
+            }
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+        }
+        level++;
+        res.add(list);
+    }
+    return res;
+}

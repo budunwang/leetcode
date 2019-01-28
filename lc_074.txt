@@ -1,0 +1,65 @@
+74.Search a 2D Matrix
+二分法。
+
+解法一
+先确定行位置。
+再确定列位置。
+注意行位置为0时的处理。
+public boolean searchMatrix(int[][] matrix, int target) {
+    if (matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int left = 0;
+    int right = row;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (matrix[mid][0] == target) {
+            return true;
+        } else if (matrix[mid][0] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    int rowIndex = left == 0 ? 0 : left - 1;
+    left = 0;
+    right = col;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (matrix[rowIndex][mid] == target) {
+            return true;
+        } else if (matrix[rowIndex][mid] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return false;
+}
+
+解法二
+直接作为一个排序数列处理。
+public boolean searchMatrix(int[][] matrix, int target) {
+    if (matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int left = 0;
+    int right = row * col;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int r_i = mid / col;
+        int c_i = mid % col;
+        if (matrix[r_i][c_i] == target) {
+            return true;
+        } else if (matrix[r_i][c_i] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return false;
+}

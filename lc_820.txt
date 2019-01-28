@@ -1,0 +1,14 @@
+820.Short Encoding of Words
+public int minimumLengthEncoding(String[] words) {
+    int res = 0;
+    Set<String> set = new HashSet<String>(Arrays.asList(words));
+    for (String word : words) {
+        for (int i = 1; i < word.length(); i++) {
+            set.remove(word.substring(i));
+        }
+    }
+    for (String s : set) {
+        res += s.length() + 1;
+    }
+    return res;  
+}

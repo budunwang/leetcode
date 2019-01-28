@@ -1,0 +1,49 @@
+129.Sum Root to Leaf Numbers
+解法一
+记录根结点结果，计算和。
+public int sumNumbers(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    dfs(root, list, 0);
+    int res = 0;
+    for (int i = 0; i < list.size(); i++) {
+        res += list.get(i);
+    }
+    return res;
+}
+
+public void dfs(TreeNode treeNode, List<Integer> list, int sum) {
+    if (treeNode.left == null && treeNode.right == null) {
+        list.add(sum * 10 + treeNode.val);
+        return;
+    }
+    if (treeNode.left != null) {
+        dfs (treeNode.left, list, sum * 10 + treeNode.val);
+    }
+    if (treeNode.right != null) {
+        dfs (treeNode.right, list, sum * 10 + treeNode.val);
+    }
+    return;
+}
+
+解法二
+直接计算和。
+public int sumNumbers(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return dfs(root, 0);
+}
+
+public int dfs(TreeNode treeNode, int sum) {
+    if (treeNode == null) {
+        return 0;
+    }
+    int s = sum * 10 + treeNode.val;
+    if (treeNode.left == null && treeNode.right == null) {
+        return s;
+    }
+    return dfs (treeNode.left, s) + dfs (treeNode.right, s);
+}

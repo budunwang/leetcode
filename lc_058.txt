@@ -1,0 +1,13 @@
+58.Length of Last Word
+public int lengthOfLastWord(String s) {
+    s = s.trim();
+    char[] cs = s.toCharArray();
+    int i = cs.length - 1;
+    while(i >= 0) {
+        if (cs[i] == ' ') {
+            return cs.length - i - 1;
+        }
+        i--;
+    }
+    return s.length();
+}

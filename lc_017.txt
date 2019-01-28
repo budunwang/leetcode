@@ -1,0 +1,24 @@
+17.Letter Combinations of a Phone Number
+public List<String> letterCombinations(String digits) {
+    if (digits.equals("")) {
+        return new ArrayList<String>();
+    }
+    List<String> res = new ArrayList<String>();
+    char[] cs = digits.toCharArray();
+    dfs(cs, 0, res, "");
+    return res;
+}
+
+public void dfs(char[] cs, int count, List<String> res, String str) {
+    if (count == cs.length) {
+        res.add(str);
+        return;
+    }
+    String[] ss = new String[]{"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    char[] chars = ss[cs[count] - '2'].toCharArray();
+    for (char ch : chars) {
+        str += ch;
+        dfs(cs, count + 1, res, str);
+        str = str.substring(0, str.length() - 1);
+    }
+}

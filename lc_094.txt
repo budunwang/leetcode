@@ -1,0 +1,19 @@
+94.
+public List<Integer> inorderTraversal(TreeNode root) {
+	List<Integer> res = new ArrayList<Integer>();
+	if (root == null) {
+		return res;
+	}
+	Stack<TreeNode> stack = new Stack<TreeNode>();
+	TreeNode treeNode = root;
+	while (!stack.empty() || treeNode != null) {
+		while (treeNode != null) {
+			stack.push(treeNode);
+			treeNode = treeNode.left;
+		}
+		treeNode = stack.pop();
+		res.add(treeNode.val);
+		treeNode = treeNode.right;
+	}
+	return res;
+}

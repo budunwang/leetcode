@@ -1,0 +1,13 @@
+848.Shifting Letters
+public String shiftingLetters(String S, int[] shifts) {
+    StringBuilder sb = new StringBuilder();
+    int length = shifts.length;
+    int[] sum = new int[length + 1];
+    sum[length] = 0;
+    char[] cs = S.toCharArray();
+    for (int i = length - 1; i >= 0; i--) {
+        sum[i] = sum[i + 1] + shifts[i] % 26;
+        sb.insert(0, (char)(97 + (cs[i] - 97 + sum[i]) % 26));
+    }
+    return sb.toString();
+}

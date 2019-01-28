@@ -1,0 +1,31 @@
+817.Linked List Components
+将G存为set。
+遍历数组，比较set，计算连接集合。
+遍历时有三种状况，
+1.本数属于子集，向下遍历
+2.本数不属于子集，前一个数属于子集，连接集合加一
+3.本数不属于子集，前一个数不属于子集，继续遍历
+注意最后一组的处理。
+public int numComponents(ListNode head, int[] G) {
+    Set<Integer> set = new HashSet<Integer>();
+    for (int i = 0; i < G.length; i++) {
+        set.add(G[i]);
+    }
+    int res = 0;
+    boolean connected = false;
+    while(head != null) {
+        if (set.contains(head.val)) {
+            connected = true;
+        } else if (connected) {
+            res++;
+            connected = false;
+        } else {
+            connected = false;
+        }           
+        head = head.next;
+    }
+    if (connected) {
+        res++;
+    }
+    return res;
+}

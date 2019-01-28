@@ -1,0 +1,27 @@
+111.Minimum Depth of Binary Tree
+深度搜索。
+public int minDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int res = 0;
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    while (!queue.isEmpty()) {
+        int length = queue.size();
+        res++;
+        for (int i = 0; i < length; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+            if (treeNode.left == null && treeNode.right == null) {
+                return res;
+            }
+        }
+    }
+    return res;
+}

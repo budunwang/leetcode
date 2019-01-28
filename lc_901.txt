@@ -1,0 +1,18 @@
+901.Online Stock Span
+单调栈。
+单调递减时，重置结果。
+单调递增时，需要计算当前结果。
+public Stack<int[]> stack;
+
+public StockSpanner() {
+    stack = new Stack<int[]>();
+}
+
+public int next(int price) {
+    int count = 1;
+    while (!stack.isEmpty() && stack.peek()[0] <= price) {
+        count += stack.pop()[1];
+    }
+    stack.push(new int[]{price, count});
+    return count;
+}

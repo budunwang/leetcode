@@ -1,0 +1,20 @@
+897.Increasing Order Search Tree
+中序遍历。
+public TreeNode head = new TreeNode(0);
+
+public TreeNode increasingBST(TreeNode root) {
+    TreeNode dummy = head;
+    dfs(root);
+    return dummy.right;
+}
+
+public void dfs(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    dfs(root.left);
+    TreeNode tmp = new TreeNode(root.val);
+    head.right = tmp;
+    head = head.right;
+    dfs(root.right);
+}

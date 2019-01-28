@@ -1,0 +1,16 @@
+88.Merge Sorted Array
+public void merge(int[] nums1, int m, int[] nums2, int n) {
+    int p_1 = m - 1;
+    int p_2 = n - 1;
+    int i = nums1.length - 1;
+    while (p_1 != -1 && p_2 != -1) {
+        if (nums2[p_2] >= nums1[p_1]) {
+            nums1[i--] = nums2[p_2--];
+        } else {
+            nums1[i--] = nums1[p_1--];
+        }
+    }
+    while (p_1 == -1 && p_2 != -1) {
+        nums1[i--] = nums2[p_2--];
+    }
+}

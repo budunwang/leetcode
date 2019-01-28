@@ -1,0 +1,36 @@
+861.Score After Flipping Matrix
+贪心法。拥有最佳策略。
+1.将每行首列为0的行翻转。
+2.计算每列的1的总和。如果小于一半行数，将该列翻转。
+3.求和。
+public int matrixScore(int[][] A) {
+    int row = A.length;
+    int col = A[0].length;
+    for (int i = 0; i < row; i++) {
+        if (A[i][0] == 0) {
+            for (int j = 0; j < col; j++) {
+                A[i][j] = A[i][j] == 0 ? 1 : 0; 
+            }
+        }
+    }
+    for (int j = 1; j < col; j++) {
+        int sum = 0;
+        for (int i = 0; i < row; i++) {
+            sum += A[i][j];
+        }
+        if (sum * 2 < row) {
+            for (int k = 0; k < row; k++) {
+                A[k][j] = A[k][j] == 0 ? 1 : 0; 
+            }
+        }
+    }
+    int sum = 0;
+    for (int i = 0; i < row; i++) {
+        int num = 0;
+        for (int j = 0; j < col; j++) {
+            num += A[i][j] * Math.pow(2, col - j - 1);
+        }
+        sum += num;
+    }
+    return sum;  
+}

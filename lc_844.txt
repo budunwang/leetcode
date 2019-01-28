@@ -1,0 +1,23 @@
+844.Backspace String Compare
+public boolean backspaceCompare(String S, String T) {
+    return getStr(S).equals(getStr(T));
+}
+
+public String getStr(String str) {
+    Stack<Character> stack = new Stack<Character>();
+    char[] cs = str.toCharArray();
+    for (char c : cs) {
+        if (c == '#') {
+            if (stack.size() != 0) {
+                stack.pop();
+            }
+        } else {
+            stack.push(c);
+        }
+    }
+    String res = "";
+    while(stack.size() != 0) {
+        res = stack.pop() + res;
+    }
+    return res;
+}

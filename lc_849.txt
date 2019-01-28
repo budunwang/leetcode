@@ -1,0 +1,31 @@
+849.Maximize Distance to Closest Person
+三种情况
+1.初始为0，直接计算距离
+2.结尾为0，直接计算距离
+3.初始结尾为1，计算距离的一半
+public int maxDistToClosest(int[] seats) {
+    int length = seats.length;
+    int max = 0;
+    int dis = 0;
+    boolean isInitial = true;
+    for (int i = 0; i < length; i++) {
+        if (seats[0] == 0 && isInitial) {
+            if (seats[i] == 1) {
+                max = Math.max(max, dis);
+                dis = 0;
+                isInitial = false;
+            } else {
+                dis++;
+            }
+        } else {
+            if (seats[i] == 1) {
+                max = Math.max(max, (dis + 1) / 2);
+                dis = 0;
+            } else {
+                dis++;
+            }
+        }
+    }
+    max = Math.max(max, dis);
+    return max;
+}

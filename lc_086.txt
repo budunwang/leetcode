@@ -1,0 +1,26 @@
+86.Partition List
+拆分为两个链表，一个小于x，一个大于x。
+最后连接两个链表。
+注意要保存两个链表的头部。
+public ListNode partition(ListNode head, int x) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode n_1 = new ListNode(0);
+    ListNode n_1_head = n_1;
+    ListNode n_2 = new ListNode(0);
+    ListNode n_2_head = n_2;
+    while (head != null) {
+        if (head.val < x) {
+            n_1.next = head;
+            n_1 = n_1.next;
+        } else {
+            n_2.next = head;
+            n_2 = n_2.next;
+        }
+        head = head.next;
+    }
+    n_2.next = null;
+    n_1.next = n_2_head.next;
+    return n_1_head.next;
+}

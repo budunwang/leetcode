@@ -1,0 +1,38 @@
+898.Bitwise ORs of Subarrays
+解法一
+直接计算会超时。
+public int subarrayBitwiseORs(int[] A) {
+    Set<Integer> res = new HashSet<Integer>();
+    int length = A.length;
+    for (int i = 0; i < length; i++) {
+        res.add(A[i]);
+        int tmp = A[i];
+        for (int j = i + 1; j < length; j++) {
+            tmp = tmp | A[j];
+            res.add(tmp);
+        }
+    }
+    return res.size();
+}
+
+解法二
+加上优化条件。
+(tmp & A[i]) == A[i]
+A[i]之后的数与A[i]等于A[i]，即A[i]等于1的位，A[i]后的数也等于1。
+那么可以跳过A[i]，因为遍历A[i]后的数相或等价于A[i]去或。
+public int subarrayBitwiseORs(int[] A) {
+    Set<Integer> res = new HashSet<Integer>();
+    int length = A.length;
+    for (int i = 0; i < length; i++) {
+        res.add(A[i]);
+        int tmp = 0;
+        for (int j = i + 1; j < length; j++) {
+            tmp = tmp | A[j];
+            if ((tmp & A[i]) == A[i]) {
+                break;
+            }
+            res.add(tmp | A[i]);
+        }
+    }
+    return res.size();
+}

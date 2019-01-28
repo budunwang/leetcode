@@ -1,0 +1,39 @@
+131.Palindrome Partitioning
+深度搜索。
+收敛条件是遍历到字符串边界。
+树的子集集合是字符串索引切割的字符串。
+优化的回溯条件是切割前的字符串是回文字符串。
+如果不是回文字符串，就没有必要再遍历。
+public List<List<String>> partition(String s) {
+    if (s.equals("")) {
+        return new ArrayList<List<String>>();
+    }
+    List<List<String>> res = new ArrayList<List<String>>();
+    dfs(s, res, new ArrayList<String>(), 0);
+    return res;
+}
+
+public void dfs(String s, List<List<String>> res, List<String> list, int index) {
+    if (index == s.length()) {
+        res.add(new ArrayList<String>(list));
+    }
+    int length = s.length();
+    for (int i = index; i < length; i++) {
+        if (isPalindrome(s, index, i)) {
+            list.add(s.substring(index, i + 1));
+            dfs(s, res, list, i + 1);
+            list.remove(list.size() - 1);
+        }
+    }
+}
+
+public boolean isPalindrome(String s, int left, int right) {
+    while (left < right) {
+        if (s.charAt(left) != s.charAt(right)) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}

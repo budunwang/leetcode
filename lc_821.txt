@@ -1,0 +1,24 @@
+821.Shortest Distance to a Character
+获取C的位置，比较前后的位置差，得到最短距离。
+public int[] shortestToChar(String S, char C) {
+    List<Integer> c_index = new ArrayList<Integer>();
+    char[] chars = S.toCharArray();
+    for (int i = 0; i < chars.length; i++) {
+        if (chars[i] == C) {
+            c_index.add(i);
+        }
+    }
+    c_index.add(0, Integer.MAX_VALUE);
+    c_index.add(Integer.MIN_VALUE);
+    int cur_index = 0;
+    int[] res = new int[chars.length];
+    for (int i = 0; i < chars.length; i++) {
+        if (Math.abs(i - c_index.get(cur_index)) <= Math.abs(c_index.get(cur_index + 1) - i)) {
+            res[i] = Math.abs(i - c_index.get(cur_index));
+        } else {
+            res[i] = Math.abs(c_index.get(cur_index + 1) - i);
+            cur_index++;
+        }
+    }
+    return res;   
+}

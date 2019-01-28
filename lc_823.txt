@@ -1,0 +1,22 @@
+﻿823.Binary Trees With Factors
+动态规划。
+注意长数字。
+public int numFactoredBinaryTrees(int[] A) {
+    long res = 0L;
+    int length = A.length;
+    long mod = (long)(Math.pow(10, 9) + 7);
+    Map<Integer, Long> dp = new HashMap<Integer, Long>();
+    Arrays.sort(A);
+    for (int i = 0; i < length; i++) {
+        dp.put(A[i], 1L);
+        for (int j = i - 1; j >= 0; j--) {
+            if (A[i] % A[j] == 0 && dp.containsKey(A[i] / A[j])) {
+                dp.put(A[i], (dp.get(A[i]) + dp.get(A[i] / A[j]) * dp.get(A[j])) % mod);
+            }
+        }
+    }
+    for (long i : dp.values()) {
+        res = (res + i) % mod;
+    }
+    return (int)res;
+}

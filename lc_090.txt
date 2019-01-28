@@ -1,0 +1,26 @@
+// 同78
+// 排列组合
+public List<List<Integer>> subsetsWithDup(int[] nums) {
+	if (nums == null || nums.length == 0) {
+		return null;
+	}
+	List<List<Integer>> res = new ArrayList<List<Integer>>();
+	List<Integer> list = new ArrayList<Integer>();
+    // 注意必须要排序
+    Arrays.sort(nums);
+	helper(res, list, nums, 0);
+	return res;       
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] nums, int index) {
+	res.add(new ArrayList<Integer>(list));
+	for (int i = index ; i < nums.length ; i++) {
+        // 去重条件
+        // 去重时，i必须大于index，不然会少叶结点
+        // 需要去除重复的，但子结点与父结点重复不需要去除
+        if (i > 0 && nums[i] == nums[i - 1] && i > index) continue;
+        list.add(nums[i]);
+		helper(res, list, nums, i + 1);
+		list.remove(list.size() - 1);
+	}
+}

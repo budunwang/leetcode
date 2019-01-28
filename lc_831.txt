@@ -1,0 +1,9 @@
+831.Masking Personal Information
+public String maskPII(String S) {
+    if (S.indexOf("@") != -1) {
+      return (S.charAt(0) + "*****" + S.substring(S.indexOf("@") - 1)).toLowerCase();
+    }
+    String s = S.replaceAll("[^0-9]+", "");
+    String[] ss = {"", "+*-", "+**-", "+***-"};
+    return ss[s.length() - 10] + "***-***-" + s.substring(s.length() - 4);
+}

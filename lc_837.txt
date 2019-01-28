@@ -1,0 +1,31 @@
+837.New 21 Game
+动态规划
+dp[n] = (dp[n - 1] + dp[n - 2] + ... + dp[n - w]) / w
+当N = K时，res = dp[N - w ~ N] = (dp[N - 1] + dp[N - 2] + ... + dp[N - w]) / w
+当N > K && K + W < N时，res = dp[K ~ N] = (dp[N - 1] + dp[N - 2] + ... + dp[K]) / w
+注意取数区间在[1, W]，所以求和时需要去除dp[i - W]前的值。
+
+public double new21Game(int N, int K, int W) {
+    if (K == 0 || N >= K + W) {
+        return 1.0;
+    }
+    double[] dp = new double[N + 1];
+    dp[0] = 1.0;
+    double sum = 1;
+    double res = 0;
+    for (int i = 1; i < K; i++) {
+        dp[i] = sum / W;
+        sum += dp[i];
+        if (i - W >= 0) {
+            sum -= dp[i - W];
+        }
+    }
+    for (int i = K; i <= N; i++) {
+        dp[i] = sum / W;
+        res += dp[i];
+        if (i - W >= 0) {
+            sum -= dp[i - W];
+        }
+    }
+    return res;
+}

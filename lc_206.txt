@@ -1,0 +1,15 @@
+206.Reverse Linked List
+将下一结点交换放到首位。
+public ListNode reverseList(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode node = head;
+    while (head != null && head.next != null) {
+        ListNode tmp = head.next;
+        head.next = head.next.next;
+        tmp.next = node;
+        node = tmp;
+        dummy.next = node;
+    }
+    return dummy.next;
+}

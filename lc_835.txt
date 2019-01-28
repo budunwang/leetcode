@@ -1,0 +1,71 @@
+835.Image Overlap
+计算A中点的位置。
+计算B中点的位置。
+遍历两个位置，如果距离相等，则属于同一个偏离距离。
+计算出最大的偏离点个数。
+解法一
+public int largestOverlap(int[][] A, int[][] B) {
+    int row_A = A.length;
+    int col_A = A[0].length;
+    int row_B = B.length;
+    int col_B = B[0].length;
+    List<List<Integer>> list_A = new ArrayList<List<Integer>>();
+    List<List<Integer>> list_B = new ArrayList<List<Integer>>();
+    for (int i = 0; i < row_A; i++) {
+        for (int j = 0; j < col_A; j++) {
+            if (A[i][j] == 1) {
+                list_A.add(new ArrayList(Arrays.asList(i, j)));
+            }
+        }
+    }
+    for (int i = 0; i < row_B; i++) {
+        for (int j = 0; j < col_B; j++) {
+            if (B[i][j] == 1) {
+                list_B.add(new ArrayList(Arrays.asList(i, j)));
+            }
+        }
+    }
+    HashMap<String, Integer> map = new HashMap<String, Integer>();
+    for (int i = 0; i < list_A.size(); i++) {
+        for (int j = 0; j < list_B.size(); j++) {
+            ArrayList<Integer> p_A = list_A.get(i);
+            ArrayList<Integer> p_B = list_B.get(j);
+            int distance_i = p_A.get(0) - p_B.get(0);
+            int distance_j = p_A.get(1) - p_B.get(1);
+            map.put(distance_i + "+" + distance_j, map.getOrDefault(distance_i + "+" + distance_j, 0) + 1);
+        }
+    }
+    int max = 0;
+    for (int value : map.values()) {
+        max = Math.max(max, value);             
+    }
+    return max;    
+}
+
+解法二
+使用矩阵记录偏离点。
+public int largestOverlap(int[][] A, int[][] B) {
+    int row = A.length;
+    int col = A[0].length;
+    int[][] m = new int[2 * row + 1][2 * col + 1];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (A[i][j] == 1) {
+                for (int k = 0; k < row; k++) {
+                    for (int l = 0; l < row; l++) {
+                        if (B[k][l] == 1) {
+                            m[k - i + row][l - j + col]++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    int max = 0;
+    for (int i = 0; i < 2 * row + 1; i++) {
+        for (int j = 0; j < 2 * col + 1; j++) {
+            max = Math.max(max, m[i][j]);
+        }
+    }
+    return max;
+}

@@ -1,0 +1,29 @@
+852. Peak Index in a Mountain Array
+找最大值。
+public int peakIndexInMountainArray(int[] A) {
+    int length = A.length;
+    int res = 0;
+    for (int i = 0; i < length; i++) {
+        if (A[i] > A[res]) {
+            res = i;
+        }
+    }
+    return res;
+}
+
+二分法。
+public int peakIndexInMountainArray(int[] A) {
+    int left = 0;
+    int right = A.length - 1;
+    while(left < right) {
+        int mid = left + (right - left) / 2;
+        if (A[mid] < A[mid + 1]) {
+            left = mid;
+        } else if (A[mid] < A[mid - 1]) {
+            right = mid;
+        } else {
+            return mid;
+        }
+    }
+    return 0;
+}

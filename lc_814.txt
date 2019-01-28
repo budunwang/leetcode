@@ -1,0 +1,20 @@
+814.Binary Tree Pruning
+注意tree的结点赋值。
+public TreeNode pruneTree(TreeNode root) {
+    if (root == null) {
+        return null;
+    }
+    return dfs(root);
+}
+
+public TreeNode dfs(TreeNode treeNode) {
+    if (treeNode == null) {
+        return null;
+    }
+    treeNode.left = dfs(treeNode.left);
+    treeNode.right = dfs(treeNode.right);
+    if (treeNode.left == null && treeNode.right == null && treeNode.val == 0) {
+        return null;
+    }
+    return treeNode;
+}

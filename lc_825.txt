@@ -1,0 +1,21 @@
+825.Friends Of Appropriate Ages
+public int numFriendRequests(int[] ages) {
+    int res = 0;
+    Arrays.sort(ages);
+    for (int i = ages.length - 1; i >= 0; i--) {
+        for (int j = 1; j <= i; j++) {
+            if ((ages[i - j] <= 100 || ages[i] >= 100) && ages[i - j] > 0.5 * ages[i] + 7) {
+                if (ages[i] == ages[i - j]) {
+                    res = res + 2;
+                } else if (ages[i - j] < ages[i]) {
+                    res = res + 1;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+    }
+    return res;
+}

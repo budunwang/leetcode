@@ -1,0 +1,36 @@
+// 同78
+// 排列组合
+// 与90类似，需要去重复组合
+// 比90复杂，因为是求根结点，必须去记录访问过的结点，保证所有组合
+// 难点在于如何去除同级的重复结点，又保留下级的重复结点
+// 根据观察，同级点的visited[i-1]为0，下级点的visited[i-1]为1
+public List<List<Integer>> permuteUnique(int[] nums) {
+	if (nums == null || nums.length == 0) {
+		return null;
+	}
+	List<List<Integer>> res = new ArrayList<List<Integer>>();
+	List<Integer> list = new ArrayList<Integer>();
+    // 记录访问的点
+	int[] visited = new int[nums.length];
+	Arrays.sort(nums);
+	helper(res, list, nums, visited);
+	return res;       
+}
+
+public void helper(List<List<Integer>> res, List<Integer> list, int[] nums, int[] visited) {
+	if (list.size() == nums.length) {
+		res.add(new ArrayList<Integer>(list));
+	}
+    // 去除当前访问过的结点集合
+	for (int i = 0 ; i < nums.length ; i++) {
+		if (visited[i] == 0) {
+            // 去除重复结点
+    		if (i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == 0) continue;
+    		list.add(nums[i]);
+    		visited[i] = 1;
+    		helper(res, list, nums, visited);
+    		list.remove(list.size() - 1);
+    		visited[i] = 0;
+		}
+	}
+}

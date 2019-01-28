@@ -1,0 +1,20 @@
+138.Copy List with Random Pointer
+遍历建立map, 存储新结点与旧结点。
+再次遍历，根据map赋值新结点的next与random。
+public RandomListNode copyRandomList(RandomListNode head) {
+    Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+    RandomListNode dummy = head;
+    while (head != null) {
+        RandomListNode node = new RandomListNode(head.label);
+        map.put(head, node);
+        head = head.next;
+    }
+    head = dummy;
+    while(head != null) {
+        RandomListNode node = map.get(head);
+        node.next = map.get(head.next);
+        node.random = map.get(head.random);
+        head = head.next;
+    }
+    return map.get(dummy);
+}

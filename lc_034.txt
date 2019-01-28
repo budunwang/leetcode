@@ -1,0 +1,52 @@
+34.Find First and Last Position of Element in Sorted Array
+二分法求出第一个与最后一个。
+注意去除不存在的情况。
+
+二分法核心
+1.跳出循环
+最终两指针必然是left, left + 1。
+所以mid = left。
+为了结束循环，left = left + 1。
+2.确定解的位置
+在于判断条件。
+if (nums[mid] >= target)，right一定等于最左边的解。
+if (nums[mid] > target)，right一定等于最右边的解加一。
+
+public int[] searchRange(int[] nums, int target) {
+    if (nums.length == 0) {
+        return new int[]{-1, -1};
+    }
+    int first = findFirst(nums, target);
+    if (first >= nums.length || nums[first] != target) {
+        return new int[]{-1, -1};
+    }
+    return new int[]{first, findLast(nums, target)};
+}
+
+public int findFirst(int[] nums, int target) {
+    int left = 0;
+    int right = nums.length;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] >= target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+public int findLast(int[] nums, int target) {
+    int left = 0;
+    int right = nums.length;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left - 1;
+}

@@ -1,0 +1,24 @@
+114.Flatten Binary Tree to Linked List
+后序遍历。
+1.保存右枝
+2.将左枝赋给右枝
+3.左枝为空
+4.遍历至右枝根结点，将原右枝赋给结点右枝。
+public void flatten(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    if (root.left != null) {
+        flatten(root.left);
+    }
+    if (root.right != null) {
+        flatten(root.right);
+    }
+    TreeNode tmp = root.right;
+    root.right = root.left;
+    root.left = null;
+    while (root.right != null) {
+        root = root.right;
+    }
+    root.right = tmp;
+}

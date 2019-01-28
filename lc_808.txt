@@ -1,0 +1,52 @@
+808.Soup Servings
+每个结点下都有四个可能结点，遍历直至叶点，即A,B任一为0。
+
+解法1
+超时
+class Solution {
+    public double soupServings(int N) {
+        return dfs(N, N);
+    }
+
+    public double dfs(int a, int b) {
+        if (a <= 0 && b > 0) {
+            return 1;
+        }
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a > 0 && b <= 0) {
+            return 0;
+        }
+        return 0.25 * (dfs(a - 100, b) + dfs(a - 75, b - 25) + dfs(a - 50, b - 50) + dfs(a - 25, b -75));
+    }
+}
+
+解法2
+加入记录
+class Solution {
+    public double soupServings(int N) {
+        if (N > 5000) {
+            return 1;
+        }
+        return dfs(N, N, new HashMap<String, Double>());
+    }
+
+    public double dfs(int a, int b, Map<String, Double> map) {
+        if (a <= 0 && b > 0) {
+            return 1;
+        }
+        if (a <= 0 && b <= 0) {
+            return 0.5;
+        }
+        if (a > 0 && b <= 0) {
+            return 0;
+        }
+        if (map.containsKey(new String(a + "-" + b))) {
+            return map.get(new String(a + "-" + b));
+        }
+        double res = 0.25 * (dfs(a - 100, b, map) + dfs(a - 75, b - 25, map) + dfs(a - 50, b - 50, map) + dfs(a - 25, b -75, map));
+        map.put(new String(a + "-" + b), res);
+        return res;
+    }
+}

@@ -1,0 +1,59 @@
+838.Push Dominoes
+public String pushDominoes(String dominoes) {
+    char[] res = new char[dominoes.length()];
+    int[] arr_l = new int[dominoes.length()];
+    int[] arr_r = new int[dominoes.length()];
+    char[] cs = dominoes.toCharArray();
+    int l_count = 0;
+    for (int i = cs.length - 1; i >= 0; i--) {
+        char c = cs[i];
+        if (c == '.') {
+            arr_l[i] = l_count == 0 ? 0 : --l_count;
+        } else if (c == 'R') {
+            arr_l[i] = 1;
+            l_count = 0;
+        } else {
+            arr_l[i] = -1;
+            l_count = -1;
+        }
+    }
+    int r_count = 0;
+    for (int i = 0; i < cs.length; i++) {
+        char c = cs[i];
+        if (c == '.') {
+            arr_r[i] = r_count == 0 ? 0 : ++r_count;
+        } else if (c == 'L') {
+            arr_r[i] = -1;
+            r_count = 0;
+        } else {
+            arr_r[i] = 1;
+            r_count = 1;
+        }
+    }
+    for (int i = 0; i < cs.length; i++) {
+        int l = arr_l[i];
+        int r = arr_r[i];
+        if (l * r == 0) {
+            if (l == 0 && r == 0) {
+                res[i] = '.';
+            } else if (l == 0) {
+                res[i] = 'R';
+            } else if (r == 0) {
+                res[i] = 'L';
+            }
+        } else if (l > 0 && r > 0) {
+            res[i] = 'R';
+        } else if (l < 0 && r < 0) {
+            res[i] = 'L';
+        } else {
+            if (l + r == 0) {
+                res[i] = '.';
+            } else if (l + r < 0) {
+                res[i] = 'R';
+            } else {
+                res[i] = 'L';
+            }
+        }
+    }
+    return new String(res);
+}

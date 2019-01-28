@@ -1,0 +1,38 @@
+31.Next Permutation
+从尾部找到第一个递增组合。
+下一个排列必然从这一位开始。
+如果没有递增组合，就是排列的最后一个，下一个排列就是数组逆序。
+如果有，从尾部找到第一个大于递增的数字，替换，再重新数组逆序。
+public void nextPermutation(int[] nums) {
+    int length = nums.length;
+    if (length == 0) {
+        return;
+    }
+    
+    int i = length - 1;
+    for (; i >= 1; i--) {
+        if (nums[i] > nums[i - 1]) {
+            break;
+        }
+    }
+    
+    if (i != 0) {
+        int j = length - 1;
+        while (nums[j] <= nums[i - 1] && j > i - 1) {
+            j--;
+        }
+        int tmp = nums[j];
+        nums[j] = nums[i - 1];
+        nums[i - 1] = tmp;
+    }
+    
+    int left = i;
+    int right = length - 1;
+    while (left < right) {
+        int tmp = nums[right];
+        nums[right] = nums[left];
+        nums[left] = tmp;
+        left++;
+        right--;
+    }
+}
