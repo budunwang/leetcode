@@ -1,0 +1,34 @@
+166.Fraction to Recurring Decimal
+注意负数以及long数的处理。
+public String fractionToDecimal(int numerator, int denominator) {
+    StringBuilder sb = new StringBuilder();
+    
+    if ((numerator > 0 && denominator < 0) || (numerator < 0 && denominator > 0)) {
+        sb.append("-");
+    }
+    long n = Math.abs((long)numerator);
+    long d = Math.abs((long)denominator);
+    
+    sb.append(n / d);
+    n = n % d;
+    if (n == 0) {
+        return sb.toString();
+    }
+    sb.append(".");
+    
+    Map<Long, Integer> map = new HashMap<Long, Integer>();
+    while (n != 0) {
+        if (map.containsKey(n)) {
+            sb.insert(map.get(n), "(");
+            sb.append(")");
+            return sb.toString();
+        } else {
+            map.put(n, sb.length());
+        }
+        n = n * 10;
+        sb.append(n / d);
+        n = n % d;
+    }
+    
+    return sb.toString();
+}
