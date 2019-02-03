@@ -1,0 +1,10 @@
+172.Factorial Trailing Zeroes
+public int trailingZeroes(int n) {
+    int sum = 0;
+    long num = 5;
+    while (n >= num) {
+        sum += n / num;
+        num *= 5;
+    }
+    return sum;
+}
