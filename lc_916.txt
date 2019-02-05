@@ -1,0 +1,35 @@
+916.Word Subsets
+统计B中字母出现的最大个数，与A进行比较。
+public List<String> wordSubsets(String[] A, String[] B) {
+    List<String> list = new ArrayList<String>();
+    int[] arr_B = new int[26];
+    for (String str_B :B) {
+        int[] tmp = arr_B;
+        arr_B = count(str_B);
+        for (int i = 0; i < 26; i++) {
+            arr_B[i] = Math.max(arr_B[i], tmp[i]);
+        }
+    }
+    for (String str_A : A) {
+        int[] arr_A = count(str_A);
+        int num = 0;
+        for (int i = 0; i < 26; i++) {
+            if (arr_A[i] < arr_B[i]) {
+                break;
+            }
+            num++;
+        }
+        if (num == 26) {
+            list.add(str_A);
+        }
+    }
+    return list;
+}
+
+public int[] count(String str) {
+    int[] arr = new int[26];
+    for (char c : str.toCharArray()) {
+        arr[c - 'a']++;
+    }
+    return arr;
+}
