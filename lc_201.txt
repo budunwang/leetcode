@@ -1,0 +1,13 @@
+201.Bitwise AND of Numbers Range
+public int rangeBitwiseAnd(int m, int n) {
+    int mark = Integer.MAX_VALUE;
+    int range = 0;
+    for (int i = 0; i < 32; i++) {
+        if (n - m <= range) {
+            break;
+        }
+        range = range == 0 ? 1 : range << 1;
+        mark = range == 1 ? mark : mark << 1;
+    }
+    return n & m & mark;
+}
