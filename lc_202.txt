@@ -1,0 +1,18 @@
+202.Happy Number
+public boolean isHappy(int n) {
+    Set<Integer> set = new HashSet<Integer>();
+    int sum = 0;
+    while (set.add(sum)) {
+        sum = 0;
+        while (n != 0) {
+            int num = n % 10;
+            sum += num * num;
+            n /= 10;
+        }
+        n = sum;
+        if (sum == 1) {
+            return true;
+        }
+    }
+    return false;
+}
