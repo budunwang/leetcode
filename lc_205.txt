@@ -1,0 +1,20 @@
+205.Isomorphic Strings
+public boolean isIsomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    int[] s_t = new int[129];
+    int[] t_s = new int[129];
+    int length = s.length();
+    for (int i = 0; i < length; i++) {
+        int cs = (int)s.charAt(i) + 1;
+        int ct = (int)t.charAt(i) + 1;
+        if (s_t[cs] == 0 && t_s[ct] == 0) {
+            s_t[cs] = ct;
+            t_s[ct] = cs;
+        } else if (s_t[cs] != ct || t_s[ct] != cs) {
+            return false;
+        }
+    }
+    return true;
+}
