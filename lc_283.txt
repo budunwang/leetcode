@@ -1,15 +1,13 @@
 283.Move Zeroes
 public void moveZeroes(int[] nums) {
+    int i = 0;
     int length = nums.length;
-    for (int i = 0; i < length; i++) {
-        if (nums[i] == 0) {
-            int j = i;
-            while (j < length - 1 && nums[j] == 0) {
-                j++;
-            }
-            int tmp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = tmp;
+    for (int j = 0; j < length; j++) {
+        if (nums[j] != 0) {
+            int tmp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = tmp;
+            i++;
         }
     }
 }

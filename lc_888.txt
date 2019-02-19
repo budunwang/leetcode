@@ -1,0 +1,25 @@
+888.Fair Candy Swap
+A移走a个，放入b个，最后等于A和B平均数。
+那么a与b的差值是A和B差值的1/2。
+找到a与b即可。
+sum_A - a + b = (sum_A + sum_B) / 2
+a - b = (sum_A - sum_B) / 2
+public int[] fairCandySwap(int[] A, int[] B) {
+    int sum_A = 0;
+    int sum_B = 0;
+    Set<Integer> set = new HashSet<Integer>();
+    for (int a : A) {
+        sum_A += a;
+        set.add(a);
+    }
+    for (int b : B) {
+        sum_B += b;
+    }
+    int dif = (sum_A - sum_B) / 2;
+    for (int b : B) {
+        if (set.contains(b + dif)) {
+            return new int[] {b + dif, b};
+        }
+    }
+    return new int[2];
+}
