@@ -1,0 +1,17 @@
+884.Uncommon Words from Two Sentences
+public String[] uncommonFromSentences(String A, String B) {
+    List<String> list = new ArrayList<String>();
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    for (String a : A.split(" ")) {
+        map.put(a, map.getOrDefault(a, 0) + 1);
+    }
+    for (String b : B.split(" ")) {
+        map.put(b, map.getOrDefault(b, 0) + 1);
+    }
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        if (entry.getValue() == 1) {
+            list.add(entry.getKey());
+        }
+    }
+    return list.toArray(new String[0]);
+}
