@@ -1,0 +1,17 @@
+921.Minimum Add to Make Parentheses Valid
+public int minAddToMakeValid(String S) {
+    int res = 0;
+    Stack<Character> stack = new Stack<Character>();
+    for (char c : S.toCharArray()) {
+        if (c == '(') {
+            stack.push('(');
+        } else {
+            if (stack.isEmpty()) {
+                res++;
+            } else {
+                stack.pop();
+            }
+        }
+    }
+    return res + stack.size();
+}
