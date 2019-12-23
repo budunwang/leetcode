@@ -1,0 +1,26 @@
+1002.Find Common Characters
+public List<String> commonChars(String[] A) {
+    List<String> list = new ArrayList<String>();
+    int length = A.length;
+    int[] arr = new int[26];
+    for (char c : A[0].toCharArray()) {
+        arr[c - 'a']++;
+    }
+    for (int i = 1; i < length; i++) {
+        int[] tmp = new int[26];
+        for (char c : A[i].toCharArray()) {
+            tmp[c - 'a']++;
+        }
+        for (int j = 0; j < 26; j++) {
+            arr[j] = Math.min(arr[j], tmp[j]);
+        }
+    }
+    for (int i = 0; i < 26; i++) {
+        if (arr[i] > 0) {
+            for (int j = 0; j < arr[i]; j++) {
+                list.add(Character.toString((char)(i + 'a')));
+            }
+        }
+    }
+    return list;
+}

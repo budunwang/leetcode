@@ -1,0 +1,22 @@
+914.X of a Kind in a Deck of Cards
+最大公约数 > 1
+public boolean hasGroupsSizeX(int[] deck) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int num : deck) {
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+    int res = 0;
+    for (int num : map.values()) {
+        res = gcd(num, res);
+    }
+    return res > 1;
+}
+
+public int gcd(int a, int b) {
+    while (b != 0) {
+        int tmp = a;
+        a = b;
+        b = tmp % b;
+    }
+    return a;
+}

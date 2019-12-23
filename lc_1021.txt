@@ -1,0 +1,22 @@
+1021.Remove Outermost Parentheses
+public String removeOuterParentheses(String S) {
+    StringBuilder sb = new StringBuilder();
+    Stack<Integer> stack = new Stack<Integer>();
+    char[] cs = S.toCharArray();
+    int dis = 0;
+    for (int i = 0; i < cs.length; i++) {
+        if (cs[i] == '(') {
+            stack.push(i);
+            sb.append('(');
+        } else {
+            int index = stack.pop();
+            if (stack.size() == 0) {
+                sb.delete(index - dis, index - dis + 1);
+                dis += 2;
+            } else {
+                sb.append(')');
+            }
+        }
+    }
+    return sb.toString();
+}

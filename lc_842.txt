@@ -1,0 +1,54 @@
+842.Split Array into Fibonacci Sequence
+306
+public List<Integer> splitIntoFibonacci(String S) {
+    int length = S.length();
+    for (int i = 1; i <= length - 1; i++) {
+        String s1 = S.substring(0, i);
+        Long n1 = Long.valueOf(s1);
+        if ((s1.length() != 1 && s1.charAt(0) == '0') || (n1 > Integer.MAX_VALUE)) {
+            break;
+        }
+        for (int j = i + 1; j < length; j++) {
+            String s2 = S.substring(i, j);
+            Long n2 = Long.valueOf(s2);
+            if ((s2.length() != 1 && s2.charAt(0) == '0') || (n2 > Integer.MAX_VALUE)) {
+                break;
+            }
+            List<Long> dummy = new ArrayList<Long>();
+            dummy.add(n1);
+            dummy.add(n2);
+            List<Long> list = dfs(S, j, n1, n2, dummy);
+            if (list != null) {
+                List<Integer> res = new ArrayList<Integer>();
+                for (Long num : list) {
+                    res.add(num.intValue());
+                }
+                return res;
+            }
+        }
+    }
+    return new ArrayList<Integer>();
+}
+
+public List<Long> dfs(String S, int index, Long a, Long b, List<Long> dummy) {
+    int length = S.length();
+    if (index == length) {
+        return new ArrayList<Long>(dummy);
+    }
+    for (int i = index + 1; i <= length; i++) {
+        String s = S.substring(index, i);
+        Long num = Long.parseLong(s);
+        if ((s.length() != 1 && s.charAt(0) == '0') || (num > Integer.MAX_VALUE)) {
+            break;
+        }
+        if (num == a + b) {
+            dummy.add(num);
+            List<Long> list = dfs(S, i, b, a + b, dummy);
+            if (list != null) {
+                return list;   
+            }
+            dummy.remove(dummy.size() - 1);
+        }
+    }
+    return null;
+}

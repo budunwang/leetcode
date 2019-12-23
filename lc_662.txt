@@ -1,0 +1,35 @@
+662.Maximum Width of Binary Tree
+public int widthOfBinaryTree(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int res = 0;
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    Map<TreeNode, Integer> map = new HashMap<TreeNode, Integer>();
+    queue.add(root);
+    map.put(root, 1);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (i == 0) {
+                start = map.get(treeNode);
+            }
+            if (i == size - 1) {
+                end = map.get(treeNode);
+            }
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+                map.put(treeNode.left, map.get(treeNode) * 2 - 1);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+                map.put(treeNode.right, map.get(treeNode) * 2);
+            }
+        }
+        res = Math.max(res, end - start + 1);
+    }
+    return res;
+}

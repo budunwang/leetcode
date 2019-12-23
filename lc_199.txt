@@ -1,0 +1,25 @@
+199.Binary Tree Right Side View
+public List<Integer> rightSideView(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    if (root == null) {
+        return list;
+    }
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    while (queue.size() != 0) {
+        int length = queue.size();
+        for (int i = 0; i < length; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+            if (i == length - 1) {
+                list.add(treeNode.val);
+            }
+        }
+    }
+    return list;
+}

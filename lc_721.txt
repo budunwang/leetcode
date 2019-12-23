@@ -1,0 +1,56 @@
+721.Accounts Merge
+public List<List<String>> accountsMerge(List<List<String>> accounts) {
+    List<List<String>> res = new ArrayList<List<String>>();
+    Map<String, List<Integer>> mMap = new HashMap<String, List<Integer>>();
+    Map<Integer, List<String>> aMap = new HashMap<Integer, List<String>>();
+    for (int i = 0; i < accounts.size(); i++) {
+        List<String> mails = accounts.get(i);
+        List<String> list = new ArrayList<String>();
+        for (int j = 1; j < mails.size(); j++) {
+            String mail = mails.get(j);
+            if (!mMap.containsKey(mail)) {
+                mMap.put(mail, new ArrayList<Integer>());
+            }
+            mMap.get(mail).add(i);
+            list.add(mail);
+        }
+        aMap.put(i, list);
+    }
+    int[] visited = new int[accounts.size()];
+    List<Integer> circle = new ArrayList<Integer>();
+    for (int i = 0; i < accounts.size(); i++) {
+        if (visited[i] == 0) {
+            dfs(mMap, aMap, visited, i, circle);
+            Set<String> set = new HashSet<String>();
+            for (int account : circle) {
+                for (String mail : aMap.get(account)) {
+                    set.add(mail);
+                }
+            }
+            List<String> list = new ArrayList<String>(set);
+            Collections.sort(list);
+            list.add(0, accounts.get(i).get(0));
+            res.add(list);
+            circle = new ArrayList<Integer>();
+        }
+    }
+    return res;
+}
+
+public void dfs(Map<String, List<Integer>> mMap, Map<Integer, List<String>> aMap, int[] visited, int index, List<Integer> circle) {
+    if (visited[index] == 1) {
+        return;
+    }
+    visited[index] = 1;
+    circle.add(index);
+    List<String> mails = aMap.get(index);
+    for (String mail : mails) {
+        List<Integer> list = mMap.get(mail);
+        for (int i : list) {
+            if (i == index) {
+                continue;
+            }
+            dfs(mMap, aMap, visited, i, circle);
+        }
+    }
+}

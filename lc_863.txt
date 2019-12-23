@@ -1,0 +1,44 @@
+863.All Nodes Distance K in Binary Tree
+tree to graph
+bfs graph
+
+public Map<Integer, List<Integer>> map;
+
+public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+    map = new HashMap<Integer, List<Integer>>(); 
+    dfs(root);
+    Queue<Integer> queue = new LinkedList<Integer>();
+    Set<Integer> visited = new HashSet<Integer>();
+    queue.add(target.val);
+    visited.add(target.val);
+    int level = 0;
+    while (level != K) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            List<Integer> list = map.get(queue.poll());
+            for (int num : list) {
+                if (!visited.contains(num)) {
+                    queue.add(num);
+                    visited.add(num);
+                }
+            }
+        }
+        level++;
+    }
+    return new ArrayList(queue);
+}
+
+public void dfs(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    if (root.left != null) {
+        dfs(root.left);
+        list.add(root.left.val);
+        map.get(root.left.val).add(root.val);
+    }
+    if (root.right != null) {
+        dfs(root.right);
+        list.add(root.right.val);
+        map.get(root.right.val).add(root.val);
+    }
+    map.put(root.val, list);
+}

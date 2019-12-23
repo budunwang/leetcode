@@ -1,0 +1,17 @@
+1233.Remove Sub-Folders from the Filesystem
+sort and search
+public List<String> removeSubfolders(String[] folder) {
+    List<String> res = new ArrayList<String>();
+    Arrays.sort(folder);
+    for (String str : folder) {
+        if (res.size() == 0) {
+            res.add(str);
+        } else {
+            String cur = res.get(res.size() - 1) + "/";
+            if (str.indexOf(cur) == -1) {
+                res.add(str);
+            }
+        }
+    }
+    return res;
+}

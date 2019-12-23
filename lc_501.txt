@@ -1,0 +1,39 @@
+501.Find Mode in Binary Search Tree
+public List<Integer> list;
+public int count;
+public int max;
+public int last;
+
+public int[] findMode(TreeNode root) {
+    if (root == null) {
+        return new int[0];
+    }
+    list = new ArrayList<Integer>();
+    count = 0;
+    max = 0;
+    last = root.val;
+    dfs(root);
+    int[] res = new int[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+        res[i] = list.get(i);
+    }
+    return res;
+}
+
+public void dfs(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    dfs(root.left);
+    count = root.val == last ? count + 1 : 1;
+    if (count == max) {
+        list.add(root.val);
+    }
+    if (count > max) {
+        list = new ArrayList<Integer>();
+        list.add(root.val);
+    }
+    max = Math.max(max, count);
+    last = root.val;
+    dfs(root.right);
+}

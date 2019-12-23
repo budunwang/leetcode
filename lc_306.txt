@@ -1,0 +1,48 @@
+306.Additive Number
+842
+public boolean isAdditiveNumber(String num) {
+    int length = num.length();
+    for (int i = 1; i <= length / 2; i++) {
+        String s1 = num.substring(0, i);
+        Long n1 = Long.valueOf(s1);
+        if ((s1.length() != 1 && s1.charAt(0) == '0') || (n1 > Long.MAX_VALUE)) {
+            break;
+        }
+        for (int j = i + 1; j < length; j++) {
+            String s2 = num.substring(i, j);
+            Long n2 = Long.valueOf(s2);
+            if ((s2.length() != 1 && s2.charAt(0) == '0') || (n2 > Long.MAX_VALUE)) {
+                break;
+            }
+            List<Long> dummy = new ArrayList<Long>();
+            dummy.add(n1);
+            dummy.add(n2);
+            if (dfs(num, j, n1, n2, dummy)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+public boolean dfs(String num, int index, Long a, Long b, List<Long> dummy) {
+    int length = num.length();
+    if (index == length) {
+        return true;
+    }
+    for (int i = index + 1; i <= length; i++) {
+        String s = num.substring(index, i);
+        Long n = Long.parseLong(s);
+        if ((s.length() != 1 && s.charAt(0) == '0') || (n > Long.MAX_VALUE)) {
+            break;
+        }
+        if (n == a + b) {
+            dummy.add(n);
+            if (dfs(num, i, b, a + b, dummy)) {
+                return true;   
+            }
+            dummy.remove(dummy.size() - 1);
+        }
+    }
+    return false;
+}

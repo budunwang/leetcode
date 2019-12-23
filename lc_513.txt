@@ -1,0 +1,22 @@
+513.Find Bottom Left Tree Value
+public int findBottomLeftValue(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    int res = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+            if (i == 0) {
+                res = treeNode.val;
+            }
+        }
+    }
+    return res;
+}

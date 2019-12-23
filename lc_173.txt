@@ -1,0 +1,26 @@
+173.Binary Search Tree Iterator
+public Stack<TreeNode> stack;
+
+public BSTIterator(TreeNode root) {
+    stack = new Stack<TreeNode>();
+    inorder(root);
+}
+
+/** @return the next smallest number */
+public int next() {
+    TreeNode treeNode = stack.pop();
+    inorder(treeNode.right);
+    return treeNode.val;
+}
+
+/** @return whether we have a next smallest number */
+public boolean hasNext() {
+    return !stack.isEmpty();
+}
+
+public void inorder(TreeNode root) {
+    while(root != null) {
+        stack.push(root);
+        root = root.left;
+    }
+}

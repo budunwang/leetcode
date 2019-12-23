@@ -1,0 +1,25 @@
+1145.Binary Tree Coloring Game
+choose one node to block player1 from parent node, left children and right children
+if children of the selected node is larger than half, it will win.
+dfs count three nodes children
+
+public int p1_left;
+public int p1_right;
+public boolean btreeGameWinningMove(TreeNode root, int n, int x) {
+    dfs(root, x);
+    int parent = n - p1_left - p1_right - 1;
+    return Math.max(Math.max(p1_left, p1_right), parent) > n / 2;
+}
+
+public int dfs(TreeNode root, int x) {
+    if (root == null) {
+        return 0; 
+    }
+    int left = dfs(root.left, x);
+    int right = dfs(root.right, x);
+    if (root.val == x) {
+        p1_left = left;
+        p1_right = right;
+    }
+    return left + right + 1;
+}

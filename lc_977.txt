@@ -1,0 +1,20 @@
+977.Squares of a Sorted Array
+two pointer
+public int[] sortedSquares(int[] A) {
+    int length = A.length;
+    int[] res = new int[length];
+    int left = 0;
+    int right = length - 1;
+    for (int i = length - 1; i >= 0; i--) {
+        int l = Math.abs(A[left]);
+        int r = Math.abs(A[right]);
+        if (l > r) {
+            res[i] = l * l;
+            left++;
+        } else {
+            res[i] = r * r;
+            right--;
+        }
+    }
+    return res;
+}

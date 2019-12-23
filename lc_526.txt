@@ -1,0 +1,19 @@
+526.Beautiful Arrangement
+public int countArrangement(int N) {
+    return dfs(N, 1, new int[N + 1]);
+}
+
+public int dfs(int N, int index, int[] visited) {
+    if (index > N) {
+        return 1;
+    }
+    int sum = 0;
+    for (int i = 1; i <= N; i++) {
+        if ((i % index == 0 || index % i == 0) && visited[i] == 0) {
+            visited[i] = 1;
+            sum += dfs(N, index + 1, visited);
+            visited[i] = 0;
+        }
+    }
+    return sum;
+}

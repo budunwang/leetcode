@@ -1,0 +1,39 @@
+1292.Maximum Side Length of a Square with Sum Less than or Equal to Threshold
+store as sum matrix and binary search to find floor key
+public int maxSideLength(int[][] mat, int threshold) {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[][] dp = new int[row + 1][col + 1];
+    for (int i = 1; i <= row; i++) {
+        for (int j = 1; j <= col; j++) {
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + mat[i - 1][j - 1];
+        }            
+    }
+    int res = 0;
+    int left = 0;
+    int right = Math.min(row, col);
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (isValid(mat, dp, mid, threshold)) {
+            res = mid;
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return res;
+}
+
+public boolean isValid(int[][] mat, int[][] dp, int square, int threshold) {
+    int row = mat.length;
+    int col = mat[0].length;
+    for (int i = square; i <= row; i++) {
+        for (int j = square; j <= col; j++) {
+            int sum = dp[i][j] - dp[i][j - square] - dp[i - square][j] + dp[i - square][j - square];
+            if (sum <= threshold) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

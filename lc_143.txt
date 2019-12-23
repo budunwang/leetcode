@@ -1,0 +1,40 @@
+143.Reorder List
+三个步骤。
+1.get mid point
+2.reverse second part
+3.order by first part and second part
+public void reorderList(ListNode head) {
+    if (head == null || head.next == null) {
+        return;
+    }
+    
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+
+    ListNode slow = dummy;
+    ListNode fast = dummy;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    ListNode mid = slow;
+    slow = slow.next;
+    ListNode midhead = slow;
+    while (slow.next != null) {
+        ListNode tmp = slow.next;
+        slow.next = slow.next.next;
+        tmp.next = midhead;
+        midhead = tmp;
+    }
+    mid.next = midhead;
+
+    ListNode newhead = dummy.next;
+    while (newhead != mid) {
+        mid.next = midhead.next;
+        midhead.next = newhead.next;
+        newhead.next = midhead;
+        newhead = midhead.next;
+        midhead = mid.next;
+    }
+}

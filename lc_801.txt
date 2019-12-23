@@ -1,0 +1,21 @@
+801.Minimum Swaps To Make Sequences Increasing
+public int minSwap(int[] A, int[] B) {
+    int length = A.length;
+    int[] ns = new int[length];
+    int[] s = new int[length];
+    ns[0] = 0;
+    s[0] = 1;
+    for (int i = 1; i < length; i++) {
+        ns[i] = Integer.MAX_VALUE;
+        s[i] = Integer.MAX_VALUE;
+        if (A[i - 1] < A[i] && B[i - 1] < B[i]) {
+            ns[i] = ns[i - 1];
+            s[i] = s[i - 1] + 1;
+        }
+        if (A[i - 1] < B[i] && B[i - 1] < A[i]) {
+            ns[i] = Math.min(ns[i], s[i - 1]);
+            s[i] = Math.min(ns[i - 1] + 1, s[i]);
+        }
+    }
+    return Math.min(ns[length - 1], s[length - 1]);
+}

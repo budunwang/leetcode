@@ -1,0 +1,44 @@
+947.Most Stones Removed with Same Row or Column
+stones belong to same row or column is a union
+find total union number
+547
+721
+
+public int removeStones(int[][] stones) {
+    List<List<int[]>> row = new ArrayList<List<int[]>>();
+    List<List<int[]>> col = new ArrayList<List<int[]>>();
+    for (int i = 0; i < 10000; i++) {
+        row.add(new ArrayList<int[]>());
+        col.add(new ArrayList<int[]>());
+    }
+    for (int[] stone : stones) {
+        int i = stone[0];
+        int j = stone[1];
+        row.get(i).add(stone);
+        col.get(j).add(stone);
+    }
+    Set<int[]> visited = new HashSet<int[]>();
+    int res = 0;
+    for (int[] stone : stones) {
+        if (!visited.contains(stone)) {
+            res++;
+            dfs(row, col, visited, stone);
+        }
+    }
+    return stones.length - res;
+}
+
+public void dfs(List<List<int[]>> row, List<List<int[]>> col, Set<int[]> visited, int[] stone) {
+    int i = stone[0];
+    int j = stone[1];
+    if (visited.contains(stone)) {
+        return;
+    }
+    visited.add(stone);
+    for (int[] arr : row.get(i)) {
+        dfs(row, col, visited, arr);
+    }
+    for (int[] arr : col.get(j)) {
+        dfs(row, col, visited, arr);
+    }
+}

@@ -1,0 +1,27 @@
+1222.Queens That Can Attack the King
+public List<List<Integer>> queensAttacktheKing(int[][] queens, int[] king) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    int[][] dir = new int[][] {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+    for (int i = 0; i < 8; i++) {
+        int x = king[0];
+        int y = king[1];
+        while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+            x += dir[i][0];
+            y += dir[i][1];
+            if (contains(queens, x, y)) {
+                res.add(Arrays.asList(x, y));
+                break;
+            }
+        }
+    }
+    return res;
+}
+
+public boolean contains(int[][] queens, int x, int y) {
+    for (int[] queen : queens) {
+        if (queen[0] == x && queen[1] == y) {
+            return true;
+        }
+    }
+    return false;
+}

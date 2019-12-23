@@ -1,0 +1,35 @@
+486.Predict the Winner
+877
+1.dfs
+public boolean PredictTheWinner(int[] nums) {
+    return dfs(nums, 0, nums.length - 1) >= 0;
+}
+
+public int dfs(int[] nums, int start, int end) {
+    if (start == end) {
+        return nums[start];
+    }
+    int left = nums[start] - dfs(nums, start + 1, end);
+    int right = nums[end] - dfs(nums, start, end - 1);
+    return Math.max(left, right);
+}
+
+2.dfs + memo
+public boolean PredictTheWinner(int[] nums) {
+    int length = nums.length;
+    int[][] m = new int[length][length];
+    return dfs(nums, 0, nums.length - 1, m) >= 0;
+}
+
+public int dfs(int[] nums, int start, int end, int[][] m) {
+    if (m[start][end] != 0) {
+        return m[start][end];
+    }
+    if (start == end) {
+        return nums[start];
+    }
+    int left = nums[start] - dfs(nums, start + 1, end, m);
+    int right = nums[end] - dfs(nums, start, end - 1, m);
+    m[start][end] = Math.max(left, right);
+    return m[start][end];
+}

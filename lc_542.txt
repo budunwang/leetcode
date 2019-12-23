@@ -1,0 +1,55 @@
+542.01 Matrix
+mark non-boundary 1
+dfs from boundary 1
+
+public int[][] updateMatrix(int[][] matrix) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            checkDis(matrix, i, j);
+        }
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (matrix[i][j] == 1) {
+                dfs(matrix, i, j, 1);
+            }
+        }
+    }
+    return matrix;
+}
+
+public void dfs(int[][] matrix, int i, int j, int dis) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (matrix[i][j] < dis) {
+        return;
+    }
+    matrix[i][j] = dis;
+    dfs(matrix, i - 1, j, dis + 1);
+    dfs(matrix, i, j - 1, dis + 1);
+    dfs(matrix, i + 1, j, dis + 1);
+    dfs(matrix, i, j + 1, dis + 1);
+}
+
+public void checkDis(int[][] matrix, int i, int j) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (matrix[i][j] == 0) {
+        return;
+    }
+    boolean up = i > 0 && matrix[i - 1][j] == 0;
+    boolean down = i < row - 1 && matrix[i + 1][j] == 0;
+    boolean left = j > 0 && matrix[i][j - 1] == 0;
+    boolean right = j < col - 1 && matrix[i][j + 1] == 0;
+    if (!up && !down && !left && !right) {
+        matrix[i][j] = Integer.MAX_VALUE;
+    }
+}

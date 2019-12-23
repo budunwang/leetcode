@@ -1,0 +1,29 @@
+1114.Print in Order
+private volatile boolean hasFirst;
+private volatile boolean hasSecond;
+
+public Foo() {
+    hasFirst = false;
+    hasSecond = false;
+}
+
+public void first(Runnable printFirst) throws InterruptedException { 
+    // printFirst.run() outputs "first". Do not change or remove this line.
+    printFirst.run();
+    hasFirst = true;
+}
+
+public void second(Runnable printSecond) throws InterruptedException {
+    while (!hasFirst) {
+    }
+    // printSecond.run() outputs "second". Do not change or remove this line.
+    printSecond.run();
+    hasSecond = true;
+}
+
+public void third(Runnable printThird) throws InterruptedException {
+    while (!hasSecond) {
+    }
+    // printThird.run() outputs "third". Do not change or remove this line.
+    printThird.run();
+}

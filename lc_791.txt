@@ -1,0 +1,23 @@
+791.Custom Sort String
+1122
+public String customSortString(String S, String T) {
+    StringBuilder sb = new StringBuilder();
+    int[] arr = new int[26];
+    for (char c : T.toCharArray()) {
+        arr[c - 'a']++;
+    }
+    for (char c : S.toCharArray()) {
+        for (int i = 0; i < arr[c - 'a']; i++) {
+            sb.append(c);
+        }
+        arr[c - 'a'] = 0;
+    }
+    for (int i = 0; i < 26; i++) {
+        if (arr[i] != 0) {
+            for (int j = 0; j < arr[i]; j++) {
+                sb.append((char)('a' + i));
+            }
+        }
+    }
+    return sb.toString();
+}

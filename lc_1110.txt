@@ -1,0 +1,87 @@
+1110.Delete Nodes And Return Forest
+How to delete node while add to list
+1.
+public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+    List<TreeNode> list = new ArrayList<TreeNode>();
+    list.add(root);
+    for (int i = 0; i < to_delete.length; i++) {
+        List<TreeNode> cur = new ArrayList<TreeNode>(list);
+        for (TreeNode treeNode : cur) {
+            if (to_delete[i] == treeNode.val) {
+                if (treeNode.left != null) {
+                    list.add(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    list.add(treeNode.right);
+                }
+                list.remove(treeNode);
+                break;
+            }
+            if (dfs(treeNode, to_delete[i], list)) {
+                break;
+            }
+        }
+    }
+    return list;
+}
+
+public Boolean dfs(TreeNode root, int num, List<TreeNode> list) {
+    if (root == null) {
+        return false;
+    }
+    if (root.left != null && root.left.val == num) {
+        TreeNode treeNode = root.left;
+        if (treeNode.left != null) {
+            list.add(treeNode.left);
+        }
+        if (treeNode.right != null) {
+            list.add(treeNode.right);
+        }
+        root.left = null;
+        return true;
+    }
+    if (root.right != null && root.right.val == num) {
+        TreeNode treeNode = root.right;
+        if (treeNode.left != null) {
+            list.add(treeNode.left);
+        }
+        if (treeNode.right != null) {
+            list.add(treeNode.right);
+        }
+        root.right = null;
+        return true;
+    }
+    Boolean left = false;
+    Boolean right = false;
+    if (root.left != null) {
+        left = dfs(root.left, num, list);
+    }
+    if (root.right != null) {
+        right = dfs(root.right, num, list);
+    }
+    return left || right;
+}
+
+2.
+public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+    List<TreeNode> res = new ArrayList<TreeNode>();
+    Set<Integer> set = new HashSet<Integer>();
+    for (int i : to_delete) {
+        set.add(i);
+    }
+    dfs(root, true, res, set);
+    return res;
+}
+
+public TreeNode dfs(TreeNode root, boolean isRoot, List<TreeNode> list, Set<Integer> set) {
+    if (root == null) {
+        return null;
+    }
+    boolean isEqual = set.contains(root.val);
+    if (isRoot && !isEqual) {
+        list.add(root);
+    }
+    root.left = dfs(root.left, isEqual, list, set);
+    root.right = dfs(root.right, isEqual, list, set);
+    return isEqual ? null : root;
+}

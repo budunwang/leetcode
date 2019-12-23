@@ -1,0 +1,25 @@
+424.Longest Repeating Character Replacement
+438
+sliding window length: max char frequency in window + k
+recalculate max char frequency in window when char changes
+public int characterReplacement(String s, int k) {
+    int[] arr = new int[26];
+    int left = 0;
+    int max = 0;
+    int maxChar = 0;
+    for (int right = 0; right < s.length(); right++) {
+        arr[s.charAt(right) - 'A']++;
+        maxChar = Math.max(maxChar, arr[s.charAt(right) - 'A']);
+        while (right - left + 1 - maxChar > k) {
+            arr[s.charAt(left) - 'A']--;
+            left++;
+            int curMaxChar = 0;
+            for (int i = 0; i < 26; i++) {
+                curMaxChar = Math.max(curMaxChar, arr[i]);
+            }
+            maxChar = curMaxChar;
+        }
+        max = Math.max(max, right - left + 1);
+    }
+    return max;
+}

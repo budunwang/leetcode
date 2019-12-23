@@ -1,0 +1,51 @@
+909.Snakes and Ladders
+public int snakesAndLadders(int[][] board) {
+    int row = board.length;
+    int col = board[0].length;
+    Map<Integer, int[]> stepMap = new HashMap<Integer, int[]>();
+    Map<String, Integer> destMap = new HashMap<String, Integer>();
+    for (int i = row - 1; i >= 0; i--) {
+        for (int j = 0; j < col; j++) {
+            if ((row - 1 - i) % 2 == 0) {
+                stepMap.put(col * (row - 1 - i) + j + 1, new int[] { i, j });
+            } else {
+                stepMap.put(col * (row - 1 - i) + col - j, new int[] { i, j });
+            }
+            if (board[i][j] != -1) {
+                destMap.put(i + "-" + j, board[i][j]);
+            }
+        }
+    }
+    Queue<Integer> queue = new LinkedList<Integer>();
+    int[] visited = new int[401];
+    queue.add(1);
+    int level = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int start = queue.poll();
+            if (visited[start] == 1) {
+                continue;
+            }
+            visited[start] = 1;
+            if (start == row * col) {
+                return level;
+            }
+            for (int j = 1; j <= 6; j++) {
+                if (!stepMap.containsKey(start + j)) {
+                    continue;
+                }
+                int[] m = stepMap.get(start + j);
+                int x = m[0];
+                int y = m[1];
+                int nextStep = start + j;
+                if (destMap.containsKey(x + "-" + y)) {
+                    nextStep = destMap.get(x + "-" + y);
+                }
+                queue.add(nextStep);
+            }
+        }
+        level++;
+    }
+    return -1;
+}

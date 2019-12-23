@@ -1,0 +1,13 @@
+160.Intersection of Two Linked Lists
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    if (headA == null || headB == null) {
+        return null;
+    }
+    ListNode n_a = headA;
+    ListNode n_b = headB;
+    while (n_a != n_b) {
+        n_a = n_a == null ? headB : n_a.next;
+        n_b = n_b == null ? headA : n_b.next;
+    }
+    return n_a;
+}

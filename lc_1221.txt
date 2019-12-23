@@ -1,0 +1,19 @@
+1221.Split a String in Balanced Strings
+public int balancedStringSplit(String s) {
+    int res = 0;
+    int n_L = 0;
+    int n_R = 0;
+    for (char c : s.toCharArray()) {
+        if (c == 'L') {
+            n_L++;
+        } else {
+            n_R++;
+        }
+        if (n_L == n_R) {
+            res++;
+            n_L = 0;
+            n_R = 0;
+        }
+    }
+    return res;
+}

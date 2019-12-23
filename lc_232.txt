@@ -1,0 +1,43 @@
+232.Implement Queue using Stacks
+public Stack<Integer> stack;
+public int peek;
+
+/** Initialize your data structure here. */
+public MyQueue() {
+    stack = new Stack<Integer>();
+    peek = 0;
+}
+
+/** Push element x to the back of queue. */
+public void push(int x) {
+    if (stack.empty()) {
+        peek = x;
+    }
+    stack.push(x);
+}
+
+/** Removes the element from in front of queue and returns that element. */
+public int pop() {
+    Stack<Integer> dummy = new Stack<Integer>();
+    while(!stack.empty()) {
+        dummy.push(stack.pop());
+    }
+    int num = dummy.pop();
+    if (!dummy.empty()) {
+        peek = dummy.peek();            
+    }
+    while(!dummy.empty()) {
+        stack.push(dummy.pop());
+    }
+    return num;
+}
+
+/** Get the front element. */
+public int peek() {
+    return peek;
+}
+
+/** Returns whether the queue is empty. */
+public boolean empty() {
+    return stack.empty();
+}

@@ -1,0 +1,15 @@
+998.Maximum Binary Tree II
+654
+val is always at root right
+public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+    if (root == null) {
+        return new TreeNode(val);
+    }
+    if (val > root.val) {
+        TreeNode treeNode = new TreeNode(val);
+        treeNode.left = root;
+        return treeNode;
+    }
+    root.right = insertIntoMaxTree(root.right, val);
+    return root;
+}

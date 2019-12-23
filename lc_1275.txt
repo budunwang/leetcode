@@ -1,0 +1,26 @@
+1275.Find Winner on a Tic Tac Toe Game
+winner:
+row * 3 or col * 3 or line_45 * 1 or line_135 * 1
+public String tictactoe(int[][] moves) {
+    int[][] row = new int[2][3];
+    int[][] col = new int[2][3];
+    int[] line_45 = new int[2];
+    int[] line_135 = new int[2];
+    for (int i = 0; i < moves.length; i++) {
+        int r = moves[i][0];
+        int c = moves[i][1];
+        int player = i % 2;
+        row[player][r]++;
+        col[player][c]++;
+        if (r + c == 2) {
+            line_45[player]++;
+        }
+        if (r == c) {
+            line_135[player]++;
+        }
+        if (row[player][r] == 3 || col[player][c] == 3 || line_45[player] == 3 || line_135[player] == 3) {
+            return player == 0 ? "A" : "B";
+        }
+    }
+    return moves.length == 9 ? "Draw" : "Pending";
+}

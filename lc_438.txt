@@ -1,0 +1,30 @@
+438.Find All Anagrams in a String
+Sliding window
+public List<Integer> findAnagrams(String s, String p) {
+    List<Integer> res = new ArrayList<Integer>();
+    int[] map_p = new int[26];
+    int[] map_s = new int[26];
+    for (char c : p.toCharArray()) {
+        map_p[c - 'a']++;
+    }
+    int length_p = p.length();
+    for (int i = 0; i < s.length(); i++) {
+        map_s[s.charAt(i) - 'a']++;
+        if (i >= length_p) {
+            map_s[s.charAt(i - length_p) - 'a']--;
+        }
+        if (isEqual(map_s, map_p)) {
+            res.add(i - length_p + 1);
+        }
+    }
+    return res;
+}    
+
+public boolean isEqual(int[] a, int[] b) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -1,0 +1,20 @@
+1104.Path In Zigzag Labelled Binary Tree
+public List<Integer> pathInZigZagTree(int label) {
+    List<Integer> list = new ArrayList<Integer>();
+    int level = 1;
+    while (Math.pow(2, level) - 1 < label) {
+        level++;
+    }
+    getUpNum(label, level, list);
+    return list;
+}
+
+public void getUpNum(int label, int level, List<Integer> list) {
+    list.add(0, label);
+    if (label == 1) {
+        return;
+    }
+    int length = (int)Math.pow(2, level - 2);
+    int upNum = length + length - 1 - label / 2 % length;
+    getUpNum(upNum, level - 1, list);
+}

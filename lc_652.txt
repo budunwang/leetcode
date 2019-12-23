@@ -1,0 +1,29 @@
+652.Find Duplicate Subtrees
+serialize treeNode and compare
+
+Set<String> set_1;
+Set<String> set_2;
+List<TreeNode> list;
+
+public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+    set_1 = new HashSet<String>();
+    set_2 = new HashSet<String>();
+    list = new ArrayList<TreeNode>();
+    dfs(root);
+    return list;
+}
+
+public String dfs(TreeNode root) {
+    if (root == null) {
+        return "#";
+    }
+    String left = dfs(root.left);
+    String right = dfs(root.right);
+    String str = root.val + left + right;
+    if (!set_1.add(str)) {
+        if (set_2.add(str)) {
+            list.add(root);
+        }
+    }
+    return str;
+}

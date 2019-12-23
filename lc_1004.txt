@@ -1,0 +1,17 @@
+1004.Max Consecutive Ones III
+424
+sliding window length: count of 1 + K
+public int longestOnes(int[] A, int K) {
+    int max = 0;
+    int left = 0;
+    int count_1 = 0;
+    for (int right = 0; right < A.length; right++) {
+        count_1 += A[right];
+        while (right - left + 1 - count_1 > K) {
+            count_1 -= A[left];
+            left++;
+        }
+        max = Math.max(max, right - left + 1);
+    }
+    return max;
+}

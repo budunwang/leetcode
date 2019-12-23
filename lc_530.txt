@@ -1,0 +1,25 @@
+530.Minimum Absolute Difference in BST
+783
+inorder
+
+public int res;
+public TreeNode last;
+
+public int getMinimumDifference(TreeNode root) {
+    res = Integer.MAX_VALUE;
+    dfs(root);
+    return res;
+}
+
+public void dfs(TreeNode root) {
+    if (root.left != null) {
+        dfs(root.left);
+    }
+    if (last != null) {
+        res = Math.min(res, root.val - last.val);
+    }
+    last = root;
+    if (root.right != null) {
+        dfs(root.right);
+    }
+}   

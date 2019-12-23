@@ -1,0 +1,39 @@
+1020.Number of Enclaves
+public int numEnclaves(int[][] A) {
+    int row = A.length;
+    int col = A[0].length;
+    int res = 0;
+    for (int i = 0; i < col; i++) {
+        dfs(A, 0, i);
+    }
+    for (int i = 0; i < col; i++) {
+        dfs(A, row - 1, i);
+    }
+    for (int i = 0; i < row; i++) {
+        dfs(A, i, 0);
+    }
+    for (int i = 0; i < col; i++) {
+        dfs(A, i, col - 1);
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (A[i][j] == 1) {
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+public void dfs(int[][] A, int i, int j) {
+    int col = A[0].length;
+    int row = A.length;
+    if (i < 0 || i >= row || j < 0 || j >= col || A[i][j] != 1) {
+        return;
+    }
+    A[i][j] = -1;
+    dfs(A, i - 1, j);
+    dfs(A, i + 1, j);
+    dfs(A, i, j - 1);
+    dfs(A, i, j + 1);
+}

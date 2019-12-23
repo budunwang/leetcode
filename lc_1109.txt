@@ -1,0 +1,38 @@
+1109.Corporate Flight Bookings
+1.
+public int[] corpFlightBookings(int[][] bookings, int n) {
+    int[] add = new int[n];
+    int[] minus = new int[n + 1];
+    for (int i = 0; i < bookings.length; i++) {
+        add[bookings[i][0] - 1] += bookings[i][2];
+        minus[bookings[i][1]] += bookings[i][2];
+    }
+    int total_add = 0;
+    int total_minus = 0;
+    int[] res = new int[n];
+    for (int i = 0; i < n; i++) {
+        if (add[i] != 0) {
+            total_add += add[i];
+        }
+        if (minus[i] != 0) {
+            total_minus += minus[i];
+        }
+        res[i] = total_add - total_minus;
+    }
+    return res;
+}
+
+2.
+public int[] corpFlightBookings(int[][] bookings, int n) {
+    int[] arr = new int[n + 1];
+    for (int i = 0; i < bookings.length; i++) {
+        arr[bookings[i][0] - 1] += bookings[i][2];
+        arr[bookings[i][1]] -= bookings[i][2];
+    }
+    int[] res = new int[n];
+    res[0] = arr[0];
+    for (int i = 1; i < n; i++) {
+        res[i] = res[i - 1] + arr[i];
+    }
+    return res;
+}

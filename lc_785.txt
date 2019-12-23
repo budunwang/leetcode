@@ -1,0 +1,25 @@
+785.Is Graph Bipartite?
+public boolean isBipartite(int[][] graph) {
+    int length = graph.length;
+    int[] mark = new int[graph.length];
+    for (int i = 0; i < length; i++) {
+        if (mark[i] == 0 && !dfs(graph, i, mark, 1)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean dfs(int[][] graph, int index, int[] mark, int color) {
+    if (mark[index] != 0) {
+        return mark[index] != color;
+    }
+    int newColor = color == 1 ? 2 : 1;
+    mark[index] = newColor;
+    for (int node : graph[index]) {
+        if (!dfs(graph, node, mark, newColor)) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -1,0 +1,12 @@
+1128.Number of Equivalent Domino Pairs
+public int numEquivDominoPairs(int[][] dominoes) {
+    int res = 0;
+    int[] map = new int[100];
+    for (int[] dominoe : dominoes ) {
+        int index = dominoe[0] > dominoe[1] ? dominoe[1] * 10 + dominoe[0] : dominoe[0] * 10 + dominoe[1];
+        int num = map[index];
+        res += num;
+        map[index] = num + 1;
+    }
+    return res;
+}

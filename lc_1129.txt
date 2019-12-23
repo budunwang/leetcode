@@ -1,0 +1,72 @@
+1129.Shortest Path with Alternating Colors
+bfs
+next point is selected by edge and color
+need record current color to pick next level point
+
+mark visited node to get rid of circle
+marked by both visited and color
+different color can visit the same node
+only same color cannot visit the same node
+
+public int[] shortestAlternatingPaths(int n, int[][] red_edges, int[][] blue_edges) {
+    ArrayList<Integer>[] red = new ArrayList[n];
+    ArrayList<Integer>[] blue = new ArrayList[n];
+    for (int[] edge : red_edges) {
+        if (red[edge[0]] == null) {
+            red[edge[0]] = new ArrayList<Integer>();
+        }
+        red[edge[0]].add(edge[1]);
+    }
+    for (int[] edge : blue_edges) {
+        if (blue[edge[0]] == null) {
+            blue[edge[0]] = new ArrayList<Integer>();
+        }
+        blue[edge[0]].add(edge[1]);
+    }
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Queue<int[]> queue = new LinkedList<>();
+    queue.add(new int[]{0, 0});
+    int level = 0;
+    // exclude circle
+    int[][] visited = new int[101][3];
+    visited[0] = new int[]{0, 1, 1};
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.remove();
+            int p = arr[0];
+            int c = arr[1];
+            if (visited[p][c] == 1) {
+                continue;
+            }
+            visited[p][c] = 1;
+            // only first level is the shortest path
+            if (res[p] == -1) {
+                res[p] = level;
+            }
+            // current color is red
+            // find in blue
+            if (c == 0 || c == 1) {
+                ArrayList<Integer> list = blue[p];
+                if (list != null) {
+                    for (int num : list) {
+                        queue.add(new int[]{num, 2});
+                    }   
+                }
+            }
+            // current color is blue
+            // find in red
+            if (c == 0 || c == 2) {
+                ArrayList<Integer> list = red[p];
+                if (list != null) {
+                    for (int num : list) {
+                        queue.add(new int[]{num, 1});
+                    }
+                }
+            }
+        }
+        level++;
+    }
+    return res;
+}

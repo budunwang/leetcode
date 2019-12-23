@@ -1,0 +1,56 @@
+300.Longest Increasing Subsequence
+O(n^2)
+public int lengthOfLIS(int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    int length = nums.length;
+    int[] dp = new int[length];
+    dp[0] = 1;
+    int max = 1;
+    for (int i = 1; i < length; i++) {
+        int curMax = 1;
+        for (int j = i - 1; j >= 0; j--) {
+            if (nums[i] > nums[j]) {
+                curMax = Math.max(curMax, dp[j] + 1);
+            }
+        }
+        dp[i] = curMax;
+        max = Math.max(max, curMax);
+    }
+    return max;
+}
+
+O(nlgn)
+public int lengthOfLIS(int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    int length = nums.length;
+    int res = 0;
+    int[] dp = new int[length];
+    for (int i = 0; i < length; i++) {
+        int index = binarySearch(dp, res, nums[i]);
+        dp[index] = nums[i];
+        if (index == res) {
+            res++;
+        }
+    }
+    return res;
+}
+
+public int binarySearch(int[] dp, int end, int num) {
+    int left = 0;
+    int right = end;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (dp[mid] < num) {
+            left = mid + 1;
+        } else if (dp[mid] > num){
+            right = mid; 
+        } else {
+            return mid;
+        }
+    }
+    return left;
+}

@@ -1,0 +1,16 @@
+1043.Partition Array for Maximum Sum
+public int maxSumAfterPartitioning(int[] A, int K) {
+    int[] dp = new int[A.length];
+    for (int i = 0; i < A.length; i++) {
+        int num = 0;
+        for (int j = 0; j < K && j <= i; j++) {
+            num = Math.max(num, A[i - j]);
+            if (i == j) {
+                dp[i] = Math.max(dp[i], num * (j + 1));
+            } else {
+                dp[i] = Math.max(dp[i], num * (j + 1) + dp[i - j - 1]);
+            }
+        }
+    }
+    return dp[A.length - 1];
+}

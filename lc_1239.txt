@@ -1,0 +1,33 @@
+1239.Maximum Length of a Concatenated String with Unique Characters
+public int max;
+
+public int maxLength(List<String> arr) {
+    max = 0;
+    dfs(arr, "", 0);
+    return max;
+}
+
+public void dfs(List<String> arr, String str, int index) {
+    if (index == arr.size()) {
+        return;
+    }
+    for (int i = index; i < arr.size(); i++) {
+        String curStr = str + arr.get(i);
+        if (!isUnique(curStr)) {
+            continue;
+        }
+        max = Math.max(max, curStr.length());
+        dfs(arr, curStr, i + 1);
+    }
+}
+
+public boolean isUnique(String str) {
+    int[] cs = new int[26];
+    for (char c : str.toCharArray()) {
+        cs[c - 'a']++;
+        if (cs[c - 'a'] > 1) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -1,0 +1,10 @@
+151.Reverse Words in a String
+注意合并空格。
+public String reverseWords(String s) {
+    String[] ss = s.trim().split("\\s+");
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < ss.length; i++) {
+        sb.append(ss[ss.length - i - 1] + " ");
+    }
+    return sb.toString().trim();
+}

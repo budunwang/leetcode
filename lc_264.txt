@@ -1,0 +1,25 @@
+264.Ugly Number II
+public int nthUglyNumber(int n) {
+    int[] dp = new int[n];
+    dp[0] = 1;
+    int i_2 = 0;
+    int i_3 = 0;
+    int i_5 = 0;
+    for (int i = 1; i < n; i++) {
+        int num_2 = dp[i_2] * 2;
+        int num_3 = dp[i_3] * 3;
+        int num_5 = dp[i_5] * 5;
+        int min = Math.min(num_2, Math.min(num_3, num_5));
+        if (num_2 == min) {
+            i_2++;
+        }
+        if (num_3 == min) {
+            i_3++;
+        } 
+        if (num_5 == min) {
+            i_5++;
+        }
+        dp[i] = min;
+    }
+    return dp[n - 1];
+}

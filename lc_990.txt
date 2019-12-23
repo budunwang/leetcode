@@ -1,0 +1,59 @@
+990.Satisfiability of Equality Equations
+public List<Set<Character>> list;
+public Set<Character> set;
+public int[] visited;
+
+public boolean equationsPossible(String[] equations) {
+    Map<Character, List<Character>> map = new HashMap<Character, List<Character>>();
+    List<char[]> ne = new ArrayList<char[]>();
+    for (int i = 0; i < 26; i++) {
+        char c = (char)(i + 'a');
+        map.putIfAbsent(c, new ArrayList<Character>());
+        map.get(c).add(c);
+    }
+    for (String equation : equations) {
+        char[] cs = equation.toCharArray();
+        if (cs[1] == '=') {
+            map.get(cs[0]).add(cs[3]);
+            map.get(cs[3]).add(cs[0]);
+        } else {
+            ne.add(new char[] { cs[0], cs[3] });
+        }
+    }
+    list = new ArrayList<Set<Character>>();
+    visited = new int[26];
+    for (Map.Entry<Character, List<Character>> entry : map.entrySet()) {
+        char c = entry.getKey();
+        if (visited[c - 'a'] == 0) {
+            visited[c - 'a'] = 1;
+            set = new HashSet<Character>();
+            set.add(c);
+            dfs(map, c);
+            list.add(set);
+        }   
+    }
+    for (char[] cs : ne) {
+        char c1 = cs[0];
+        char c2 = cs[1];
+        for (Set<Character> sset : list) {
+            if (sset.contains(c1) && sset.contains(c2)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+public void dfs(Map<Character, List<Character>> map, Character c) {
+    if (!map.containsKey(c)) {
+        return;
+    }
+    List<Character> cs = map.get(c);
+    for (Character i : cs) {
+        if (visited[i - 'a'] == 0) {
+            visited[i - 'a'] = 1;
+            set.add(i);
+            dfs(map, i);
+        }
+    }
+}

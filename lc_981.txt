@@ -1,0 +1,25 @@
+981.Time Based Key-Value Store
+public Map<String, Map<Integer, String>> map;
+
+public TimeMap() {
+    map = new HashMap<String, Map<Integer, String>>();
+}
+
+public void set(String key, String value, int timestamp) {
+    if (!map.containsKey(key)) {
+        map.put(key, new TreeMap<Integer, String>());
+    }
+    map.get(key).put(timestamp, value);
+}
+
+public String get(String key, int timestamp) {
+    if (!map.containsKey(key)) {
+        return "";
+    }
+    TreeMap<Integer, String> treeMap = (TreeMap)(map.get(key));
+    Map.Entry<Integer, String> entry = treeMap.floorEntry(timestamp);
+    if (entry == null) {
+        return "";
+    }
+    return entry.getValue();
+}

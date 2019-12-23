@@ -1,0 +1,22 @@
+958.Check Completeness of a Binary Tree
+public boolean isCompleteTree(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    boolean isLast = false;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode == null) {
+                isLast = true;
+            } else {
+                if (isLast) {
+                    return false;
+                }
+                queue.add(treeNode.left);
+                queue.add(treeNode.right);
+            }
+        }
+    }
+    return true;
+}

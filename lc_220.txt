@@ -1,0 +1,22 @@
+220.Contains Duplicate III
+public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    if (k == 0) {
+        return false;
+    }
+    TreeSet<Integer> set = new TreeSet<Integer>();
+    for (int i = 0; i < nums.length; i++) {
+        Integer small = set.floor(nums[i]);
+        Integer large = set.ceiling(nums[i]);
+        if (small != null && (long)nums[i] - (long)small <= t) {
+            return true;
+        }
+        if (large != null && (long)large - (long)nums[i] <= t) {
+            return true;
+        }
+        set.add(nums[i]);
+        if (i - k >= 0) {
+            set.remove(nums[i - k]);
+        }              
+    }
+    return false;
+}

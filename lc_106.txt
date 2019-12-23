@@ -1,0 +1,21 @@
+106.Construct Binary Tree from Inorder and Postorder Traversal
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+    return dfs(inorder, postorder, 0, inorder.length, postorder.length - 1);
+}
+
+public TreeNode dfs(int[] inorder, int[] postorder, int i_i, int i_j, int p_j) {
+    if (i_i >= i_j || p_j >= postorder.length) {
+        return null;
+    }
+    int index = 0;
+    for (int i = i_i; i < i_j; i++) {
+        if (inorder[i] == postorder[p_j]) {
+            index = i;
+            break;
+        }
+    }
+    TreeNode treeNode = new TreeNode(postorder[p_j]);
+    treeNode.left = dfs(inorder, postorder, i_i, index, p_j - i_j + index);
+    treeNode.right = dfs(inorder, postorder, index + 1, i_j, p_j - 1);
+    return treeNode;
+}

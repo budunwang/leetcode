@@ -1,0 +1,12 @@
+1022.Sum of Root To Leaf Binary Numbers
+public int sumRootToLeaf(TreeNode root) {
+    return dfs(root, 0);
+}
+
+public int dfs(TreeNode root, int num) {
+    if (root == null) {
+        return 0;
+    }
+    int cur = num * 2 + root.val;
+    return root.left == root.right ? cur : dfs(root.left, cur) + dfs(root.right, cur);
+}

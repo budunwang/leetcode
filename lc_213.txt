@@ -1,0 +1,27 @@
+213.House Robber II
+与198类似。
+为避免相邻，共两种可能。
+1.0到length - 1
+2.1到length
+求出两者的最大值。
+public int rob(int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    if (nums.length == 1) {
+        return nums[0];
+    }
+    int length = nums.length;
+    return Math.max(helper(nums, 0, length - 1), helper(nums, 1, length));
+}
+
+public int helper(int[] nums, int left, int right) {
+    int first = 0;
+    int second = nums[left];
+    for (int i = left + 1; i < right; i++) {
+        int tmp = second;
+        second = Math.max(second, first + nums[i]);
+        first = tmp;
+    }
+    return second;
+}

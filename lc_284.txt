@@ -1,0 +1,30 @@
+284.Peeking Iterator
+private Iterator<Integer> i;
+private Integer next = null;
+
+public PeekingIterator(Iterator<Integer> iterator) {
+    // initialize any member here.
+    i = iterator;
+    if (i.hasNext()) {
+        next = i.next();            
+    }
+}
+
+// Returns the next element in the iteration without advancing the iterator.
+public Integer peek() {
+    return next;
+}
+
+// hasNext() and next() should behave the same as in the Iterator interface.
+// Override them if needed.
+@Override
+public Integer next() {
+    int tmp = next;
+    next = i.hasNext() ? i.next() : null;
+    return tmp;
+}
+
+@Override
+public boolean hasNext() {
+    return next != null;
+}

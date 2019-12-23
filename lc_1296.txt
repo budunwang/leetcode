@@ -1,0 +1,28 @@
+1296.Divide Array in Sets of K Consecutive Numbers
+public boolean isPossibleDivide(int[] nums, int k) {
+    Arrays.sort(nums);
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int num : nums) {
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        pq.add(entry.getKey());
+    }
+    while (!pq.isEmpty()) {
+        int num = pq.peek();
+        if (map.getOrDefault(num, 0) == 0) {
+            pq.poll();
+            continue;   
+        }
+        for (int i = 0; i < k; i++) {
+            int count = map.getOrDefault(num + i, 0);
+            if (count == 0) {
+                return false;
+            }
+            count--;
+            map.put(num + i, count);
+        }
+    }
+    return true;
+}

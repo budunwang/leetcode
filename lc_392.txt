@@ -1,0 +1,21 @@
+392.Is Subsequence
+public boolean isSubsequence(String s, String t) {
+    char[] ss = s.toCharArray();
+    char[] ts = t.toCharArray();
+    int s_p = 0;
+    int t_p = 0;
+    while (s_p < ss.length) {
+        while (t_p < ts.length) {
+            if (ts[t_p] == ss[s_p]) {
+                t_p++;
+                break;
+            }
+            t_p++;
+        }
+        s_p++;
+        if (t_p == ts.length) {
+            return (s_p == ss.length && ts[t_p - 1] == ss[s_p - 1]);
+        }
+    }
+    return true;
+}

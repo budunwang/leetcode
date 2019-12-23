@@ -1,0 +1,16 @@
+337.House Robber III
+public int rob(TreeNode root) {
+    int[] arr = dfs(root);
+    return Math.max(arr[0], arr[1]);
+}
+
+public int[] dfs(TreeNode root) {
+    if (root == null) {
+        return new int[]{0, 0};
+    }
+    int[] left = dfs(root.left);
+    int[] right = dfs(root.right);
+    int selected = left[0] + right[0] + root.val;
+    int unselected =  Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+    return new int[]{unselected, selected};
+}

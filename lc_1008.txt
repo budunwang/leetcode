@@ -1,0 +1,23 @@
+1008.Construct Binary Search Tree from Preorder Traversal
+preorder traversal tree means the left tree is always built before right tree comes.
+
+public TreeNode bstFromPreorder(int[] preorder) {
+    TreeNode root = null;
+    for (int n : preorder) {
+        root = dfs(root, n);
+    }
+    return root;
+}
+
+public TreeNode dfs(TreeNode root, int n) {
+    if (root == null) {
+        return new TreeNode(n);
+    }
+    if (root.val > n) {
+        root.left = dfs(root.left, n);
+    }
+    if (root.val < n) {
+        root.right = dfs(root.right, n);
+    }
+    return root;
+}

@@ -1,0 +1,33 @@
+1011.Capacity To Ship Packages Within D Days
+非直接的二分法。
+负载量的最小值是数组的最大值，最大值是数组的和。
+所求的负载量所需的天数必然等于D。
+使用二分法比较天数，求出负载量。
+此二分法并非直接比较所求值，而是所求值计算出的间接值。
+public int shipWithinDays(int[] weights, int D) {
+    int left = 0;
+    int right = 0;
+    for (int weight : weights) {
+        left = Math.max(left, weight);
+        right += weight;
+    }
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int cur = 0;
+        int num = 1;
+        // 根据负载量，计算天数
+        for (int weight : weights) {
+            if (cur + weight > mid) {
+                cur = 0;
+                num++;
+            }
+            cur += weight;
+        }
+        if (num > D) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return right;
+}

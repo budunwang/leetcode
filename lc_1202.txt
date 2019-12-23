@@ -1,0 +1,51 @@
+1202.Smallest String With Swaps
+547
+public List<Integer> list;
+public Set<Integer> visited;
+
+public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
+    visited = new HashSet<Integer>();
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (List<Integer> pair : pairs) {
+        int a = pair.get(0);
+        int b = pair.get(1);
+        List<Integer> tmp = map.getOrDefault(a, new ArrayList<Integer>());
+        tmp.add(b);
+        map.put(a, tmp);
+        tmp = map.getOrDefault(b, new ArrayList<Integer>());
+        tmp.add(a);
+        map.put(b, tmp);
+    }
+    List<List<Integer>> circles = new ArrayList<List<Integer>>();
+    for (List<Integer> pair : pairs) {
+        list = new ArrayList<Integer>();
+        dfs(map, pair.get(0));
+        circles.add(list);
+    }
+    char[] cs = s.toCharArray();
+    for (List<Integer> circle : circles) {
+        Collections.sort(circle);
+        List<Character> clist = new ArrayList<Character>();
+        for (int i : circle) {
+            clist.add(s.charAt(i));
+        }
+        Collections.sort(clist);
+        for (int i = 0; i < circle.size(); i++) {
+            cs[circle.get(i)] = clist.get(i);
+        }
+    }
+    return new String(cs);
+}
+
+public void dfs(Map<Integer, List<Integer>> map, int n) {
+    if (visited.contains(n)) {
+        return;
+    }
+    visited.add(n);
+    list.add(n);
+    List<Integer> arr = map.getOrDefault(n, new ArrayList<Integer>());
+    for (int i : arr) {
+        dfs(map, i);
+    }
+    return;
+}

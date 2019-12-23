@@ -1,0 +1,22 @@
+979.Distribute Coins in Binary Tree
+every node need one coin
+so balance to every node is current node coin, minus one coin needed, add left balance and right balance
+balance is positive or negative, to display flow direction
+total steps is the sum of balance without direction
+
+public int res;
+
+public int distributeCoins(TreeNode root) {
+    dfs(root);
+    return res;
+}
+
+public int dfs(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = dfs(root.left);
+    int right = dfs(root.right);
+    res += Math.abs(left) + Math.abs(right);
+    return root.val - 1 + left + right;
+}

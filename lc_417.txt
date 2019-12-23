@@ -1,0 +1,50 @@
+417.Pacific Atlantic Water Flow
+130
+public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+    if (matrix.length == 0) {
+        return new ArrayList<List<Integer>>();
+    }
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int[][] p = new int[row][col];
+    int[][] a = new int[row][col];
+    for (int i = 0; i < row; i++) {
+        dfs(matrix, i, 0, Integer.MIN_VALUE, p);
+        dfs(matrix, i, col - 1, Integer.MIN_VALUE, a);
+    }
+    for (int j = 0; j < col; j++) {
+        dfs(matrix, 0, j, Integer.MIN_VALUE, p);
+        dfs(matrix, row - 1, j, Integer.MIN_VALUE, a);
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (a[i][j] == 1 && p[i][j] == 1) {
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(i);
+                list.add(j);
+                res.add(list);
+            }
+        }
+    }
+    return res;
+}
+
+public void dfs(int[][] matrix, int i, int j, int num, int[][] m) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (matrix[i][j] < num) {
+        return;
+    }
+    if (m[i][j] == 1) {
+        return;
+    }
+    m[i][j] = 1;
+    dfs(matrix, i - 1, j, matrix[i][j], m);
+    dfs(matrix, i + 1, j, matrix[i][j], m);
+    dfs(matrix, i, j - 1, matrix[i][j], m);
+    dfs(matrix, i, j + 1, matrix[i][j], m);
+}

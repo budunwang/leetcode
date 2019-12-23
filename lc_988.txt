@@ -1,0 +1,29 @@
+988.Smallest String Starting From Leaf
+only comparing the leave value is wrong
+need compare the complete string value
+so pass the current string value to dfs
+
+public String smallestFromLeaf(TreeNode root) {
+    String res = dfs(root, "");
+    return res;
+}
+
+public String dfs(TreeNode root, String str) {
+    if (root == null) {
+        return "";
+    }
+    String cur = (char)(root.val + 'a') + str;
+    String left = dfs(root.left, cur);
+    String right = dfs(root.right, cur);
+    String res = "";
+    if (left != "" && right != "") {
+        res = left.compareTo(right) <= 0 ? left : right;
+    } else if (left == "" && right == "") {
+        return cur;
+    } else if (left != "") {
+        return left;
+    } else {
+        return right;
+    }
+    return res;
+}

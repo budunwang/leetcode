@@ -1,0 +1,43 @@
+1226.The Dining Philosophers
+public boolean[] forks;
+public Object lock;
+
+public DiningPhilosophers() {
+    forks = new boolean[5];
+    lock = new Object();
+}
+
+// call the run() method of any runnable to execute its code
+public void wantsToEat(int philosopher,
+                       Runnable pickLeftFork,
+                       Runnable pickRightFork,
+                       Runnable eat,
+                       Runnable putLeftFork,
+                       Runnable putRightFork) throws InterruptedException {
+    int leftIndex = philosopher == 0 ? 4 : philosopher - 1;
+    int rightIndex = philosopher;
+    while (true) {
+        boolean isValid = false;
+        synchronized (lock) {
+            if (!forks[leftIndex] && !forks[rightIndex]) {
+                forks[leftIndex] = true;
+                forks[rightIndex] = true;
+                isValid = true;
+            }
+        }
+        if (isValid) {
+            pickLeftFork.run();
+            pickRightFork.run();
+            eat.run();
+            putLeftFork.run();
+            putRightFork.run();
+            synchronized (lock) {
+                forks[leftIndex] = false;
+                forks[rightIndex] = false;
+            }
+            break;
+        } else {
+            Thread.sleep(1);
+        }
+    }
+}

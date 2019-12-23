@@ -1,0 +1,25 @@
+1027.Longest Arithmetic Sequence
+dp
+dp[i][dp[i] - dp[j]] = dp[j][dp[i] - dp[j]] + 1;
+注意dp[i] - dp[j] < 0
+
+public int longestArithSeqLength(int[] A) {
+    int numMax = Integer.MIN_VALUE;
+    int numMin = Integer.MAX_VALUE;
+    for (int a : A) {
+        numMax = Math.max(numMax, a);
+        numMin = Math.min(numMin, a);
+    }
+    int extra = numMax - numMin;
+    int max = 0;
+    int length = A.length;
+    int[][] dp = new int[length][10000 + extra];
+    for (int i = 1; i < length; i++) {
+        for (int j = 0; j < i; j++) {
+            int diff = A[i] - A[j] + extra;
+            dp[i][diff] = dp[j][diff] + 1;
+            max = Math.max(dp[i][diff], max);
+        }
+    }
+    return max + 1;
+}

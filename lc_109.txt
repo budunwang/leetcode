@@ -1,0 +1,23 @@
+109.Convert Sorted List to Binary Search Tree
+public TreeNode sortedListToBST(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    return dfs(head, null);
+}
+
+public TreeNode dfs(ListNode head, ListNode tail) {
+    if (head == tail) {
+        return null;
+    }
+    ListNode fast = head;
+    ListNode slow = head;
+    while (fast != tail && fast.next != tail) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    TreeNode treeNode = new TreeNode(slow.val);
+    treeNode.left = dfs(head, slow);
+    treeNode.right = dfs(slow.next, tail);
+    return treeNode;
+}

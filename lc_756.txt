@@ -1,0 +1,44 @@
+756.Pyramid Transition Matrix
+public boolean pyramidTransition(String bottom, List<String> allowed) {
+    Map<String, List<String>> map = new HashMap<String, List<String>>();
+    for (String str : allowed) {
+        String target = str.substring(0, 2);
+        String next = str.substring(2, 3);
+        if (!map.containsKey(target)) {
+            map.put(target, new ArrayList<String>());
+        }
+        map.get(target).add(next);
+    }
+    return isValid(bottom, map);
+}
+    
+public boolean isValid(String bottom, Map<String, List<String>> map) {
+    if (bottom.length() == 1) {
+        return true;
+    }
+    List<String> list = new ArrayList<String>();
+    getList(bottom, map, 0, list, new StringBuilder());
+    for (String str : list) {
+        if (isValid(str, map)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public void getList(String bottom, Map<String, List<String>> map, int index, List<String> list, StringBuilder sb) {
+    if (index == bottom.length() - 1) {
+        list.add(sb.toString());
+        return;
+    }
+    String target = bottom.substring(index, index + 2);
+    if (!map.containsKey(target)) {
+        return;
+    }
+    List<String> dict = map.get(target);
+    for (String str : dict) {
+        sb.append(str);
+        getList(bottom, map, index + 1, list, sb);
+        sb.deleteCharAt(sb.length() - 1);
+    }
+}

@@ -1,0 +1,33 @@
+332.Reconstruct Itinerary
+Eulerian path
+Not all paths can go to the end.
+Greedy is wrong.
+dfs 
+
+public List<String> res;
+
+public List<String> findItinerary(List<List<String>> tickets) {
+    Map<String, PriorityQueue<String>> map = new HashMap<String, PriorityQueue<String>>();
+    for (List<String> list : tickets) {
+        String start = list.get(0);
+        String end = list.get(1);
+        if (map.containsKey(start)) {
+            map.get(start).add(end);
+        } else {
+            PriorityQueue<String> queue = new PriorityQueue<String>();
+            queue.add(end);
+            map.put(start, queue);
+        }
+    }
+    res = new ArrayList<String>();
+    dfs("JFK", map);
+    return res;
+}
+
+public void dfs(String str, Map<String, PriorityQueue<String>> map) {
+    PriorityQueue<String> queue = map.get(str);
+    while (queue != null && queue.peek() != null) {
+        dfs(queue.poll(), map);
+    }
+    res.add(0, str);
+}

@@ -1,0 +1,4 @@
+1025.Divisor Game
+public boolean divisorGame(int N) {
+    return N % 2 == 0;
+}

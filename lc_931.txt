@@ -1,0 +1,27 @@
+931.Minimum Falling Path Sum
+public int minFallingPathSum(int[][] A) {
+	int row = A.length;
+	int col = A[0].length;
+	int[] dp = new int[col];
+	for (int i = 0; i < col; i++) {
+		dp[i] = A[0][i];
+	}
+	for (int i = 1; i < row; i++) {
+		int tmp = dp[0];
+		int left = tmp;
+		dp[0] = Math.min(dp[0], dp[1]) + A[i][0]; 
+		for (int j = 1; j < col - 1; j++) {
+			left = tmp;
+			tmp = dp[j];
+			dp[j] = Math.min(left, Math.min(dp[j], dp[j + 1])) + A[i][j];
+		}
+		left = tmp;
+		dp[col - 1] = Math.min(left, dp[col - 1]) + A[i][col - 1]; 
+
+	}
+	int min = Integer.MAX_VALUE;
+	for (int i = 0; i < col; i++) {
+		min = Math.min(dp[i], min);
+	}
+	return min;
+}

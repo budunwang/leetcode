@@ -1,0 +1,28 @@
+1223.Dice Roll Simulation
+public int[][][] dp;
+public int mod = 1000000007;
+
+public int dieSimulator(int n, int[] rollMax) {
+    dp = new int[5001][6][16];
+    return dfs(n, rollMax, -1, 0);
+}
+
+    public int dfs(int n, int[] rollMax, int last, int count) {
+    if (n == 0) {
+        return 1;
+    }
+    if (last != -1 && dp[n][last][count] != 0) {
+        return dp[n][last][count];
+    }
+    int sum = 0;
+    for (int i = 0; i < 6; i++) {
+        if (i != last || count != rollMax[i]) {
+            int newCount = i == last ? count + 1 : 1;
+            sum = (sum + dfs(n - 1, rollMax, i, newCount)) % mod;
+        }
+    }
+    if (last != -1) {
+        dp[n][last][count] = sum;
+    }
+    return sum;
+}

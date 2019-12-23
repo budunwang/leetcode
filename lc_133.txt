@@ -1,0 +1,25 @@
+133.Clone Graph
+travel graph and mark visited node
+
+public Map<Integer, Node> map;
+
+public Node cloneGraph(Node node) {
+    map = new HashMap<Integer, Node>();
+    return dfs(node);
+}
+
+public Node dfs(Node node) {
+    if (map.containsKey(node.val)) {
+        return map.get(node.val);
+    }
+    Node dummy = new Node();
+    dummy.val = node.val;
+    map.put(dummy.val, dummy);
+    List<Node> list = new ArrayList<Node>();
+    for (Node n : node.neighbors) {
+        Node n_dummy = dfs(n);
+        list.add(n_dummy);
+    }
+    dummy.neighbors = list;
+    return dummy;
+}

@@ -1,0 +1,27 @@
+636.Exclusive Time of Functions
+public int[] exclusiveTime(int n, List<String> logs) {
+    int[] res = new int[n];
+    Stack<Integer> stack = new Stack<Integer>();
+    int preStart = 0;
+    for (String log : logs) {
+        String[] ss = log.split(":");
+        int id = Integer.valueOf(ss[0]);
+        int time = Integer.valueOf(ss[2]);
+        if (ss[1].equals("start")) {
+            if (!stack.isEmpty()) {
+                int dur = time - preStart;
+                int preId = stack.peek();
+                res[preId] += dur;
+            }
+            stack.push(id);
+            preStart = time;
+        } else {
+            int dur = time - preStart + 1;
+            int preId = stack.peek();
+            res[preId] += dur;
+            stack.pop();
+            preStart = time + 1;
+        }
+    }
+    return res;
+}

@@ -1,0 +1,66 @@
+449.Serialize and Deserialize BST
+// Encodes a tree to a single string.
+public String serialize(TreeNode root) {
+    if (root == null) {
+        return "";
+    }
+    List<String> list = new ArrayList<String>();
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    while(!queue.isEmpty()) {
+        int size = queue.size();
+        boolean isEnd = true;
+        List<String> tmp = new ArrayList<String>();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode != null) {
+                isEnd = false;
+                queue.add(treeNode.left);
+                queue.add(treeNode.right);
+                tmp.add(String.valueOf(treeNode.val));
+            } else {
+                tmp.add("null");
+            }
+        }
+        if (!isEnd) {
+            list.addAll(tmp);
+        } else {
+            break;
+        }
+    }
+    return String.join(",", list);
+}
+
+// Decodes your encoded data to tree.
+public TreeNode deserialize(String data) {
+    if (data.equals("")) {
+        return null;
+    }
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    String[] arr = data.split(",");
+    TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+    queue.add(root);
+    int index = 1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        if (index == arr.length) {
+            break;
+        }
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            String leftVal = arr[index++];
+            String rightVal = arr[index++];
+            if (!leftVal.equals("null")) {
+                TreeNode left = new TreeNode(Integer.parseInt(leftVal));
+                treeNode.left = left;
+                queue.add(left);
+            }
+            if (!rightVal.equals("null")) {
+                TreeNode right = new TreeNode(Integer.parseInt(rightVal));
+                treeNode.right = right;
+                queue.add(right);
+            }
+        }
+    }
+    return root;
+}

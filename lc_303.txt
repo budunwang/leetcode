@@ -1,0 +1,16 @@
+303.Range Sum Query - Immutable
+private int[] dp;
+public NumArray(int[] nums) {
+    int length = nums.length;
+    dp = new int[length];
+    for (int i = 0; i < length; i++) {
+        int sum = i == 0 ? 0 : dp[i - 1];
+        dp[i] = nums[i] + sum;
+    }
+}
+
+public int sumRange(int i, int j) {
+    int sum_i = i == 0 ? 0 : dp[i - 1];
+    int sum_j = dp[j];
+    return sum_j - sum_i;
+}

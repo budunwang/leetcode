@@ -1,0 +1,40 @@
+623.Add One Row to Tree
+public TreeNode addOneRow(TreeNode root, int v, int d) {
+    if (root == null) {
+        return null;
+    }
+    if (d == 1) {
+        TreeNode treeNode = new TreeNode(v);
+        treeNode.left = root;
+        return treeNode;
+    }
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    int level = 1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (level != d - 1) {
+                if (treeNode.left != null) {
+                    queue.add(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    queue.add(treeNode.right);
+                }
+            } else {
+                TreeNode left = new TreeNode(v);
+                left.left = treeNode.left;
+                treeNode.left = left;
+                TreeNode right = new TreeNode(v);
+                right.right = treeNode.right;
+                treeNode.right = right;
+            }
+        }
+        if (level == d - 1) {
+            break;
+        }
+        level++;
+    }
+    return root;
+}

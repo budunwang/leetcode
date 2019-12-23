@@ -1,0 +1,40 @@
+1143.Longest Common Subsequence
+dfs
+public int longestCommonSubsequence(String text1, String text2) {
+    return dfs(text1, text2, 0, 0);
+}
+
+public int dfs(String str1, String str2, int i, int j) {
+    if (i == str1.length() || j == str2.length()) {
+        return 0;
+    }
+    if (str1.charAt(i) == str2.charAt(j)) {
+        return 1 + dfs(str1, str2, i + 1, j + 1);
+    }
+    return Math.max(dfs(str1, str2, i + 1, j), dfs(str1, str2, i, j + 1));
+}
+
+dfs + memo
+public int[][] dp;
+
+public int longestCommonSubsequence(String text1, String text2) {
+    dp = new int[text1.length()][text2.length()];
+    return dfs(text1, text2, 0, 0);
+}
+
+public int dfs(String str1, String str2, int i, int j) {
+    if (i == str1.length() || j == str2.length()) {
+        return 0;
+    }
+    if (dp[i][j] != 0) {
+        return dp[i][j];
+    }
+    int num = 0;
+    if (str1.charAt(i) == str2.charAt(j)) {
+        num = 1 + dfs(str1, str2, i + 1, j + 1);
+    } else {
+        num = Math.max(dfs(str1, str2, i + 1, j), dfs(str1, str2, i, j + 1));
+    }
+    dp[i][j] = num;
+    return dp[i][j];
+}

@@ -1,0 +1,36 @@
+207.Course Schedule
+拓扑排序
+public boolean canFinish(int numCourses, int[][] prerequisites) {
+    ArrayList[] graph = new ArrayList[numCourses];
+    int[] degree = new int[numCourses];
+    for (int i = 0; i < numCourses; i++) {
+        graph[i] = new ArrayList<Integer>();
+    }
+    for (int[] prerequisite : prerequisites) {
+        degree[prerequisite[0]]++;
+        graph[prerequisite[1]].add(prerequisite[0]);
+    }
+    
+    Queue<Integer> queue = new LinkedList<Integer>();
+    int count = 0;
+    for (int i = 0; i < degree.length; i++) {
+        if (degree[i] == 0) {
+            queue.add(i);
+            count++;
+        }
+    }
+    
+    while (queue.size() != 0) {
+        int node = queue.poll();
+        for (int i = 0; i < graph[node].size(); i++) {
+            int j = (int)graph[node].get(i);
+            degree[j]--;
+            if (degree[j] == 0) {
+                queue.add(j);
+                count++;
+            }
+        }
+    }
+    
+    return count == numCourses;
+}

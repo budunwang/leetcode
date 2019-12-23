@@ -1,0 +1,20 @@
+983.Minimum Cost For Tickets
+public int mincostTickets(int[] days, int[] costs) {
+    int[] dp = new int[366];
+    boolean[] travel = new boolean[366];
+    for (int day : days) {
+        travel[day] = true;
+    }
+    dp[0] = 0;
+    for (int i = 1; i < 366; i++) {
+        if (travel[i]) {
+            int min = dp[i - 1] + costs[0];
+            min = Math.min(min, (i >= 7 ? dp[i - 7] : 0) + costs[1]);
+            min = Math.min(min, (i >= 30 ? dp[i - 30] : 0) + costs[2]);
+            dp[i] = min;
+        } else {
+            dp[i] = dp[i - 1];
+        }
+    }
+    return dp[365];
+}

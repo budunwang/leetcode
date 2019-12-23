@@ -1,0 +1,42 @@
+310.Minimum Height Trees
+topological sort to tree
+public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+    List<Integer> list = new ArrayList<Integer>();
+    if (edges.length == 0) {
+        list.add(0);
+        return list;
+    }
+    List<Set<Integer>> map = new ArrayList<Set<Integer>>(n);
+    for (int i = 0; i < n; i++) {
+        map.add(new HashSet<Integer>());
+    }
+    for (int[] edge : edges) {
+        map.get(edge[0]).add(edge[1]);
+        map.get(edge[1]).add(edge[0]);
+    }
+    Queue<Integer> queue = new LinkedList<Integer>();
+    for (int i = 0; i < n; i++) {
+        if (map.get(i).size() == 1) {
+            queue.add(i);
+        }
+    }
+    int count = 0;
+    while (n - count > 2) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int node = queue.poll();
+            count++;
+            Set<Integer> set = map.get(node);
+            int linkNode = set.iterator().next();
+            map.get(linkNode).remove(node);
+            map.get(node).remove(linkNode);
+            if (map.get(linkNode).size() == 1) {
+                queue.add(linkNode);
+            }
+        }
+    }
+    for (int i : queue) {
+        list.add(i);
+    }
+    return list;
+}

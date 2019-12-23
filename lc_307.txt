@@ -1,0 +1,30 @@
+307.Range Sum Query - Mutable
+303,304
+private int[] dp;
+private int[] dummy;
+
+public NumArray(int[] nums) {
+    int length = nums.length;
+    dp = new int[length];
+    dummy = new int[length];
+    for (int i = 0; i < length; i++) {
+        int sum = i == 0 ? 0 : dp[i - 1];
+        dp[i] = nums[i] + sum;
+        dummy[i] = nums[i];
+    }
+}
+
+public void update(int i, int val) {
+    int length = dummy.length;
+    for (int j = i; j < length; j++) {
+        dp[j] -= dummy[i] - val;
+    }
+    dummy[i] = val;
+}
+
+public int sumRange(int i, int j) {
+    if (i == 0) {
+        return dp[j];
+    }
+    return dp[j] - dp[i - 1];
+}

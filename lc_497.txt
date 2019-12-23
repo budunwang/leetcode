@@ -1,0 +1,39 @@
+497.Random Point in Non-overlapping Rectangles
+public int[] arr;
+public int[][] nrects;
+
+public Solution(int[][] rects) {
+    int length = rects.length;
+    arr = new int[length];
+    for (int i = 0; i < length; i++) {
+        int[] rect = rects[i];
+        arr[i] = (i == 0 ? 0 : arr[i - 1]) + (rect[2] - rect[0] + 1) * (rect[3] - rect[1] + 1);
+    }
+    nrects = rects;
+}
+
+public int[] pick() {
+    int length = arr.length;
+    int randomRect = new Random().nextInt(arr[length - 1]) + 1;
+    int left = 0;
+    int right = length - 1;
+    int mid = 0;
+    boolean isMid = false;
+    while (left < right) {
+        mid = left + (right - left) / 2;
+        if (arr[mid] < randomRect) {
+            left = mid + 1;
+        } else if (arr[mid] > randomRect) {
+            right = mid;
+        } else {
+            isMid = true;
+            break;
+        }
+    }
+    mid = isMid ? mid : left;
+    int[] rect = nrects[mid];
+    int[] res = new int[2];
+    res[0] = new Random().nextInt(rect[2] - rect[0] + 1) + rect[0];
+    res[1] = new Random().nextInt(rect[3] - rect[1] + 1) + rect[1];
+    return res;
+}

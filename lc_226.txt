@@ -1,0 +1,10 @@
+226.Invert Binary Tree
+public TreeNode invertTree(TreeNode root) {
+    if (root == null) {
+        return null;
+    }
+    TreeNode treeNode = new TreeNode(root.val);
+    treeNode.left = invertTree(root.right);
+    treeNode.right = invertTree(root.left);
+    return treeNode;
+}

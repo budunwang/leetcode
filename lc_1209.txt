@@ -1,0 +1,31 @@
+1209.Remove All Adjacent Duplicates in String II
+stack_c: cur character which length < k
+stack_n: cur character length 
+public String removeDuplicates(String s, int k) {
+    Stack<Character> stack_c = new Stack<Character>();
+    Stack<Integer> stack_n = new Stack<Integer>();
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (!stack_c.empty() && stack_c.peek() == c) {
+            int cur_num = stack_n.pop();
+            cur_num++;
+            stack_n.push(cur_num);
+            if (cur_num == k) {
+                stack_c.pop();
+                stack_n.pop();
+            }
+        } else {
+            stack_c.push(c);
+            stack_n.push(1);
+        }
+    }
+    StringBuilder sb = new StringBuilder();
+    while (!stack_c.empty()) {
+        Character cur_c = stack_c.pop();
+        int cur_num = stack_n.pop();
+        for (int i = 0; i < cur_num; i++) {
+            sb.append(cur_c);
+        }
+    }
+    return sb.reverse().toString();
+}

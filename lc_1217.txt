@@ -1,0 +1,9 @@
+1217.Play with Chips
+public int minCostToMoveChips(int[] chips) {
+    int odd = 0;
+    for (int chip : chips) {
+        odd += chip % 2;
+    }
+    int even = chips.length - odd;
+    return even > odd ? odd : even;
+}

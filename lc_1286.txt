@@ -1,0 +1,26 @@
+1286.Iterator for Combination
+public Queue<String> queue;
+
+public CombinationIterator(String characters, int combinationLength) {
+    queue = new LinkedList<String>();
+    dfs(characters, combinationLength, 0, "");
+}
+
+public String next() {
+    return queue.poll();
+}
+
+public boolean hasNext() {
+    return queue.peek() != null;
+}
+
+public void dfs(String characters, int combinationLength, int index, String str) {
+    char[] cs = characters.toCharArray();
+    if (str.length() == combinationLength) {
+        queue.add(str);
+        return;
+    }
+    for (int i = index; i < cs.length; i++) {
+        dfs(characters, combinationLength, i + 1, str + cs[i]);
+    }
+}

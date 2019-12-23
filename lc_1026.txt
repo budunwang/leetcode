@@ -1,0 +1,13 @@
+1026.Maximum Difference Between Node and Ancestor
+public int maxAncestorDiff(TreeNode root) {
+    return dfs(root, root.val, root.val);
+}
+
+public int dfs(TreeNode treeNode, int max, int min) {
+    if (treeNode == null) {
+        return Math.abs(max - min);
+    }
+    int max_new = Math.max(treeNode.val, max);
+    int min_new = Math.min(treeNode.val, min);
+    return Math.max(dfs(treeNode.left, max_new, min_new), dfs(treeNode.right, max_new, min_new));
+}

@@ -1,0 +1,48 @@
+529.Minesweeper
+public char[][] updateBoard(char[][] board, int[] click) {
+    int x = click[0];
+    int y = click[1];
+    if (board[x][y] == 'M') {
+        board[x][y] = 'X';
+    } else {
+        dfs(board, x, y);
+    }
+    return board;
+}
+
+public void dfs(char[][] board, int i, int j) {
+    int row = board.length;
+    int col = board[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (board[i][j] != 'E') {
+        return;
+    }
+    int mineNum = checkMine(board, i - 1, j - 1) + checkMine(board, i, j - 1)
+        + checkMine(board, i + 1, j - 1) + checkMine(board, i - 1, j)
+        + checkMine(board, i + 1, j) + checkMine(board, i - 1, j + 1)
+        + checkMine(board, i, j + 1) + checkMine(board, i + 1, j + 1);
+    if (mineNum != 0) {
+        board[i][j] = (char)(mineNum + '0');
+        return;
+    }
+    board[i][j] = 'B';
+    dfs(board, i - 1, j - 1);
+    dfs(board, i, j - 1);
+    dfs(board, i + 1, j - 1);
+    dfs(board, i - 1, j);
+    dfs(board, i + 1, j);
+    dfs(board, i - 1, j + 1);
+    dfs(board, i, j + 1);
+    dfs(board, i + 1, j + 1);
+}
+
+public int checkMine(char[][] board, int i, int j) {
+    int row = board.length;
+    int col = board[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return 0;
+    }
+    return board[i][j] == 'M' ?  1 : 0;
+}

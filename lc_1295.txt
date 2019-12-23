@@ -1,0 +1,17 @@
+1295.Find Numbers with Even Number of Digits
+public int findNumbers(int[] nums) {
+    int res = 0;
+    for (int num : nums) {
+        res += (getDigit(num) + 1) % 2;
+    }
+    return res;
+}
+
+public int getDigit(int num) {
+    int res = 0;
+    while (num != 0) {
+        num /= 10;
+        res++;
+    }
+    return res;
+}

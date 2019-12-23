@@ -1,0 +1,13 @@
+338.Counting Bits
+public int[] countBits(int num) {
+    int[] res = new int[num + 1];
+    res[0] = 0;
+    int diff = 1;
+    for (int i = 1; i <= num; i++) {
+        if (diff * 2 == i) {
+            diff *= 2;
+        }
+        res[i] = res[i - diff] + 1;
+    }
+    return res;
+}

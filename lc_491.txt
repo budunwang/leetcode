@@ -1,0 +1,28 @@
+491.Increasing Subsequences
+dfs
+39, 40
+public List<List<Integer>> findSubsequences(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    dfs(nums, 0, new ArrayList<Integer>(), res);
+    return res;
+}
+
+public void dfs (int[] nums, int index, List<Integer> list, List<List<Integer>> res) {
+    if (list.size() > 1) {
+        res.add(new ArrayList<Integer>(list));
+    }
+    int length = nums.length;
+    Set<Integer> set = new HashSet<Integer>();
+    int head = list.size() == 0 ? Integer.MIN_VALUE : list.get(list.size() - 1);
+    for (int i = index; i < length; i++) {
+        if (set.contains(nums[i])) {
+            continue;
+        }
+        if (nums[i] >= head) {
+            set.add(nums[i]);
+            list.add(nums[i]);
+            dfs(nums, i + 1, list, res);
+            list.remove(list.size() - 1);
+        }
+    }
+}

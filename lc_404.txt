@@ -1,0 +1,20 @@
+404.Sum of Left Leaves
+public int sum;
+
+public int sumOfLeftLeaves(TreeNode root) {
+    sum = 0;
+    dfs(root, false);
+    return sum;
+}
+
+public void dfs(TreeNode root, boolean isLeft) {
+    if (root == null) {
+        return;
+    }
+    if (root.left == null && root.right == null) {
+        sum += isLeft ? root.val : 0;
+        return;
+    }
+    dfs(root.left, true);
+    dfs(root.right, false);
+}

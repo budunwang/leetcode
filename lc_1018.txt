@@ -1,0 +1,10 @@
+1018.Binary Prefix Divisible By 5
+public List<Boolean> prefixesDivBy5(int[] A) {
+    List<Boolean> res = new ArrayList<Boolean>();
+    int cur = 0;
+    for (int num : A) {
+        cur = (cur * 2 + num) % 10;
+        res.add(cur % 5 == 0);
+    }
+    return res;
+}

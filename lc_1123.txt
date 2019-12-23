@@ -1,0 +1,21 @@
+1123.Lowest Common Ancestor of Deepest Leaves
+private int max = 0;
+private TreeNode treeNode = null;
+
+public TreeNode lcaDeepestLeaves(TreeNode root) {
+    dfs(root, 1);
+    return treeNode;
+}
+
+public int dfs(TreeNode root, int level) {
+    if (root == null) {
+        return level - 1;
+    }
+    max = Math.max(level, max);
+    int left = dfs(root.left, level + 1);
+    int right = dfs(root.right, level + 1);
+    if (left == right && left == max) {
+        treeNode = root;
+    }
+    return Math.max(left, right);
+}

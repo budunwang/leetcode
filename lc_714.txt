@@ -1,0 +1,27 @@
+714.Best Time to Buy and Sell Stock with Transaction Fee
+two state: have a stock (can sell) and no stock (can buy)
+two operation for each state (do or not do)
+buy: sell[i] - 1 * price[i] (do) and buy[i - 1] (not do)
+sell: buy[i - 1] + price[i] - fee (sell) and sell[i - 1] (not do)
+
+public int maxProfit(int[] prices, int fee) {
+    int length = prices.length;
+    int[] buy = new int[length];
+    int[] sell = new int[length];
+    buy[0] = -1 * prices[0];
+    for (int i = 1; i < length; i++) {
+        sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i] - fee);
+        buy[i] = Math.max(buy[i - 1], sell[i] - 1 * prices[i]);
+    }
+    return sell[length - 1];
+}
+
+public int maxProfit(int[] prices, int fee) {
+    int sell = 0;
+    int buy = -1 * prices[0];
+    for (int i = 1; i < prices.length; i++) {
+        sell = Math.max(sell, buy + prices[i] - fee);
+        buy = Math.max(buy, sell - 1 * prices[i]);
+    }
+    return sell;
+}

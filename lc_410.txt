@@ -1,0 +1,33 @@
+410.Split Array Largest Sum
+与1011相同。
+非直接的二分法。
+此二分法并非直接比较所求值，而是所求值计算出的间接值。
+sum最小为数组最大值，最大为数组和。
+逐个比较计算出组数。
+根据组数二分法求出sum。
+public int splitArray(int[] nums, int m) {
+    long left = 0;
+    long right = 0;
+    for (int num : nums) {
+        left = Math.max(num, left);
+        right += num;
+    }
+    while (left < right) {
+        long mid = left + (right - left) / 2;
+        long cur = 0;
+        int group = 1;
+        for (int num : nums) {
+            if (cur + num > mid) {
+                cur = 0;
+                group++;
+            }
+            cur += num;
+        }
+        if (group > m) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return (int)right;
+}

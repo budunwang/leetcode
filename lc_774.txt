@@ -1,0 +1,30 @@
+774.Minimize Max Distance to Gas Station
+与410，1011，875类似。
+非直接的二分法。
+此二分法并非直接比较所求值，而是所求值计算出的间接值。
+注意double的二分法与比较方法。
+public double minmaxGasDist(int[] stations, int k) {
+    // Write your code here
+    double left = 0;
+    double right = 0;
+    int[] dis = new int[stations.length - 1];
+    for (int i = 0; i < stations.length - 1; i++) {
+        dis[i] = stations[i + 1] - stations[i];
+        right = Math.max(right, dis[i]);
+    }
+    while (right - left > 1e-6) {
+        double mid = left + (right - left) / 2;
+        int group = 0;
+        for (int n : dis) {
+            if (n - mid > 1e-6) {
+                group += Math.ceil(n / mid) - 1;
+            }
+        }
+        if (group > k) {
+            left = mid;
+        } else {
+            right = mid;
+        } 
+    }
+    return right;
+}

@@ -1,0 +1,24 @@
+209.Minimum Size Subarray Sum
+public int minSubArrayLen(int s, int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    int left = 0;
+    int right = 1;
+    int min = nums.length + 1;
+    int sum = nums[left];
+    while (left < right) {
+        if (sum >= s) {
+            min = Math.min(right - left, min);
+            sum = sum - nums[left];
+            left++;
+        } else {
+            if () {
+                return min == nums.length + 1 ? 0 : min;
+            }
+            sum = sum + nums[right];
+            right++;
+        }
+    }
+    return min == nums.length + 1 ? 0 : min;
+}

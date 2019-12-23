@@ -1,0 +1,31 @@
+967.Numbers With Same Consecutive Differences
+public int[] numsSameConsecDiff(int N, int K) {
+    Set<Integer> set = new HashSet<Integer>();
+    if (N == 1) {
+        set.add(0);
+    }
+    for (int i = 1; i <= 9; i++) {
+        dfs(set, N, K, 1, i, i);
+    }
+    int[] arr = new int[set.size()];
+    int i = 0;
+    for (Integer num : set) {
+        arr[i++] = num;
+    }
+    return arr;
+}
+
+public void dfs(Set<Integer> set, int N, int K, int n, int k, int num) {
+    if (n == N) {
+        set.add(num);
+        return;
+    }
+    if (k + K <= 9) {
+        int next = k + K;
+        dfs(set, N, K, n + 1, next, num * 10 + next);
+    }
+    if (k - K >= 0) {
+        int next = k - K;
+        dfs(set, N, K, n + 1, next, num * 10 + next);
+    }
+}

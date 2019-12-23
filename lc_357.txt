@@ -1,0 +1,21 @@
+357.Count Numbers with Unique Digits
+1st 2nd 3rd 4th 5th
+|   |   |   |   |
+9 * 9 * 8 * 7 * 6 ...
+1st pick 1 - 9 except 0
+2nd pick 0 - 9 min 1 (1st pick)
+3rd pick 0 - 9 min 2 (1st, 2nd pick)
+...
+
+public int countNumbersWithUniqueDigits(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    int sum = 10;
+    int total = 9;
+    for (int i = 1; i < n; i++) {
+        total *= 9 - i + 1;
+        sum += total;
+    }
+    return sum;
+}

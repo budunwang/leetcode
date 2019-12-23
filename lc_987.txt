@@ -1,0 +1,49 @@
+987.Vertical Order Traversal of a Binary Tree
+public List<List<Integer>> verticalTraversal(TreeNode root) {
+    if (root == null) {
+        return new ArrayList<List<Integer>>();
+    }
+    // record vertical index
+    Map<Integer, List<Integer>> map = new TreeMap<Integer, List<Integer>>();\
+    // record treeNode vertical index
+    Map<TreeNode, Integer> v_map = new HashMap<TreeNode, Integer>();
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    v_map.put(root, 0);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        // record current level treeNode
+        Map<Integer, List<Integer>> curMap = new TreeMap<Integer, List<Integer>>();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            int v_index = v_map.get(treeNode);
+            if (curMap.containsKey(v_index)) {
+                curMap.get(v_index).add(treeNode.val);
+            } else {
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(treeNode.val);
+                curMap.put(v_index, list);
+            }
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+                v_map.put(treeNode.left, v_index - 1);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+                v_map.put(treeNode.right, v_index + 1);
+            }
+        }
+        // sort current level treeNode vertical index
+        for (Map.Entry<Integer, List<Integer>> entry : curMap.entrySet()) {
+            int v_index = entry.getKey();
+            List<Integer> list = entry.getValue();
+            Collections.sort(list);
+            if (map.containsKey(v_index)) {
+                map.get(v_index).addAll(list);
+            } else {
+                map.put(v_index, list);
+            }
+        }
+    }
+    return new ArrayList<List<Integer>>(map.values());
+}

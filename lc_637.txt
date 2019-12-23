@@ -1,0 +1,25 @@
+637.Average of Levels in Binary Tree
+public List<Double> averageOfLevels(TreeNode root) {
+    if (root == null) {
+        return new ArrayList<Double>();
+    }
+    List<Double> res = new ArrayList<Double>();
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.add(root);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        long sum = 0;
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            sum += treeNode.val;
+            if (treeNode.left != null) {
+                queue.add(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.add(treeNode.right);
+            }
+        }
+        res.add(sum / (double)size);
+    }
+    return res;
+}

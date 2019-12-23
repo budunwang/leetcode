@@ -1,0 +1,18 @@
+965.Univalued Binary Tree
+public boolean isUnivalTree(TreeNode root) {
+    if (root == null) {
+        return true;
+    }
+    boolean left = true;
+    boolean right = true;
+    if (root.left != null) {
+        left = root.left.val == root.val;
+    }
+    if (root.right != null) {
+        right = root.right.val == root.val;
+    }
+    if (left && right) {
+        return isUnivalTree(root.left) && isUnivalTree(root.right);
+    }
+    return false;
+}

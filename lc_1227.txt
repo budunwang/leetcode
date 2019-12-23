@@ -1,0 +1,9 @@
+1227.Airplane Seat Assignment Probability
+f(n) = 1 / n * 1 + 1 / n * 0 + (n - 2) / n * f(n - 1)
+在原位的概率 + 在n位的概率 + 在其他位的概率
+public double nthPersonGetsNthSeat(int n) {
+    if (n == 1) {
+        return 1;
+    }
+    return 1 / (double)n + (n - 2) / (double)n * nthPersonGetsNthSeat(n - 1);
+}

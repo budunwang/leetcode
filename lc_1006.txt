@@ -1,0 +1,28 @@
+1006.Clumsy Factorial
+public int clumsy(int N) {
+    int res = 0;
+    int last = 0;
+    for (int i = N; i >= 1; i--) {
+        int j = (N - i) % 4;
+        if (j == 0) {
+            if (i == N - 4) {
+                res = res + last;
+            } else {
+                res = res - last;
+            }
+            last = i;
+        } else if (j == 1) {
+          last = last * i;
+        } else if (j == 2) {
+          last = last / i;
+        } else if (j == 3) {
+          res = res + i;
+        }
+    }
+    if (N < 5) {
+        res = res + last;
+    } else {
+        res = res - last;
+    }
+    return res;
+}

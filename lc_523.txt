@@ -1,0 +1,20 @@
+523.Continuous Subarray Sum
+Math
+public boolean checkSubarraySum(int[] nums, int k) {
+    int length = nums.length;
+    int sum = 0;
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    map.put(0, -1);
+    for (int i = 0; i < length; i++) {
+        sum += nums[i];
+        int res = k != 0 ? sum % k : sum;
+        if (map.containsKey(res)) {
+            if (i - map.get(res) > 1) {
+                return true;
+            }
+        } else {
+            map.put(res, i);
+        }
+    }
+    return false;
+}

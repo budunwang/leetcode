@@ -1,0 +1,18 @@
+1013.Partition Array Into Three Parts With Equal Sum
+public boolean canThreePartsEqualSum(int[] A) {
+    int sum = 0;
+    for (int num : A) {
+        sum += num;
+    }
+    int target = sum / 3;
+    int cur = 0;
+    int count = 0;
+    for (int num : A) {
+        cur += num;
+        if (cur == target) {
+            cur = 0;
+            count++;
+        }
+    }
+    return count == 3;
+}

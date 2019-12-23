@@ -1,0 +1,17 @@
+1248.Count Number of Nice Subarrays
+Sliding Window
+number of subarray(current count >= k) = number of index that keep at count at (current count - k)
+public int numberOfSubarrays(int[] nums, int k) {
+    int res = 0;
+    int sum = 0;
+    int[] dp = new int[nums.length + 1];
+    dp[0] = 1;
+    for (int num : nums) {
+        sum += num % 2;
+        dp[sum]++;
+        if (sum - k >= 0) {
+            res += dp[sum - k];
+        }
+    }
+    return res;
+}

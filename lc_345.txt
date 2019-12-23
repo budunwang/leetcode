@@ -1,0 +1,24 @@
+345.Reverse Vowels of a String
+public String reverseVowels(String s) {
+    String map = "aeiouAEIOU";
+    int left = 0;
+    int right = s.length() - 1;
+    char[] cs = s.toCharArray();
+    while (true) {
+        while (left < s.length() && map.indexOf(cs[left]) == -1) {
+            left++;
+        }
+        while (right >= 0 && map.indexOf(cs[right]) == -1) {
+            right--;
+        }
+        if (left >= right) {
+            break;
+        }
+        char c = cs[left];
+        cs[left] = cs[right];
+        cs[right] = c;
+        left++;
+        right--;
+    }
+    return new String(cs);
+}

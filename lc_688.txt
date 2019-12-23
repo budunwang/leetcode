@@ -1,0 +1,29 @@
+688.Knight Probability in Chessboard
+public double knightProbability(int N, int K, int r, int c) {
+    int[][] dir = {{-1, -2}, {1, -2}, {2, -1}, {2, 1}, {1, 2}, {-1, 2}, {-2, -1}, {-2, 1}};
+    double[][] dp = new double[N][N];
+    dp[r][c] = 1;
+    for (int i = 1; i < K + 1; i++) {
+        double[][] tmp = new double[N][N];
+        for (int j = 0; j < N; j++) {
+            for (int k = 0; k < N; k++) {
+                for (int[] arr : dir) {
+                    int x = j + arr[0];
+                    int y = k + arr[1];
+                    if (x < 0 || x >= N || y < 0 || y >= N) {
+                        continue;
+                    }
+                    tmp[j][k] += dp[x][y];
+                }
+            }
+        }
+        dp = tmp;
+    }
+    double sum = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            sum += dp[i][j];
+        }
+    }
+    return sum / Math.pow(8, K);
+}

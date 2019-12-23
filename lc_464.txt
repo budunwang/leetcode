@@ -1,0 +1,41 @@
+464.Can I Win
+minimax
+any of next pick is losing mean this pick is win
+
+public int[] visited;
+public Map<String, Boolean> map;
+
+public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+    if (maxChoosableInteger >= desiredTotal) {
+        return true;
+    }
+    if (((1 + maxChoosableInteger) * maxChoosableInteger) / 2 < desiredTotal) {
+        return false;
+    }
+    visited = new int[maxChoosableInteger + 1];
+    map = new HashMap<String, Boolean>();
+    return dfs(maxChoosableInteger, desiredTotal);
+}
+
+public boolean dfs(int maxChoosableInteger, int desiredTotal) {
+    String str = Arrays.toString(visited);
+    if (map.containsKey(str)) {
+        return map.get(str);
+    }
+    if (desiredTotal <= 0) {
+        return false;
+    }
+    for (int i = 1; i <= maxChoosableInteger; i++) {
+        if (visited[i] == 0) {
+            visited[i] = 1;
+            if (!dfs(maxChoosableInteger, desiredTotal - i)) {
+                map.put(str, true);
+                visited[i] = 0;
+                return true;
+            }
+            visited[i] = 0;
+        }
+    }
+    map.put(str, false);
+    return false;
+}

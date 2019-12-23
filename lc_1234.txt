@@ -1,0 +1,25 @@
+1234.Replace the Substring for Balanced String
+sliding window length: #Q, #W, #E, #R in the string except sliding window smaller than length / 4
+or substring can not balance
+public int balancedString(String s) {
+    int[] map = new int[26];
+    for (char c : s.toCharArray()) {
+        map[c - 'A']++;
+    }
+    int balance = s.length() / 4;
+    int left = 0;
+    int min = s.length();
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right) - 'A']--;
+        while (left < s.length()
+               && map['Q' - 'A'] <= balance
+               && map['W' - 'A'] <= balance 
+               && map['E' - 'A'] <= balance
+               && map['R' - 'A'] <= balance) {
+            map[s.charAt(left) - 'A']++;
+            min = Math.min(min, right - left + 1);
+            left++;
+        }
+    }
+    return min;
+}

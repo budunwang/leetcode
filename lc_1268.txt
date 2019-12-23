@@ -1,0 +1,69 @@
+1268.Search Suggestions System
+trie tree
+public class TrieNode {
+    Character val;
+    List<TrieNode> list;
+    List<String> suggestions;
+    TrieNode(Character c) {
+        val = c;
+        list = new ArrayList<TrieNode>();
+        suggestions = new ArrayList<String>();
+    }
+}
+
+public List<List<String>> res;
+
+public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+    res = new ArrayList<List<String>>();
+    TrieNode root = new TrieNode('0');
+    for (String product : products) {
+      buildTrieTree(product, root, 0);
+    }
+    getSuggestion(searchWord, root, 0);
+    return res;
+}
+
+public String buildTrieTree(String str, TrieNode node, int index) {
+    if (index == str.length()) {
+        return str;
+    }
+    Character target = str.charAt(index);
+    for (TrieNode trieNode : node.list) {
+      if (trieNode.val == target) {
+        String suggestion = buildTrieTree(str, trieNode, index + 1);
+        trieNode.suggestions.add(suggestion);
+        return suggestion;
+      }
+    }
+    TrieNode trieNode = new TrieNode(target);
+    node.list.add(trieNode);
+    String suggestion = buildTrieTree(str, trieNode, index + 1);
+    trieNode.suggestions.add(suggestion);
+    return suggestion;
+}
+
+public void getSuggestion(String str, TrieNode node, int index) {
+    if (index == str.length()) {
+        return;
+    }
+    for (TrieNode trieNode : node.list) {
+        if (trieNode.val == str.charAt(index)) {
+            PriorityQueue<String> pq = new PriorityQueue<String>();
+            for (String suggestion : trieNode.suggestions) {
+                pq.add(suggestion);
+            }
+            int limit = 0;
+            List<String> list = new ArrayList<String>();
+            while (limit < 3 && !pq.isEmpty()) {
+                list.add(pq.poll());
+                limit++;
+            }
+            res.add(list);
+            getSuggestion(str, trieNode, index + 1);
+            return;
+        }
+    }
+    for (int i = index; i < str.length(); i++) {
+        res.add(new ArrayList<String>());
+    }
+}

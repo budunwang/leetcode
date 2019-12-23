@@ -1,0 +1,20 @@
+690.Employee Importance
+public int getImportance(List<Employee> employees, int id) {
+    Map<Integer, Employee> map = new HashMap<Integer, Employee>();
+    for (Employee employee : employees) {
+        map.put(employee.id, employee);
+    }
+    return dfs(map, id);
+}
+
+public int dfs(Map<Integer, Employee> map, int id) {
+    Employee employee = map.get(id);
+    List<Integer> subordinates = employee.subordinates;
+    int res = 0;
+    for (int subordinate : subordinates) {
+        if (map.containsKey(subordinate)) {
+            res += dfs(map, subordinate);
+        }
+    }
+    return employee.importance + res;
+}

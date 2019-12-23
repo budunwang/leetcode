@@ -1,0 +1,38 @@
+787.Cheapest Flights Within K Stops
+Djikstra with path record
+find min path weight in graph with limited node number
+Record current node number when relaxation
+
+public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+    Map<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
+    for (int[] flight : flights) {
+        if (!map.containsKey(flight[0])) {
+            map.put(flight[0], new ArrayList<int[]>());
+        }
+        map.get(flight[0]).add(new int[] { flight[1], flight[2] });
+    }
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[1] - b[1]);
+    pq.add(new int[] { src, 0, 0 });
+    while (!pq.isEmpty()) {
+        int size = pq.size();
+        for (int i = 0; i < size; i++) {
+            int[] flight = pq.poll();
+            int start = flight[0];
+            int price = flight[1];
+            int stop = flight[2];
+            if (start == dst) {
+                return price;
+            }
+            if (!map.containsKey(start)) {
+                continue;
+            }
+            List<int[]> list = map.get(start);
+            for (int[] next : list) {
+                if (stop <= K) {
+                    pq.add(new int[] { next[0], next[1] + price, stop + 1 });
+                }
+            }
+        }
+    }
+    return -1;
+}

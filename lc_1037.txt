@@ -1,0 +1,10 @@
+1037.Valid Boomerang
+计算斜率。
+不能直接使用结果。使用乘积，避免分母为0。
+public boolean isBoomerang(int[][] points) {
+    int first_x = points[1][0] - points[0][0];
+    int first_y = points[1][1] - points[0][1];
+    int second_x = points[2][0] - points[0][0];
+    int second_y = points[2][1] - points[0][1];
+    return first_x * second_y != second_x * first_y;
+}

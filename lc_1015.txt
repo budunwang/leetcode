@@ -1,0 +1,20 @@
+1015.Smallest Integer Divisible by K
+数学题。
+先排除2和5的公倍数。
+再遍历求出长度。
+但是由于整数长度会超出范围，不能直接使用整数整除。
+y = ax + b
+y' = 10ax + 10b + 1,
+可知，只需要余数满足整除，也可以求出长度。
+public int smallestRepunitDivByK(int K) {
+    if (K % 2 == 0 || K % 5 == 0) {
+        return -1;
+    }
+    int res = 1;
+    int num = 1;
+    while (num % K != 0) {
+        num = (num * 10 + 1) % K;
+        res++;
+    }
+    return res;
+}

@@ -1,0 +1,16 @@
+590.N-ary Tree Postorder Traversal
+public List<Integer> postorder(Node root) {
+    List<Integer> list = new ArrayList<Integer>();
+    dfs(root, list);
+    return list;
+}
+
+public void dfs(Node root, List<Integer> list) {
+    if (root == null) {
+        return;
+    }
+    for (Node node : root.children) {
+        dfs(node, list);
+    }
+    list.add(root.val);
+}

@@ -1,0 +1,26 @@
+654.Maximum Binary Tree
+dfs
+public TreeNode constructMaximumBinaryTree(int[] nums) {
+    return dfs(nums, 0, nums.length - 1);
+}
+
+public TreeNode dfs(int[] nums, int start, int end) {
+    if (start > end) {
+        return null;
+    }
+    if (start == end) {
+        return new TreeNode(nums[start]);
+    }
+    int index = 0;
+    int max = Integer.MIN_VALUE;
+    for (int i = start; i <= end; i++) {
+        if (nums[i] > max) {
+            max = nums[i];
+            index = i;
+        }
+    }
+    TreeNode node = new TreeNode(nums[index]);
+    node.left = dfs(nums, start, index - 1);
+    node.right = dfs(nums, index + 1, end);
+    return node;
+}

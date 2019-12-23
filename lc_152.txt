@@ -1,0 +1,45 @@
+152.Maximum Product Subarray
+动态规划。
+为获得乘积的最大值，只需要记录下前一个的最大值与最小值(最大值必然来自这两个乘积)。
+同时为了避免出现0的乘积，比较最大值与最小值时也需要计算当前值。
+最后维护当前出现的最大值。
+public int maxProduct(int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    if (nums.length == 1) {
+        return nums[0];
+    }
+    int[] list = new int[] {1, 1};
+    int max = 0;
+    int length = nums.length;
+    for (int i = length - 1; i >= 0 ; i--) {
+        int num_1 = list[0] * nums[i];
+        int num_2 = list[1] * nums[i];
+        list[0] = Math.min(Math.min(num_1, num_2), nums[i]);
+        list[1] = Math.max(Math.max(num_1, num_2), nums[i]);
+        max = Math.max(list[1], max);
+    }
+    return max;
+}
+
+public int maxProduct(int[] nums) {
+    if (nums.length == 0) {
+        return 0;
+    }
+    int cur_min = nums[0];
+    int cur_max = nums[0];
+    int max = nums[0];
+    int length = nums.length;
+    for (int i = 1; i < length ; i++) {
+        if (nums[i] < 0) {
+            int tmp = cur_min;
+            cur_min = cur_max;
+            cur_max = tmp;
+        }
+        cur_min = Math.min(cur_min * nums[i], nums[i]);
+        cur_max = Math.max(cur_max * nums[i], nums[i]);
+        max = Math.max(cur_max, max);
+    }
+    return max;
+}

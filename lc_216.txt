@@ -1,0 +1,22 @@
+216.Combination Sum III
+public List<List<Integer>> combinationSum3(int k, int n) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    dfs(res, new ArrayList<Integer>(), 1, 0, k, n);
+    return res;
+}
+
+public void dfs(List<List<Integer>>res, List<Integer> list, int num, int sum, int k, int n) {
+    if (sum == n && list.size() == k) {
+        res.add(new ArrayList<Integer>(list));
+    }
+    if (list.size() == k) {
+        return;
+    }
+    for (int i = num; i < 10; i++) {
+        if (sum + i <= n) {
+            list.add(i);
+            dfs(res, list, i + 1, sum + i, k, n);
+            list.remove(list.size() - 1);
+        }
+    }
+}

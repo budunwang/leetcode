@@ -1,0 +1,43 @@
+646.Maximum Length of Pair Chain
+same as 300
+sort at first -> compare with pair
+
+public int findLongestChain(int[][] pairs) {
+    if (pairs.length == 0) {
+        return 0;
+    }
+    int length = pairs.length;
+    int[] dp = new int[length];
+    dp[0] = 1;
+    int max = 1;
+    Arrays.sort(pairs, (int[] a, int[] b) -> a[0] - b[0]);
+    for (int i = 1; i < length; i++) {
+        int curMax = 1;
+        for (int j = i - 1; j >= 0; j--) {
+            if (pairs[i][0] > pairs[j][1]) {
+                curMax = Math.max(curMax, dp[j] + 1);
+            }
+        }
+        dp[i] = curMax;
+        max = Math.max(max, curMax);
+    }
+    return max;
+}
+
+greedy
+public int findLongestChain(int[][] pairs) {
+    if (pairs.length == 0) {
+        return 0;
+    }
+    int length = pairs.length;
+    Arrays.sort(pairs, (int[] a, int[] b) -> a[1] - b[1]);
+    int res = 1;
+    int cur = pairs[0][1];
+    for (int i = 1; i < length; i++) {
+        if (pairs[i][0] > cur) {
+            res++;
+            cur = pairs[i][1];
+        }
+    }
+    return res;
+}

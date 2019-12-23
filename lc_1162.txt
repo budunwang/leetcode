@@ -1,0 +1,42 @@
+1162.As Far from Land as Possible
+public int maxDistance(int[][] grid) {
+    int n = grid.length;
+    Queue<int[]> queue = new LinkedList<int[]>();
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == 1) {
+                queue.add(new int[] { i, j });
+            }
+        }
+    }
+    if (queue.size() == n * n) {
+        return -1;
+    }
+    int level = -1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            int x = arr[0];
+            int y = arr[1];
+            if (x > 0 && grid[x - 1][y] == 0) {
+                grid[x - 1][y] = 2;
+                queue.add(new int[] { x - 1, y });
+            }
+            if (x < n - 1 && grid[x + 1][y] == 0) {
+                grid[x + 1][y] = 2;
+                queue.add(new int[] { x + 1, y });
+            }
+            if (y > 0 && grid[x][y - 1] == 0) {
+                grid[x][y - 1] = 2;
+                queue.add(new int[] { x, y - 1 });
+            }
+            if (y < n - 1 && grid[x][y + 1] == 0) {
+                grid[x][y + 1] = 2;
+                queue.add(new int[] { x, y + 1 });
+            }
+        }
+        level++;
+    }
+    return level;
+}

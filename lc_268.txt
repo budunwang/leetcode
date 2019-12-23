@@ -1,0 +1,10 @@
+268.Missing Number
+public int missingNumber(int[] nums) {
+    int length = nums.length;
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    int total = nums.length * (nums.length + 1) / 2;
+    return total - sum;
+}

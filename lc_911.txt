@@ -1,20 +1,17 @@
 911.Online Election
-以time为key，person为value。
-为了获得当前person，需要记录下每个person出现的个数以及当前最大出现个数。
-如果当前person的个数大于等于最大出现个数，那么当前person就是当前时间内的person。
-否则前一个记录的person是当前时间内的person。
-
+时间为key。
+要获得当前trend的person,必须记录下当前的最高票数以及最高person。
+当该person的票数等于最高票数时，即该person是当前的trend，更新最高票数和person。
 public TreeMap<Integer, Integer> map;
 public TopVotedCandidate(int[] persons, int[] times) {
     map = new TreeMap<Integer, Integer>();
-    int length = times.length;
-    int[] count = new int[length + 1];
-    int lastMax = 0;
+    int[] count = new int[persons.length + 1];
+    int lastTop = 0;
     int lastTrend = 0;
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < times.length; i++) {
         count[persons[i]]++;
-        if (count[persons[i]] >= lastMax) {
-            lastMax = count[persons[i]];
+        if (count[persons[i]] >= lastTop) {
+            lastTop = count[persons[i]];
             lastTrend = persons[i];
         }
         map.put(times[i], lastTrend);

@@ -1,0 +1,75 @@
+934.Shortest Bridge
+public Set<int[]> set;
+public boolean isConnected;
+public int sum;
+
+public int shortestBridge(int[][] A) {
+    set = new HashSet<int[]>();
+    isConnected = false;
+    sum = 0;
+    int row = A.length;
+    int col = A[0].length;
+    boolean find = false;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (A[i][j] == 1 && !find) {
+                findIsland(A, i, j);
+                find = true;
+            }
+        }
+    }
+    buildBoundary(A);
+    return sum - 1;
+}
+
+public void findIsland(int[][] A, int i, int j) {
+    int row = A.length;
+    int col = A[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (A[i][j] == 2 || A[i][j] == 0) {
+        return;
+    }
+    A[i][j] = 2;
+    set.add(new int[] { i, j });
+    findIsland(A, i - 1, j);
+    findIsland(A, i + 1, j);
+    findIsland(A, i, j - 1);
+    findIsland(A, i, j + 1);
+}
+
+public void buildBoundary(int[][] A) {
+    if (isConnected) {
+        return;
+    }
+    Set<int[]> dummy = new HashSet<int[]>(set);
+    set = new HashSet<int[]>();
+    for (int[] arr : dummy) {
+        int i = arr[0];
+        int j = arr[1];
+        build(A, i - 1, j);
+        build(A, i + 1, j);
+        build(A, i, j - 1);
+        build(A, i, j + 1);
+    }
+    sum++;
+    buildBoundary(A);
+}
+
+public void build(int[][] A, int i, int j) {
+    int row = A.length;
+    int col = A[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return;
+    }
+    if (A[i][j] == 1) {
+        isConnected = true;
+        return;
+    }
+    if (A[i][j] == 0) {
+        A[i][j] = 2;
+        set.add(new int[] { i, j });
+    }
+    return;
+}

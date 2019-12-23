@@ -1,0 +1,14 @@
+1014.Best Sightseeing Pair
+动态规划。
+对于当前位置，在之前的位置中必然存在一个最优解。
+比较最优解和前一个位置获得当前最优解。
+注意遍历时最优解需要减去一个位置。
+public int maxScoreSightseeingPair(int[] A) {
+    int sum = 0;
+    int cur = 0;
+    for (int i = 1; i < A.length; i++) {
+        cur = Math.max(cur, A[i - 1]) - 1;
+        sum = Math.max(sum, cur + A[i]);
+    }
+    return sum;
+}

@@ -1,0 +1,32 @@
+576.Out of Boundary Paths
+public int mod;
+public long[][][] memo;
+
+public int findPaths(int m, int n, int N, int i, int j) {
+    mod = 1000000000 + 7;
+    memo = new long[m][n][N + 1];
+    for (int a = 0; a < m; a++) {
+        for (int b = 0; b < n; b++) {
+            for (int c = 0; c <= N; c++) {
+                memo[a][b][c] = -1;
+            }
+        }
+    }
+    return (int)dfs(m, n, N, i, j);
+}
+
+public long dfs(int m, int n, int N, int i, int j) {
+    if ((i < 0 || i >= m || j < 0 || j >= n)) {
+        return N >= 0 ? 1 : 0;
+    }
+    if (N <= 0) {
+        return 0;
+    }
+    if (memo[i][j][N] != -1) {
+        return memo[i][j][N];
+    }
+    long sum = (dfs(m, n, N - 1, i - 1, j) + dfs(m, n, N - 1, i + 1, j)) % mod
+        + (dfs(m, n, N - 1, i, j - 1) + dfs(m, n, N - 1, i, j + 1)) % mod;
+    memo[i][j][N] = sum % mod;
+    return memo[i][j][N];
+}

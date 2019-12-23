@@ -1,0 +1,13 @@
+509.Fibonacci Number
+public int fib(int N) {
+    if (N == 0) {
+        return 0;
+    }
+    int a = 0;
+    int b = 1;
+    for (int i = 2; i < N + 1; i++) {
+        b = a + b;
+        a = b - a;
+    }
+    return b;
+}

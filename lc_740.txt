@@ -1,0 +1,34 @@
+740.Delete and Earn
+714
+two state: take and not take
+take: notTake[i - 1] + sum[i]
+not take: max of take[i - 1] and notTake[i - 1]
+
+public int deleteAndEarn(int[] nums) {
+    int[] sum = new int[10001];
+    for (int num : nums) {
+        sum[num] += num;
+    }
+    int[] take = new int[10001];
+    int[] notTake = new int[10001];
+    for (int i = 1; i <= 10000; i++) {
+        take[i] = notTake[i - 1] + sum[i];
+        notTake[i] = Math.max(notTake[i - 1], take[i - 1]);
+    }
+    return Math.max(take[10000], notTake[10000]);
+}
+
+public int deleteAndEarn(int[] nums) {
+    int[] sum = new int[10001];
+    for (int num : nums) {
+        sum[num] += num;
+    }
+    int take = 0;
+    int notTake = 0;
+    for (int i = 1; i <= 10000; i++) {
+        int lastTake = take;
+        take = notTake + sum[i];
+        notTake = Math.max(notTake, lastTake);
+    }
+    return Math.max(take, notTake);
+}

@@ -1,0 +1,14 @@
+925.Long Pressed Name
+public boolean isLongPressedName(String name, String typed) {
+    int j = 0;
+    for (int i = 0; i < typed.length(); i++) {
+        if (j < name.length() && typed.charAt(i) == name.charAt(j)) {
+            j++;
+        } else {
+            if (i == 0 || typed.charAt(i) != typed.charAt(i - 1)) {
+                return false;
+            }
+        }
+    }
+    return j == name.length();
+}

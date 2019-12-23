@@ -1,0 +1,23 @@
+350.Intersection of Two Arrays II
+public int[] intersect(int[] nums1, int[] nums2) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    List<Integer> list = new ArrayList<Integer>();
+    for (int num : nums1) {
+        int count = map.getOrDefault(num, 0);
+        map.put(num, count + 1);
+    }
+    for (int num : nums2) {
+        if (map.containsKey(num)) {
+            int count = map.get(num);
+            if (count > 0) {
+                list.add(num);
+                map.put(num, count - 1);
+            }
+        }
+    }
+    int[] arr = new int[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+        arr[i] = list.get(i);
+    }
+    return arr;
+}

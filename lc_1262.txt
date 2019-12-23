@@ -1,0 +1,13 @@
+1262.Greatest Sum Divisible by Three
+dp
+public int maxSumDivThree(int[] nums) {
+    int[] dp = new int[] {0, Integer.MIN_VALUE, Integer.MIN_VALUE};
+    for (int num : nums) {
+        int[] dummy = new int[3];
+        for (int i = 0; i < 3; i++) {
+            dummy[(i + num) % 3] = Math.max(dp[(i + num) % 3], dp[i] + num);
+        }
+        dp = dummy;
+    }
+    return dp[0];
+}

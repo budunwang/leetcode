@@ -1,0 +1,37 @@
+368.Largest Divisible Subset
+300 LIS
+public List<Integer> largestDivisibleSubset(int[] nums) {
+    if (nums.length == 0) {
+        return new ArrayList<Integer>();
+    }
+    Arrays.sort(nums);
+    int[] dp = new int[nums.length];
+    int[] map = new int[nums.length];
+    int max = 0;
+    int index = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int curMax = 1;
+        int curIndex = i;
+        for (int j = i - 1; j >= 0; j--) {
+            if (nums[i] % nums[j] == 0) {
+                if (curMax < dp[j]) {
+                    curIndex = j;
+                    curMax = dp[j];
+                }
+            }
+        }
+        map[i] = curIndex;
+        dp[i] = curMax + 1;
+        if (max < dp[i]) {
+            index = i;
+            max = dp[i];
+        }
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    list.add(0, nums[index]);
+    while (map[index] != index) {
+        index = map[index];
+        list.add(0, nums[index]);
+    }
+    return list;
+}

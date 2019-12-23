@@ -1,0 +1,26 @@
+875.Koko Eating Bananas
+与410类似。
+非直接的二分法。
+此二分法并非直接比较所求值，而是所求值计算出的间接值。
+与410,1011区别在于间接值的计算方法不同。
+public int minEatingSpeed(int[] piles, int H) {
+    int left = 1;
+    int right = 1000000000;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int hour = 0;
+        for (int pile : piles) {
+            if (pile < mid) {
+                hour++;
+            } else {
+                hour += pile / mid + (pile % mid == 0 ? 0 : 1);
+            }
+        }
+        if (hour > H) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return right;
+}

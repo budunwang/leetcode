@@ -1,0 +1,53 @@
+547.Friend Circles
+dfs
+public int findCircleNum(int[][] M) {
+    int length = M.length;
+    int res = 0;
+    int[] visited = new int[length];
+    for (int i = 0; i < length; i++) {
+        if (visited[i] == 0) {
+            visited[i] = 1;
+            res++;
+            dfs(M, visited, i);
+        }
+    }
+    return res;
+}
+
+public void dfs(int[][] M, int[] visited, int index) {
+    int length = M.length;
+    for (int i = 0; i < length; i++) {
+        if (M[index][i] == 1 && visited[i] == 0) {
+            visited[i] = 1;
+            dfs(M, visited, i);
+        }
+    }
+}
+
+bfs
+public int findCircleNum(int[][] M) {
+    int length = M.length;
+    int res = 0;
+    int[] visited = new int[length];
+    for (int i = 0; i < length; i++) {
+        if (visited[i] == 0) {
+            visited[i] = 1;
+            res++;
+            Queue<Integer> queue = new LinkedList<Integer>();
+            queue.add(i);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                for (int j = 0; j < size; j++) {
+                    int index = queue.poll();
+                    for (int k = 0; k < length; k++) {
+                        if (M[index][k] == 1 && visited[k] == 0) {
+                            visited[k] = 1;
+                            queue.add(k);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return res;
+}

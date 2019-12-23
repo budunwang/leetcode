@@ -1,0 +1,19 @@
+1023.Camelcase Matching
+public List<Boolean> camelMatch(String[] queries, String pattern) {
+    List<Boolean> res = new ArrayList<Boolean>();
+    for (String query : queries) {
+        char[] cq = query.toCharArray();
+        char[] cp = pattern.toCharArray();
+        int i = 0;
+        for (char c : cq) {
+            if (i < cp.length && c == cp[i]) {
+                i++;
+            } else if (c != Character.toLowerCase(c)) {
+                i = 0;
+                break;
+            }
+        }
+        res.add(i == cp.length);
+    }
+    return res;
+}

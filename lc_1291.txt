@@ -1,0 +1,23 @@
+1291.Sequential Digits
+public List<Integer> sequentialDigits(int low, int high) {
+    List<Integer> res = new ArrayList<Integer>();
+    String str = "123456789";
+    for (int i = bitCount(low); i <= bitCount(high); i++) {
+        for (int j = 0; j <= 9 - i; j++) {
+            int num = Integer.parseInt(str.substring(j, j + i));
+            if (num >= low && num <= high) {
+                res.add(num);
+            }
+        }
+    }
+    return res;
+}
+
+public int bitCount(int num) {
+    int count = 0;
+    while (num != 0) {
+        count++;
+        num /= 10;
+    }
+    return count;
+}

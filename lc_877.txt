@@ -1,0 +1,55 @@
+877.Stone Game
+486
+1.dfs
+public boolean stoneGame(int[] piles) {
+    return dfs(piles, 0, piles.length - 1) >= 0;
+}
+
+public int dfs(int[] piles, int start, int end) {
+    if (start == end) {
+        return piles[start];
+    }
+    int left = piles[start] - dfs(piles, start + 1, end);
+    int right = piles[end] - dfs(piles, start, end - 1);
+    return Math.max(left, right);
+}
+
+2.dfs + memo
+public boolean stoneGame(int[] piles) {
+    int length = piles.length;
+    int[][] m = new int[length][length];
+    return dfs(piles, 0, length - 1, m) >= 0;
+}
+
+public int dfs(int[] piles, int start, int end, int[][] m) {
+    if (m[start][end] != 0) {
+        return m[start][end];
+    }
+    if (start == end) {
+        return piles[start];
+    }
+    int left = piles[start] - dfs(piles, start + 1, end, m);
+    int right = piles[end] - dfs(piles, start, end - 1, m);
+    m[start][end] = Math.max(left, right);
+    return m[start][end];
+}
+
+3.dp
+m[i][j] = Math.max(a[i] - m[i + 1][j], a[j] - m[i][j - 1]);
+m[i][i] = a[i];
+
+public boolean stoneGame(int[] piles) {
+    int length = piles.length;
+    int[][] dp = new int[length][length];
+    for (int i = 0; i < length; i++) {
+        dp[i][i] = piles[i];
+    }
+    for (int i = 0; i < length; i++) {
+        for (int j = i - 1; j >= 0; j--) {
+            dp[j][i] = Math.max(piles[j] - dp[j + 1][i], piles[i] - dp[j][i - 1]);
+        }
+    }
+    return dp[0][length - 1] >= 0;
+}
+
+dfs -> dfs + memo -> dp

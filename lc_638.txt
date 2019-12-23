@@ -1,0 +1,35 @@
+638.Shopping Offers
+inorder visit to get rid of overlap visit
+a -> a -> b = a -> b -> a = b -> a -> a
+
+public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+    return dfs(price, special, needs, 0);
+}
+
+public int dfs(List<Integer> price, List<List<Integer>> special, List<Integer> needs, int index) {
+    int min = maxValue(price, needs);
+    for (int i = index; i < special.size(); i++) {
+        List<Integer> specialList = special.get(i);
+        int size = specialList.size();
+        int curPrice = specialList.get(size - 1);
+        List<Integer> list = new ArrayList<Integer>();   
+        boolean invalid = false;
+        for (int j = 0; j < size - 1; j++) {
+            int num = needs.get(j) - specialList.get(j);
+            list.add(num);
+            invalid = invalid || (num < 0);
+        }
+        if (!invalid) {
+            min = Math.min(min, curPrice + dfs(price, special, list, i));
+        }
+    }
+    return min;
+}
+
+public int maxValue(List<Integer> price, List<Integer> needs) {
+    int sum = 0;
+    for (int i = 0; i < needs.size(); i++) {
+        sum += price.get(i) * needs.get(i);
+    }
+    return sum;
+}
