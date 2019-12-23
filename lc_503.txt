@@ -1,0 +1,22 @@
+503.Next Greater Element II
+739
+1019
+stack for last smaller element index
+loop twice for circular array
+public int[] nextGreaterElements(int[] nums) {
+    int length = nums.length;
+    int res[] = new int[length];
+    Arrays.fill(res, -1);
+    Stack<Integer> stack = new Stack<Integer>();
+    for (int i = 0; i < length * 2; i++) {
+        int num = nums[i % length];
+        while (!stack.empty() && nums[stack.peek()] < num) {
+            int index = stack.pop();
+            res[index] = num;
+        }
+        if (i < length) {
+            stack.push(i);
+        }
+    }
+    return res;
+}
