@@ -1,0 +1,38 @@
+767.Reorganize String
+public String reorganizeString(String S) {
+    int[] map = new int[26];
+    for (char c : S.toCharArray()) {
+        map[c - 'a']++;
+        if (map[c - 'a'] > ((S.length() + 1) / 2)) {
+            return "";
+        }
+    }
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[1] - a[1]);
+    for (int i = 0; i < 26; i++) {
+        if (map[i] != 0) {
+            pq.offer(new int[] { i, map[i] });
+        }
+    }
+    StringBuilder sb = new StringBuilder();
+    while (!pq.isEmpty()) {
+        int[] first = pq.poll();
+        char c = (char) (first[0] + 'a');
+        if (sb.length() == 0 || sb.charAt(sb.length() - 1) != c) {
+            sb.append(c);
+            first[1]--;
+            if (first[1] > 0) {
+                pq.offer(first);
+            }
+        } else {
+            int[] second = pq.poll();
+            c = (char) (second[0] + 'a');
+            sb.append(c);
+            second[1]--;
+            if (second[1] > 0) {
+                pq.offer(second);
+            }
+            pq.offer(first);
+        }
+    }
+    return sb.toString();
+}
