@@ -1,0 +1,29 @@
+1138.Alphabet Board Path
+to handle 'z', 'L' should be append before 'D'
+public String alphabetBoardPath(String target) {
+    StringBuilder sb = new StringBuilder();
+    int x0 = 0;
+    int y0 = 0;
+    for (char c : target.toCharArray()) {
+        int x1 = (c - 'a') % 5;
+        int y1 = (c - 'a') / 5;
+        while (y0 - y1 > 0) {
+            sb.append('U');
+            y0 -= 1;
+        }
+        while (x1 - x0 > 0) {
+            sb.append('R');
+            x0 += 1;
+        }
+        while (x0 - x1 > 0) {
+            sb.append('L');
+            x0 -= 1;
+        }
+        while (y1 - y0 > 0) {
+            sb.append('D');
+            y0 += 1;
+        }
+        sb.append('!');
+    }
+    return sb.toString();
+}
