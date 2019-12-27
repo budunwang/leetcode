@@ -1,0 +1,41 @@
+1170.Compare Strings by Frequency of the Smallest Character
+public int[] numSmallerByFrequency(String[] queries, String[] words) {
+    int[] arr = new int[words.length];
+    for (int i = 0; i < words.length; i++) {
+        arr[i] = getFrequency(words[i]);
+    }
+    Arrays.sort(arr);
+    int[] res = new int[queries.length];
+    for (int i = 0; i < queries.length; i++) {
+        int num = getFrequency(queries[i]);
+        res[i] = binarySearch(arr, num);
+    }
+    return res;
+}
+
+public int getFrequency(String str) {
+    int[] map = new int[26];
+    for (char c : str.toCharArray()) {
+        map[c - 'a']++;
+    }
+    for (int i = 0; i < 26; i++) {
+        if (map[i] != 0) {
+            return map[i];
+        }
+    }
+    return 0;
+}
+
+public int binarySearch(int[] arr, int num) {
+    int left = 0;
+    int right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] <= num) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return arr.length - left;
+}
