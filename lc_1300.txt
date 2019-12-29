@@ -1,0 +1,29 @@
+1300.Sum of Mutated Array Closest to Target
+public int findBestValue(int[] arr, int target) {
+    Arrays.sort(arr);
+    int left = 0;
+    int right = target;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int sum = getSum(arr, mid);
+        if (sum < target) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    int leftDiff = Math.abs(target - getSum(arr, left - 1));
+    int rightDiff = Math.abs(target - getSum(arr, left));
+    return leftDiff > rightDiff ? left : left - 1;
+}
+
+public int getSum(int[] arr, int num) {
+    int length = arr.length;
+    int sum = 0;
+    int index = 0;
+    while (arr[index] < num) {
+        sum += arr[index++];
+    }
+    sum += num * (length - index);
+    return sum;
+}

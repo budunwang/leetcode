@@ -1,0 +1,11 @@
+1299.Replace Elements with Greatest Element on Right Side
+public int[] replaceElements(int[] arr) {
+    int length = arr.length;
+    int[] res = new int[length];
+    int max = -1;
+    for (int i = length - 1; i >= 0; i--) {
+        res[i] = max;
+        max = Math.max(max, arr[i]);
+    }
+    return res;
+}
