@@ -1,23 +1,55 @@
 1190.Reverse Substrings Between Each Pair of Parentheses
+1.O(n^2)
 public String reverseParentheses(String s) {
-    Stack<Character> stack = new Stack<Character>();
+    Stack<Integer> stack = new Stack<Integer>();
+    StringBuilder sb = new StringBuilder();
     for (int i = 0; i < s.length(); i++) {
-        if (s.charAt(i) != ')') {
-            stack.push(s.charAt(i));
-        } else {
-            Queue<Character> queue = new LinkedList<Character>();
-            while (stack.peek() != '(') {
-                queue.offer(stack.pop());
-            }
-            stack.pop();
-            while (!queue.isEmpty()) {
-                stack.push(queue.poll());
-            }
+        char c = s.charAt(i);
+        if (c == '(') {
+            stack.push(i);
+        } else if (c == ')') {
+            int start = stack.pop();
+            int end = i;
+            StringBuilder tmp = new StringBuilder(sb.substring(start + 1, end)).reverse();
+            sb.delete(start + 1, end);
+            sb.append(tmp);
+        }
+        sb.append(c);
+    }
+    StringBuilder str = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+        char c = sb.charAt(i);
+        if (c != '(' && c != ')') {
+            str.append(c);
+        }
+    }
+    return str.toString();
+}
+
+2.O(n)
+public String reverseParentheses(String s) {
+    Stack<Integer> stack = new Stack<Integer>();
+    int[] arr = new int[s.length()];
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == '(') {
+            stack.push(i);
+        } else if (c == ')') {
+            int num = stack.pop();
+            arr[i] = num;
+            arr[num] = i;
         }
     }
     StringBuilder sb = new StringBuilder();
-    while (!stack.isEmpty()) {
-        sb.append(stack.pop());
+    int d = 1;
+    for (int i = 0; i < s.length(); i += d) {
+        char c = s.charAt(i);
+        if (c != '(' && c != ')') {
+            sb.append(c);
+        } else {
+            i = arr[i];
+            d = -1 * d;
+        }
     }
-    return sb.reverse().toString();
+    return sb.toString();
 }

@@ -1,0 +1,36 @@
+856.Score of Parentheses
+public int scoreOfParentheses(String S) {
+    Stack<Integer> stack = new Stack<Integer>();
+    for (char c : S.toCharArray()) {
+        if (c == '(') {
+            stack.push(0);
+        } else {
+            int num = 0;
+            while (!stack.isEmpty() && stack.peek() != 0) {
+                num += stack.pop();
+            }
+            num = num == 0 ? 1 : num * 2;
+            stack.pop();
+            stack.push(num);
+        }
+    }
+    int sum = 0;
+    while (!stack.isEmpty()) {
+        sum += stack.pop();
+    }
+    return sum;
+}
+
+public int scoreOfParentheses(String S) {
+    Stack<Integer> stack = new Stack<Integer>();
+    int num = 0;
+    for (char c : S.toCharArray()) {
+        if (c == '(') {
+            stack.push(num);
+            num = 0;
+        } else {
+            num = stack.pop() + (num == 0 ? 1 : 2 * num); 
+        }
+    }
+    return num;
+}
