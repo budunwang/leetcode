@@ -1,0 +1,33 @@
+341.Flatten Nested List Iterator
+dfs
+public List<Integer> list;
+public int index;
+
+public NestedIterator(List<NestedInteger> nestedList) {
+    list = new ArrayList<Integer>();
+    index = 0;
+    dfs(nestedList);
+}
+
+public void dfs(List<NestedInteger> nestedList) {
+    if (nestedList == null) {
+        return;
+    }
+    for (NestedInteger nestedInteger : nestedList) {
+        if (nestedInteger.isInteger()) {
+            list.add(nestedInteger.getInteger());
+        } else {
+            dfs(nestedInteger.getList());
+        }
+    }
+}
+
+@Override
+public Integer next() {
+    return list.get(index++);
+}
+
+@Override
+public boolean hasNext() {
+    return index != list.size();
+}

@@ -1,0 +1,20 @@
+147.Insertion Sort List
+public ListNode insertionSortList(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    ListNode tmp = head;
+    ListNode next = null;
+    while (tmp != null) {
+        next = tmp.next;
+        ListNode idx = dummy;
+        // find right position for tmp
+        while (idx.next != null && tmp.val > idx.next.val) {
+            idx = idx.next;
+        }
+        // insert tmp
+        tmp.next = idx.next;
+        idx.next = tmp;
+        // go to next val of tmp
+        tmp = next;
+    }
+    return dummy.next;
+}

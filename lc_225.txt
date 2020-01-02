@@ -1,0 +1,44 @@
+225.Implement Stack using Queues
+public Queue<Integer> queue;
+public int peek;
+
+/** Initialize your data structure here. */
+public MyStack() {
+    queue = new LinkedList<Integer>();
+    peek = 0;
+}
+
+/** Push element x onto stack. */
+public void push(int x) {
+    queue.offer(x);
+    peek = x;
+}
+
+/** Removes the element on top of the stack and returns that element. */
+public int pop() {
+    Queue<Integer> tmp = new LinkedList<Integer>();
+    int size = queue.size();
+    int i = 0;
+    while (i < size - 1) {
+        if (i == size - 2) {
+            peek = queue.peek();
+        } 
+        tmp.offer(queue.poll());
+        i++;
+    }
+    int num = queue.poll();
+    while (!tmp.isEmpty()) {
+        queue.offer(tmp.poll());
+    }
+    return num;
+}
+
+/** Get the top element. */
+public int top() {
+    return peek;
+}
+
+/** Returns whether the stack is empty. */
+public boolean empty() {
+    return queue.isEmpty();
+}

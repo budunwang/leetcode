@@ -1,0 +1,39 @@
+331.Verify Preorder Serialization of a Binary Tree
+1.tree
+public boolean isValidSerialization(String preorder) {
+    String[] ss = preorder.split(",");
+    int count = 1;
+    for (String s : ss) {
+        count--;
+        if (count < 0) {
+            return false;
+        }
+        if (!s.equals("#")) {
+            count += 2;
+        }
+    }
+    return count == 0;
+}
+
+2.stack
+public boolean isValidSerialization(String preorder) {
+    String[] ss = preorder.split(",");
+    Stack<int[]> stack = new Stack<int[]>();
+    for (int i = 0; i < ss.length; i++) {
+        if (!ss[i].equals("#")) {
+            int num = Integer.parseInt(ss[i]);
+            stack.push(new int[] { num, 0 });
+        } else {
+            while (!stack.isEmpty() && stack.peek()[1] == 1) {
+                stack.pop();
+            }
+            if (stack.isEmpty() && i != ss.length - 1) {
+                return false;
+            }
+            if (!stack.isEmpty()) {
+                stack.peek()[1] = 1;
+            }
+        }
+    }
+    return stack.isEmpty();
+}

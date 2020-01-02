@@ -1,0 +1,41 @@
+385.Mini Parser
+use substring to count negative number
+public NestedInteger deserialize(String s) {
+    if (s.equals("")) {
+        return null;
+    }
+    if (s.charAt(0) != '[') {
+        return new NestedInteger(Integer.parseInt(s));
+    }
+    Stack<NestedInteger> stack = new Stack<NestedInteger>();
+    NestedInteger n = null;
+    int start = 0;
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == ',') {
+            String str = s.substring(start, i);
+            if (!str.equals("")) {
+                n.add(new NestedInteger(Integer.parseInt(str)));  
+            }
+            start = i + 1;
+        } else if (c == '[') {
+            if (n != null) {
+                stack.push(n);
+            }
+            n = new NestedInteger();
+            start = i + 1;
+        } else if (c == ']') {
+            String str = s.substring(start, i);
+            if (!str.equals("")) {
+                n.add(new NestedInteger(Integer.parseInt(str)));
+            }
+            if (!stack.isEmpty()) {
+                NestedInteger peek = stack.pop();
+                peek.add(n);
+                n = peek;
+            }
+            start = i + 1;
+        }
+    }
+    return n;
+}
