@@ -1,0 +1,16 @@
+1309.Decrypt String from Alphabet to Integer Mapping
+public String freqAlphabets(String s) {
+    char[] cs = s.toCharArray();
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < cs.length; i++) {
+        if (cs[i] != '#') {
+            if (i < cs.length - 2 && cs[i + 2] == '#') {
+                sb.append((char)((cs[i] - '0') * 10 + (cs[i + 1] - '0') + 'a' - 1));
+                i += 2;
+            } else {
+                sb.append((char)(cs[i] - '0' + 'a' - 1));
+            }
+        }
+    }
+    return sb.toString();
+}

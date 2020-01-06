@@ -1,12 +1,6 @@
 524.Longest Word in Dictionary through Deleting
 public String findLongestWord(String s, List<String> d) {
-    Collections.sort(d, (s1, s2) -> {
-        if (s1.length() != s2.length()) {
-            return s2.length() - s1.length();
-        } else {
-            return s1.compareTo(s2);
-        }
-    });
+    String res = "";
     for (String str : d) {
         int j = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -14,9 +8,9 @@ public String findLongestWord(String s, List<String> d) {
                 j++;
             }
         }
-        if (j == str.length()) {
-            return str;
+        if (j == str.length() && (str.length() > res.length() || (str.length() == res.length() && str.compareTo(res) < 0))) {
+            res = str;
         }
     }
-    return "";
+    return res;
 }
