@@ -1,0 +1,47 @@
+1311.Get Watched Videos by Your Friends
+public List<String> watchedVideosByFriends(List<List<String>> watchedVideos, int[][] friends, int id, int level) {
+    Queue<Integer> queue = new LinkedList<Integer>();
+    Set<Integer> visited = new HashSet<Integer>();
+    queue.offer(id);
+    visited.add(id);
+    int count = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = friends[queue.poll()];
+            for (int num : arr) {
+                if (!visited.contains(num)) {
+                    queue.offer(num);
+                    visited.add(num);
+                }
+            }
+        }
+        count++;
+        if (count == level) {
+            break;
+        }
+    }
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    while (!queue.isEmpty()) {
+        List<String> videos = watchedVideos.get(queue.poll());
+        for (String video : videos) {
+            map.put(video, map.getOrDefault(video, 0) + 1);
+        }
+    }
+    Map<Integer, Queue<String>> countMap = new TreeMap<Integer, Queue<String>>();
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        int num = entry.getValue();
+        String video = entry.getKey();
+        Queue<String> q = countMap.getOrDefault(num, new PriorityQueue<String>());
+        q.add(video);
+        countMap.put(num, q);
+    }
+    List<String> list = new ArrayList<String>();
+    for (Map.Entry<Integer, Queue<String>> entry : countMap.entrySet()) {
+        Queue<String> q = entry.getValue();
+        while (!q.isEmpty()) {
+            list.add(q.poll());
+        }
+    }
+    return list;
+}
