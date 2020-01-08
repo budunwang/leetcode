@@ -1,0 +1,9 @@
+762.Prime Number of Set Bits in Binary Representation
+public int countPrimeSetBits(int L, int R) {
+    int res = 0;
+    for (int i = L; i <= R; i++) {
+        int num = Integer.bitCount(i);
+        res += num == 2 || num == 3 || num == 5 || num == 7 || num == 11 || num == 13 || num == 17 || num == 19 ? 1 : 0;
+    }
+    return res;
+}

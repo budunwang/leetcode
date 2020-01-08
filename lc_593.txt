@@ -1,0 +1,33 @@
+593.Valid Square
+4 equal short line and 2 equal long line
+public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+    double d1 = Math.pow(p1[1] - p2[1], 2) + Math.pow(p1[0] - p2[0], 2);
+    double d2 = Math.pow(p1[1] - p3[1], 2) + Math.pow(p1[0] - p3[0], 2);
+    double d3 = Math.pow(p1[1] - p4[1], 2) + Math.pow(p1[0] - p4[0], 2);
+    double d4 = Math.pow(p2[1] - p3[1], 2) + Math.pow(p2[0] - p3[0], 2);
+    double d5 = Math.pow(p2[1] - p4[1], 2) + Math.pow(p2[0] - p4[0], 2);
+    double d6 = Math.pow(p3[1] - p4[1], 2) + Math.pow(p3[0] - p4[0], 2);
+    double[] d = new double[] { d1, d2, d3, d4, d5, d6 };
+    double maxLength = 0;
+    for (int i = 0; i < 6; i++) {
+        if (d[i] > maxLength) {
+            maxLength = d[i];
+        }
+    }
+    int maxCount = 0;
+    double length = 0;
+    for (int i = 0; i < 6; i++) {
+        if (d[i] == maxLength) {
+            maxCount++;
+        } else {
+            length = d[i];
+        }
+    }
+    int count = 0;
+    for (int i = 0; i < 6; i++) {
+        if (d[i] == length) {
+            count++;
+        }
+    }
+    return maxCount == 2 && count == 4;
+}
