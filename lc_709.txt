@@ -1,0 +1,4 @@
+709.To Lower Case
+public String toLowerCase(String str) {
+    return str.toLowerCase();
+}

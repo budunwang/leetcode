@@ -1,0 +1,27 @@
+234.Palindrome Linked List
+1.find mid by slow and fast
+2.reverse right part
+3.compare
+public boolean isPalindrome(ListNode head) {
+    ListNode fast = head;
+    ListNode slow = head;
+    while (fast != null && fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    ListNode tmp = null;
+    while (slow != null) {
+        ListNode next = slow.next;
+        slow.next = tmp;
+        tmp = slow;
+        slow = next;
+    }
+    while (head != null && tmp != null) {
+        if (head.val != tmp.val) {
+            return false;
+        }
+        head = head.next;
+        tmp = tmp.next;
+    }
+    return true;
+}

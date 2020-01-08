@@ -1,4 +1,6 @@
 712.Minimum ASCII Delete Sum for Two Strings
+LCS
+1143
 1.dfs
 public int minimumDeleteSum(String s1, String s2) {
     int[] a1 = new int[s1.length()];

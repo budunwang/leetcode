@@ -1,0 +1,60 @@
+474.Ones and Zeroes
+knapsack
+1.dp
+public int findMaxForm(String[] strs, int m, int n) {
+    int length = strs.length;
+    int[][][] dp = new int[length + 1][m + 1][n + 1];
+    for (int i = 1; i <= strs.length; i++) {
+        int[] arr = count(strs[i - 1]);
+        for (int j = 0; j <= m; j++) {
+            for (int k = 0; k <= n; k++) {
+                if (j >= arr[0] && k >= arr[1]) {
+                    dp[i][j][k] = Math.max(dp[i - 1][j][k], dp[i - 1][j - arr[0]][k - arr[1]] + 1);
+                } else {
+                    dp[i][j][k] = dp[i - 1][j][k];
+                }
+            }
+        }
+    }
+    return dp[length][m][n];
+}
+
+public int[] count(String str) {
+    int count_0 = 0;
+    for (char c : str.toCharArray()) {
+        count_0 += c == '0' ? 1 : 0;
+    }
+    return new int[] { count_0, str.length() - count_0 };
+}
+
+2.dfs
+public int max;
+
+public int findMaxForm(String[] strs, int m, int n) {
+    max = 0;
+    dfs(strs, 0, m, n, 0);
+    return max;
+}
+
+public void dfs(String[] strs, int index, int m, int n, int count) {
+    if (m == 0 && n== 0) {
+        max = Math.max(max, count);
+    }
+    if (m < 0 || n < 0) {
+        return;
+    }
+    for (int i = index; i < strs.length; i++) {
+        int[] arr = count(strs[i]);
+        dfs(strs, i + 1, m - arr[0], n - arr[1], count + 1);
+        dfs(strs, i + 1, m, n, count);
+    }
+    return;
+}
+
+public int[] count(String str) {
+    int count_0 = 0;
+    for (char c : str.toCharArray()) {
+        count_0 += c == '0' ? 1 : 0;
+    }
+    return new int[] { count_0, str.length() - count_0 };
+}

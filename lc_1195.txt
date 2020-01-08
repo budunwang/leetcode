@@ -1,0 +1,57 @@
+1195.Fizz Buzz Multithreaded
+1115
+private int n;
+private int index;
+
+public FizzBuzz(int n) {
+    this.n = n;
+    this.index = 1;
+}
+
+// printFizz.run() outputs "fizz".
+public void fizz(Runnable printFizz) throws InterruptedException {
+    while (index <= n) {
+        synchronized(this) {
+            if (index <= n && index % 3 == 0 && index % 5 != 0) {
+                printFizz.run();
+                index++;
+            }
+        }
+    }
+}
+
+// printBuzz.run() outputs "buzz".
+public void buzz(Runnable printBuzz) throws InterruptedException {
+    while (index <= n) {
+        synchronized(this) {
+            if (index <= n && index % 5 == 0 && index % 3 != 0) {
+                printBuzz.run();
+                index++;
+            }
+        }
+    }
+}
+
+// printFizzBuzz.run() outputs "fizzbuzz".
+public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
+    while (index <= n) {
+        synchronized(this) {
+            if (index <= n && index % 3 == 0 && index % 5 == 0) {
+                printFizzBuzz.run();
+                index++;
+            }
+        }
+    }
+}
+
+// printNumber.accept(x) outputs "x", where x is an integer.
+public void number(IntConsumer printNumber) throws InterruptedException {
+    while (index <= n) {
+        synchronized(this) {
+            if (index <= n && index % 3 != 0 && index % 5 != 0) {
+                printNumber.accept(index);
+                index++;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+1117.Building H2O
+1115
+private int h;
+
+public H2O() {
+    h = 0;
+}
+
+public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
+    synchronized(this) {
+        while (h == 2) {
+            this.wait();
+        }
+        // releaseHydrogen.run() outputs "H". Do not change or remove this line.
+        releaseHydrogen.run();
+        h++;
+        this.notifyAll();
+    }
+}
+
+public void oxygen(Runnable releaseOxygen) throws InterruptedException {
+    synchronized(this) {
+        while (h != 2) {
+            this.wait();
+        }
+        // releaseOxygen.run() outputs "O". Do not change or remove this line.
+        releaseOxygen.run();
+        h = 0;
+        this.notifyAll();
+    }
+}

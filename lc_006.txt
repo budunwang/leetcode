@@ -1,0 +1,35 @@
+6.ZigZag Conversion
+#i line:
+start from i
+i_1 = i + (2n - 2) - (2n - 2 * i)
+i_2 = i_1 + (2n - 2 * i)
+i_3 = i_2 + (2n - 2) - (2n - 2 * i)
+i_4 = i_3 + (2n - 2 * i)
+...
+except first line and last line
+i = i + (2n - 2)
+...
+
+public String convert(String s, int numRows) {
+    if (numRows == 1) {
+        return s;
+    }
+    StringBuilder sb = new StringBuilder();
+    int length = s.length();
+    int sum = 2 * numRows - 2;
+    int diff = sum;
+    for (int i = 0; i < numRows; i++) {
+        int start = i;
+        int curDiff = diff;
+        while (start < length) {
+            if (i == 0 || i == numRows - 1) {
+                curDiff = sum;
+            }
+            sb.append(s.charAt(start));
+            start = start + curDiff;
+            curDiff = sum - curDiff;
+        }
+        diff -= 2;
+    }
+    return sb.toString();
+}

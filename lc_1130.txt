@@ -1,0 +1,30 @@
+1130.Minimum Cost Tree From Leaf Values
+greedy
+set the largest num as the highest leaf
+1.dfs
+public int sum;
+
+public int mctFromLeafValues(int[] arr) {
+    sum = 0;
+    dfs(arr, 0, arr.length - 1);
+    return sum;
+}
+
+public int dfs(int[] arr, int left, int right) {
+    if (left > right) {
+        return 0;
+    }
+    if (left == right) {
+        return arr[left];
+    }
+    int curMaxIndex = left;
+    for (int i = left; i <= right; i++) {
+        if (arr[i] > arr[curMaxIndex]) {
+            curMaxIndex = i;
+        }
+    }
+    int curLeft = dfs(arr, left, curMaxIndex - 1);
+    int curRight = dfs(arr, curMaxIndex + 1, right);
+    sum += arr[curMaxIndex] * curLeft + arr[curMaxIndex] * curRight;
+    return arr[curMaxIndex];
+}

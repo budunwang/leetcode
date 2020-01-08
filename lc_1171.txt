@@ -1,0 +1,51 @@
+1171.Remove Zero Sum Consecutive Nodes from Linked List
+store current sum index, same sum means interval sum is 0
+1.
+public ListNode removeZeroSumSublists(ListNode head) {
+    Map<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    int sum = 0;
+    map.put(sum, dummy);
+    while (head != null) {
+        sum += head.val;
+        if (!map.containsKey(sum)) {
+            map.put(sum, head);
+        } else {
+            ListNode start = map.get(sum);
+            ListNode node = start.next;
+            int cur = sum;
+            while (node != head) {
+                cur += node.val;
+                map.remove(cur);
+                node = node.next;
+            }
+            start.next = head.next;
+            head = start;
+        }
+        head = head.next;
+    }
+    return dummy.next;
+}
+
+2.
+public ListNode removeZeroSumSublists(ListNode head) {
+    Map<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    int sum = 0;
+    ListNode node = dummy;
+    while (node != null) {
+        sum += node.val;
+        map.put(sum, node);
+        node = node.next;
+    }
+    sum = 0;
+    node = dummy;
+    while (node != null) {
+        sum += node.val;
+        node.next = map.get(sum).next;
+        node = node.next;
+    }
+    return dummy.next;
+}

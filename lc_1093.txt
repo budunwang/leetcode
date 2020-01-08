@@ -1,0 +1,53 @@
+1093.Statistics from a Large Sample
+public double[] sampleStats(int[] count) {
+    double[] arr = new double[5];
+    int minimum = count.length;
+    int maximum = 0;
+    double sum = 0;
+    int length = 0;
+    int max_length = 0;
+    int mode = 0;
+    for (int i = 0; i < count.length; i++) {
+        if (count[i] != 0) {
+            if (i < minimum) {
+                minimum = i;
+            }
+            maximum = i;
+            sum += i * count[i];
+            length += count[i];
+            if (count[i] > max_length) {
+                max_length = count[i];
+                mode = i;
+            }
+        }
+    }
+    int length_count = 0;
+    int last_index = 0;
+    int last_num = 0;
+    double median = 0;
+    int index1 = (length + 1) / 2;
+    int index2 = index1 + 1;
+    for (int i = 0; i < count.length; i++) {
+        if (count[i] != 0) {
+            length_count += count[i];
+            if (length / 2 == 1) {
+                if (length_count >= index1) {
+                    median = i;
+                    break;
+                }
+            } else {
+                if (length_count >= index2) {
+                    if (last_index != index1) {
+                        median = i;
+                    } else {
+                        median = (last_num + i) / 2.0;
+                    }
+                    break;
+                }
+            }
+            last_index = length_count;
+            last_num = i;
+        }
+    }
+    return new double[] { minimum, maximum, sum / length, median, mode };
+}

@@ -1,0 +1,22 @@
+703.Kth Largest Element in a Stream
+public PriorityQueue<Integer> pq;
+public int size;
+
+public KthLargest(int k, int[] nums) {
+    pq = new PriorityQueue<Integer>();
+    size = k;
+    for (int num : nums) {
+        pq.offer(num);
+        if (pq.size() > size) {
+            pq.poll();
+        }
+    }
+}
+
+public int add(int val) {
+    pq.offer(val);
+    if (pq.size() > size) {
+        pq.poll();
+    }
+    return pq.peek();
+}

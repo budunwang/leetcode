@@ -1,0 +1,37 @@
+457.Circular Array Loop
+public boolean circularArrayLoop(int[] nums) {
+    for (int i = 0; i < nums.length; i++) {
+        if (nums[i] <= 1000 && nums[i] >= -1001 && isCircle(nums, i)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public boolean isCircle(int[] nums, int start) {
+    int length = nums.length;
+    int last = start;
+    int circle_mark = 1001 + start;
+    while (true) {
+        int next = (last + nums[last] % length + length) % length;
+        // same node
+        if (last == next) {
+            return false;
+        }
+        // different direction
+        if (nums[last] * nums[next] < 0) {
+            return false;
+        }
+        if (nums[next] == circle_mark || nums[next] == -1 * circle_mark) {
+            // self circle visited
+            return true;
+        } else if (nums[next] < -1000 || nums[next] > 1000) {
+            // other circle visited
+            return false;
+        } else {
+            // mark
+            nums[last] = nums[last] > 0 ? circle_mark : -1 * circle_mark;   
+        }
+        last = next;
+    }
+}

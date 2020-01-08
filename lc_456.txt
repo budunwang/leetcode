@@ -1,0 +1,43 @@
+456.132 Pattern
+keep the possible largest s2
+find s1 < s2
+1.O(n)
+public boolean find132pattern(int[] nums) {
+    Stack<Integer> stack = new Stack<Integer>();
+    int s2 = Integer.MIN_VALUE;
+    for (int i = nums.length - 1; i >= 0; i--) {
+        if (nums[i] < s2) {
+            return true;
+        } else {
+            while (!stack.isEmpty() && nums[i] > stack.peek()) {
+                s2 = stack.pop();
+            }
+        }
+        stack.push(nums[i]);
+    }
+    return false;
+}
+
+2.O(n^2)
+public boolean find132pattern(int[] nums) {
+    int start = Integer.MAX_VALUE;
+    int end = 0;
+    List<int[]> list = new ArrayList<int[]>();
+    for (int i = 0; i < nums.length; i++) {
+        if (nums[i] <= start) {
+            list.add(new int[] { start, end });
+            start = nums[i];
+            end = nums[i];
+        } else if (nums[i] >= end) {
+            end = nums[i];
+        } else {
+            return true;
+        }
+        for (int[] arr : list) {
+            if (nums[i] > arr[0] && nums[i] < arr[1]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

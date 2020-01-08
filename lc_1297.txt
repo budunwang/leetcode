@@ -1,0 +1,35 @@
+1297.Maximum Number of Occurrences of a Substring
+sliding window length: maxLetters, maxSize length and minSize length
+public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+    Map<String, Integer> count = new HashMap<String, Integer>();
+    int[] map = new int[26];
+    int max = 0;
+    int left = 0;
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right) - 'a']++;
+        while (left <= right && (!isValid(map, maxLetters) || right - left + 1 > maxSize)) {
+            map[s.charAt(left) - 'a']--;
+            left++;
+        }
+        int min_left = left;
+        while (right - min_left + 1 >= minSize) {
+            String str = s.substring(min_left, right + 1);
+            int num = count.getOrDefault(str, 0) + 1;
+            count.put(str, num);
+            max = Math.max(max, num);
+            min_left++;
+        }
+    }
+    return max;
+}
+
+public boolean isValid(int[] map, int count) {
+    int sum = 0;
+    for (int i = 0; i < 26; i++) {
+        sum += map[i] > 0 ? 1 : 0;
+        if (sum > count) {
+            return false;
+        }
+    }
+    return true;
+}

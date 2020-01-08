@@ -1,0 +1,22 @@
+82.Remove Duplicates from Sorted List II
+two point
+idx to jump duplicate
+tmp to return list
+public ListNode deleteDuplicates(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode tmp = dummy;
+    ListNode idx = head;
+    while (idx != null) {
+        while (idx.next != null && idx.val == idx.next.val) {
+            idx = idx.next;
+        }
+        if (tmp.next == idx) {
+            tmp = tmp.next;
+        } else {
+            tmp.next = idx.next;
+        }
+        idx = idx.next;
+    }
+    return dummy.next;
+}

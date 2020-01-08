@@ -1,0 +1,20 @@
+29.Divide Two Integers
+bit change to handle long num
+public int divide(int dividend, int divisor) {
+    if (dividend == 1 << 31 && divisor == -1) {
+        return (1 << 31) - 1;
+    }
+    int sign = (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0) ? 1 : -1;
+    int n1 = Math.abs(dividend);
+    int n2 = Math.abs(divisor);
+    int res = 0;
+    while (n1 - n2 >= 0) {
+        int i = 0;
+        while (n1 - (n2 << i << 1) >= 0) {
+            i++;
+        }
+        res += 1 << i;
+        n1 -= n2 << i;
+    }
+    return sign == 1 ? res : -1 * res;
+}
