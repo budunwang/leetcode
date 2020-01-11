@@ -1,0 +1,31 @@
+692.Top K Frequent Words
+347
+bucket
+public List<String> topKFrequent(String[] words, int k) {
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    for (String word : words) {
+        map.put(word, map.getOrDefault(word, 0) + 1);
+    }
+    List<String>[] bucket = (List<String>[]) new List[words.length + 1];
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        int num = entry.getValue();
+        String str = entry.getKey();
+        if (bucket[num] == null) {
+            bucket[num] = new ArrayList<String>();
+        }
+        bucket[num].add(str);
+    }
+    List<String> res = new ArrayList<String>();
+    for (int i = words.length; i >= 0; i--) {
+        if (bucket[i] != null) {
+            Collections.sort(bucket[i]);
+            for (String str : bucket[i]) {
+                res.add(str);
+                if (res.size() == k) {
+                    return res;
+                }
+            }
+        }
+    }
+    return res;
+}
