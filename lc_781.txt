@@ -1,0 +1,13 @@
+781.Rabbits in Forest
+public int numRabbits(int[] answers) {
+    int[] map = new int[1000];
+    int sum = 0;
+    for (int num : answers) {
+        if (map[num] == 0) {
+            map[num] = num + 1;
+            sum += num + 1;
+        }
+        map[num]--;
+    }
+    return sum;
+}
