@@ -1,0 +1,22 @@
+1317.Convert Integer to the Sum of Two No-Zero Integers
+public int[] getNoZeroIntegers(int n) {
+    int[] arr = new int[2];
+    for (int i = 1; i <= n / 2; i++) {
+        if (isValid(i) && isValid(n - i)) {
+            arr[0] = i;
+            arr[1] = n - i;
+            break;
+        }
+    }
+    return arr;
+}
+
+public boolean isValid(int num) {
+    while (num != 0) {
+        if (num % 10 == 0) {
+            return false;
+        }
+        num /= 10;
+    }
+    return true;
+}

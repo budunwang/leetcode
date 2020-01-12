@@ -1,0 +1,17 @@
+1315.Sum of Nodes with Even-Valued Grandparent
+public int sumEvenGrandparent(TreeNode root) {
+    return dfs(root, 1, 1);
+}
+
+public int dfs(TreeNode root, int l0, int l1) {
+    if (root == null) {
+        return 0;
+    }
+    int left = dfs(root.left, l1, root.val);
+    int right = dfs(root.right, l1, root.val);
+    int sum = left + right;
+    if (l0 % 2 == 0) {
+        sum += root.val;
+    }
+    return sum;
+}

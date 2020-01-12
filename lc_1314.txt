@@ -1,0 +1,22 @@
+1314.Matrix Block Sum
+1292
+public int[][] matrixBlockSum(int[][] mat, int K) {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[][] dp = new int[row + 1][col + 1];
+    for (int i = 1; i <= row; i++) {
+        for (int j = 1; j <= col; j++) {
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1] + mat[i - 1][j - 1] - dp[i - 1][j - 1];
+        }
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            int row_min = Math.max(0, i - K);
+            int row_max = Math.min(row - 1, i + K);
+            int col_min = Math.max(0, j - K);
+            int col_max = Math.min(col - 1, j + K);
+            mat[i][j] = dp[row_max + 1][col_max + 1] - dp[row_max + 1][col_min] - dp[row_min][col_max + 1] + dp[row_min][col_min];
+        }
+    }
+    return mat;
+}
