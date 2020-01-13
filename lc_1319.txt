@@ -1,0 +1,39 @@
+1319.Number of Operations to Make Network Connected
+public Set<Integer> visited;
+
+public int makeConnected(int n, int[][] connections) {
+    if (connections.length < n - 1) {
+        return -1;
+    }
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (int[] connection : connections) {
+        if (!map.containsKey(connection[0])) {
+            map.put(connection[0], new ArrayList<Integer>());
+        }
+        map.get(connection[0]).add(connection[1]);
+        if (!map.containsKey(connection[1])) {
+            map.put(connection[1], new ArrayList<Integer>());
+        }
+        map.get(connection[1]).add(connection[0]);
+    }
+    visited = new HashSet<Integer>();
+    int group = 0;
+    for (int i = 0; i < n; i++) {
+        group += dfs(map, i);
+    }
+    return group - 1;
+}
+
+public int dfs(Map<Integer, List<Integer>> map, int start) {
+    if (visited.contains(start)) {
+        return 0;
+    }
+    visited.add(start);
+    if (map.containsKey(start)) {
+        List<Integer> list = map.get(start);
+        for (int i : list) {
+            dfs(map, i);
+        }
+    }
+    return 1;
+}

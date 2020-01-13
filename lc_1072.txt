@@ -1,0 +1,24 @@
+1072.Flip Columns For Maximum Number of Equal Rows
+equal row after flip = equal row before flip + completely unequal row before flip
+public int maxEqualRowsAfterFlips(int[][] matrix) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    for (int i = 0; i < row; i++) {
+        StringBuilder sb_0 = new StringBuilder();
+        StringBuilder sb_1 = new StringBuilder();
+        for (int j = 0; j < col; j++) {
+            sb_0.append((char) matrix[i][j]);
+            sb_1.append((char) ((matrix[i][j] + 1) % 2));
+        }
+        String s_0 = sb_0.toString();
+        String s_1 = sb_1.toString();
+        map.put(s_0, map.getOrDefault(s_0, 0) + 1);
+        map.put(s_1, map.getOrDefault(s_1, 0) + 1);
+    }
+    int max = 0;
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        max = Math.max(max, entry.getValue());
+    }
+    return max;
+}

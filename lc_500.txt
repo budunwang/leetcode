@@ -1,0 +1,26 @@
+500.Keyboard Row
+public String[] findWords(String[] words) {
+    Set<Character> set0 = new HashSet<Character>(Arrays.asList(new Character[] {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'}));
+    Set<Character> set1 = new HashSet<Character>(Arrays.asList(new Character[] {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'}));
+    Set<Character> set2 = new HashSet<Character>(Arrays.asList(new Character[] {'z', 'x', 'c', 'v', 'b', 'n', 'm'}));
+    List<String> list = new ArrayList<String>();
+    for (String word : words) {
+        boolean isSet0 = true;
+        boolean isSet1 = true;
+        boolean isSet2 = true;
+        for (char c : word.toCharArray()) {
+            char dummy = Character.toLowerCase(c);
+            isSet0 &= set0.contains(dummy);
+            isSet1 &= set1.contains(dummy);
+            isSet2 &= set2.contains(dummy);
+        }
+        if (isSet0 || isSet1 || isSet2) {
+            list.add(word);
+        }
+    }
+    String[] res = new String[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+        res[i] = list.get(i);
+    }
+    return res;
+}
