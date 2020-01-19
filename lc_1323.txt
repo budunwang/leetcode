@@ -1,0 +1,23 @@
+1323.Maximum 69 Number
+public int maximum69Number (int num) {
+    List<Integer> list = new ArrayList<Integer>();
+    int last = -1;
+    int i = 0;
+    while (num != 0) {
+        if (num % 10 == 6) {
+            last = i; 
+        }
+        list.add(num % 10);
+        num /= 10;
+        i++;
+    }
+    int sum = 0;
+    for (int j = list.size() - 1; j >= 0; j--) {
+        int n = list.get(j);
+        if (j == last) {
+            n = 9;
+        }
+        sum = sum * 10 + n;
+    }
+    return sum;
+}

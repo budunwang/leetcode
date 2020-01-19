@@ -1,0 +1,25 @@
+1324.Print Words Vertically
+public List<String> printVertically(String s) {
+    String[] ss = s.split(" ");
+    int max = 0;
+    for (String str : ss) {
+        max = Math.max(max, str.length());
+    }
+    List<String> list = new ArrayList<String>();
+    for (int i = 0; i < max; i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < ss.length; j++) {
+            if (i < ss[j].length()) {
+                sb.append(ss[j].charAt(i));
+            } else {
+                sb.append(' ');
+            }
+        }
+        int j = sb.length() - 1;
+        while (j >= 0 && sb.charAt(j) == ' ') {
+            j--;
+        }
+        list.add(sb.substring(0, j + 1));
+    }
+    return list;
+}
