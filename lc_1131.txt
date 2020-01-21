@@ -1,0 +1,30 @@
+1131.Maximum of Absolute Value Expression
+public int maxAbsValExpr(int[] arr1, int[] arr2) {
+    int max1 = Integer.MIN_VALUE;
+    int min1 = Integer.MAX_VALUE;
+    int max2 = Integer.MIN_VALUE;
+    int min2 = Integer.MAX_VALUE;
+    int max3 = Integer.MIN_VALUE;
+    int min3 = Integer.MAX_VALUE;
+    int max4 = Integer.MIN_VALUE;
+    int min4 = Integer.MAX_VALUE;
+    for (int i = 0; i < arr1.length; i++) {
+        int n1 = arr1[i] + arr2[i] + i;
+        int n2 = arr1[i] - arr2[i] + i;
+        int n3 = arr1[i] + arr2[i] - i;
+        int n4 = arr1[i] - arr2[i] - i;
+        max1 = Math.max(max1, n1);
+        min1 = Math.min(min1, n1);
+        max2 = Math.max(max2, n2);
+        min2 = Math.min(min2, n2);
+        max3 = Math.max(max3, n3);
+        min3 = Math.min(min3, n3);
+        max4 = Math.max(max4, n4);
+        min4 = Math.min(min4, n4);
+    }
+    int sum1 = max1 - min1;
+    int sum2 = max2 - min2;
+    int sum3 = max3 - min3;
+    int sum4 = max4 - min4;
+    return Math.max(Math.max(sum1, sum2), Math.max(sum3, sum4));
+}

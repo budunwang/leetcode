@@ -1,0 +1,29 @@
+869.Reordered Power of 2
+318
+public boolean reorderedPowerOf2(int N) {
+    int[] map = getMap(N);
+    for (int i = 0; i < 31; i++) {
+        int num = 1 << i;
+        int[] arr = getMap(num);
+        boolean isEqual = true;
+        for (int j = 0; j < 10; j++) {
+            if (map[j] != arr[j]) {
+                isEqual = false;
+                break;
+            }
+        }
+        if (isEqual) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public int[] getMap(int N) {
+    int[] map = new int[10];
+    while (N != 0) {
+        map[N % 10]++;
+        N /= 10;
+    }
+    return map;
+}
