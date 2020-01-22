@@ -1,0 +1,10 @@
+462.Minimum Moves to Equal Array Elements II
+public int minMoves2(int[] nums) {
+    Arrays.sort(nums);
+    int mid = nums[(nums.length - 1) / 2];
+    int sum = 0;
+    for (int num : nums) {
+        sum += num > mid ? num - mid : mid - num;
+    }
+    return sum;
+}
