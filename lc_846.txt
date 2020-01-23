@@ -1,0 +1,21 @@
+846.Hand of Straights
+public boolean isNStraightHand(int[] hand, int W) {
+    Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+    for (int num : hand) {
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+    for (int num : map.keySet()) {
+        int count = map.get(num);
+        if (count <= 0) {
+            continue;
+        }
+        for (int i = 0; i < W; i++) {
+            int nextCount = map.getOrDefault(num + i, 0);
+            if (nextCount < count) {
+                return false;
+            }
+            map.put(num + i, nextCount - count);
+        }
+    }
+    return true;
+}
