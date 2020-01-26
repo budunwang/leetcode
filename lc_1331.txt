@@ -1,0 +1,19 @@
+1331.Rank Transform of an Array
+public int[] arrayRankTransform(int[] arr) {
+    Queue<Integer> queue = new PriorityQueue<Integer>();
+    for (int num : arr) {
+        queue.offer(num);
+    }
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    int i = 1;
+    while (!queue.isEmpty()) {
+        int num = queue.poll();
+        if (!map.containsKey(num)) {
+            map.put(num, i++);
+        }
+    }
+    for (int j = 0; j < arr.length; j++) {
+        arr[j] = map.get(arr[j]);
+    }
+    return arr;
+}
