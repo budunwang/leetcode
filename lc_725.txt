@@ -1,0 +1,23 @@
+725.Split Linked List in Parts
+public ListNode[] splitListToParts(ListNode root, int k) {
+    ListNode[] arr = new ListNode[k];
+    ListNode head = root;
+    int count = 1;
+    while (head != null) {
+        head = head.next;
+        count++;
+    }
+    int length = (count - 1) / k;
+    int extra = (count - 1) % k;
+    ListNode tmp = null;
+    for (int i = 0; i < k && root != null; i++) {
+        arr[i] = root;
+        for (int j = 0; j < length + (extra > 0 ? 1 : 0); j++) {
+            tmp = root;
+            root = root.next;
+        }
+        tmp.next = null;
+        extra--;
+    }
+    return arr;
+}
