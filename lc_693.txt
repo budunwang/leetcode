@@ -1,0 +1,14 @@
+693.Binary Number with Alternating Bits
+public boolean hasAlternatingBits(int n) {
+    int last = -1;
+    while (n != 0) {
+        int cur = n & 1;
+        if (cur != last || last == -1) {
+            last = cur;
+            n = n >> 1;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
