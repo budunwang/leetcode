@@ -1,0 +1,27 @@
+1343.Maximum Product of Splitted Binary Tree
+public long max;
+
+public int maxProduct(TreeNode root) {
+    max = 0;
+    long sum = getSum(root);
+    dfs(root, sum);
+    return (int)(max % (1e9 + 7));
+}
+
+public long getSum(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return root.val + getSum(root.left) + getSum(root.right);
+}
+
+public long dfs(TreeNode root, long sum) {
+    if (root == null) {
+        return 0;
+    }
+    long left = dfs(root.left, sum);
+    long right = dfs(root.right, sum);
+    long num = root.val + left + right;
+    max = Math.max(max, (sum - num) * num);
+    return num;
+}

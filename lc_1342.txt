@@ -1,5 +1,6 @@
 1342.Reduce Array Size to The Half
-sort and bucket
+top k
+bucket
 public int minSetSize(int[] arr) {
     Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     for (int num : arr) {
