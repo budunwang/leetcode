@@ -1,0 +1,23 @@
+989.Add to Array-Form of Integer
+public List<Integer> addToArrayForm(int[] A, int K) {
+    int[] k = new int[5];
+    int i = k.length - 1;
+    while (K != 0) {
+        k[i--] = K % 10;
+        K /= 10;
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    int c = 0;
+    int length = Math.max(A.length, k.length - i - 1);
+    for (int j = 0; j < length; j++) {
+        int a = A.length - j - 1 >= 0 ? A[A.length - j - 1] : 0;
+        int b = k.length - j - 1 >= 0 ? k[k.length - j - 1] : 0;
+        int sum = a + b + c;
+        list.add(0, sum % 10);
+        c = sum / 10;
+    }
+    if (c != 0) {
+        list.add(0, c);
+    }
+    return list;
+}
