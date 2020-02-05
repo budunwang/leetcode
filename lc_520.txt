@@ -1,0 +1,14 @@
+520.Detect Capital
+public boolean detectCapitalUse(String word) {
+    boolean isValid_0 = true;
+    boolean isValid_1 = true;
+    int i = 0;
+    for (char c : word.toCharArray()) {
+        isValid_0 = isValid_0 & Character.isUpperCase(c);
+        if (i != 0) {
+            isValid_1 = isValid_1 & Character.isLowerCase(c);
+        }
+        i++;
+    }
+    return isValid_0 || isValid_1;
+}
