@@ -1,0 +1,16 @@
+554.Brick Wall
+public int leastBricks(List<List<Integer>> wall) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    int max = 0;
+    for (List<Integer> list : wall) {
+        int sum = 0;
+        for (int i = 0; i < list.size() - 1; i++) {
+            int num = list.get(i);
+            sum += num;
+            int count = map.getOrDefault(sum, 0) + 1;
+            map.put(sum, count);
+            max = Math.max(max, count);
+        }
+    }
+    return wall.size() - max;
+}
