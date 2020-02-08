@@ -2,18 +2,24 @@
 public int rotatedDigits(int N) {
     int sum = 0;
     for (int i = 1; i <= N; i++) {
-        sum += isValid(i) ? 1 : 0;
+        if (isValid(i)) {
+            sum++;
+        }
     }
     return sum;
 }
 
 public boolean isValid(int num) {
+    boolean isEqual = true;
     while (num != 0) {
         int n = num % 10;
-        if (n != 0 && n != 1 && n != 2 && n != 5 && n != 6 && n != 9) {
+        if (n != 0 && n != 1 && n != 2 && n != 5 && n != 8 && n != 6 && n != 9) {
             return false;
+        }
+        if (n == 2 || n == 5 || n == 6 || n == 9) {
+            isEqual = false;
         }
         num /= 10;
     }
-    return true;
+    return !isEqual;
 }
