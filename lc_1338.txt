@@ -1,0 +1,31 @@
+1338.Reduce Array Size to The Half
+top k
+bucket
+public int minSetSize(int[] arr) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int num : arr) {
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+    List<Integer>[] list = new List[arr.length + 1];
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        int count = entry.getValue();
+        if (list[count] == null) {
+            list[count] = new ArrayList<Integer>();
+        }
+        list[count].add(entry.getKey());
+    }
+    int sum = 0;
+    int set = 0;
+    for (int i = arr.length; i >= 0; i--) {
+        if (list[i] != null) {
+            for (int num : list[i]) {
+                sum += i;
+                set++;
+                if (sum >= arr.length / 2) {
+                    return set; 
+                }
+            }
+        }
+    }
+    return sum;
+}
