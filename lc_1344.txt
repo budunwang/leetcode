@@ -1,0 +1,7 @@
+1344.Angle Between Hands of a Clock
+public double angleClock(int hour, int minutes) {
+    double curMin = minutes * 6;
+    double curHour = (hour * 30 + minutes / 2.0) % 360;
+    double diff = Math.abs(curHour - curMin);
+    return Math.min(diff, 360 - diff);
+}
