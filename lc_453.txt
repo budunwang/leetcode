@@ -1,0 +1,11 @@
+453.Minimum Moves to Equal Array Elements
+public int minMoves(int[] nums) {
+    int length = nums.length;
+    int min = Integer.MAX_VALUE;
+    int sum = 0;
+    for (int num : nums) {
+        min = Math.min(min, num);
+        sum += num;
+    }
+    return sum - min * length;
+}
