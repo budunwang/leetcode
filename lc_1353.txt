@@ -1,0 +1,24 @@
+1353.Maximum Number of Events That Can Be Attended
+greedy
+sort to get earlier end and later start
+public int maxEvents(int[][] events) {
+    Arrays.sort(events, (a, b) -> {
+        if (a[1] == b[1]) {
+            return b[0] - a[0];
+        } else {
+            return a[1] - b[1];
+        }
+    });
+    int[] visited = new int[100001];
+    int sum = 0;
+    for (int[] event : events) {
+        for (int i = event[0]; i <= event[1]; i++) {
+            if (visited[i] == 0) {
+                visited[i] = 1;
+                sum++;
+                break;
+            }
+        }
+    }
+    return sum;
+}
