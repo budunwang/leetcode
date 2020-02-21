@@ -1,0 +1,24 @@
+506.Relative Ranks
+public String[] findRelativeRanks(int[] nums) {
+    int[][] map = new int[nums.length][2];
+    for (int i = 0; i < nums.length; i++) {
+        map[i][0] = nums[i];
+        map[i][1] = i;
+    }
+    Arrays.sort(map, (a, b) -> {
+        return b[0] - a[0];
+    });
+    String[] ss = new String[nums.length];
+    for (int i = 0; i < nums.length; i++) {
+        if (i == 0) {
+            ss[map[i][1]] = "Gold Medal";
+        } else if (i == 1) {
+            ss[map[i][1]] = "Silver Medal";
+        } else if (i == 2) {
+            ss[map[i][1]] = "Bronze Medal";
+        } else {
+            ss[map[i][1]] = i + 1 + "";
+        }
+    }
+    return ss;
+}
