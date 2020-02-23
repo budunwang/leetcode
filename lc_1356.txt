@@ -1,0 +1,21 @@
+1356.Sort Integers by The Number of 1 Bits
+public int[] sortByBits(int[] arr) {
+    Arrays.sort(arr, (a, b) -> {
+        String s_a = Integer.toBinaryString(a);
+        String s_b = Integer.toBinaryString(b);
+        int n_a = 0;
+        int n_b = 0;
+        for (char c : s_a.toCharArray()) {
+            n_a += c == '1' ? 1 : 0;
+        }
+        for (char c : s_b.toCharArray()) {
+            n_b += c == '1' ? 1 : 0;
+        }
+        if (n_a != n_b) {
+            return n_a - n_b;
+        } else {
+            return a - b;
+        }
+    });
+    return arr;
+}
