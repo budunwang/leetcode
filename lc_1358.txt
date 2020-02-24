@@ -1,0 +1,29 @@
+1358.Number of Substrings Containing All Three Characters
+sliding window
+window size is substring meets a = 1, b = 1, c = 1
+public int numberOfSubstrings(String s) {
+    int[] map = new int[3];
+    int sum = 0;
+    int lastSum = 0;
+    int left = 0;
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right) - 'a']++;
+        int count = 0;
+        while (isValid(map)) {
+            map[s.charAt(left++) - 'a']--;
+            count++;
+        }
+        lastSum += count;
+        sum += lastSum;
+    }
+    return sum;
+}
+
+public boolean isValid(int[] arr) {
+    for (int num : arr) {
+        if (num == 0) {
+            return false;
+        }
+    }
+    return true;
+}

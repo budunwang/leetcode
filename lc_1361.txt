@@ -1,0 +1,35 @@
+1361.Validate Binary Tree Nodes
+build the tree
+1.no circle
+2.valid treeNode number = n
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+public Set<Integer> set;
+public boolean isValid;
+
+public boolean validateBinaryTreeNodes(int n, int[] leftChild, int[] rightChild) {
+    set = new HashSet<Integer>();
+    isValid = true;
+    build(n, 0, leftChild, rightChild);
+    return isValid && set.size() == n;
+}
+
+public TreeNode build(int n, int i, int[] leftChild, int[] rightChild) {
+    if (i == -1) {
+        return null;
+    }
+    if (set.contains(i)) {
+        isValid = false;
+        return null;
+    }
+    set.add(i);
+    TreeNode treeNode = new TreeNode(i);
+    treeNode.left = build(n, leftChild[i], leftChild, rightChild);
+    treeNode.right = build(n, rightChild[i], leftChild, rightChild);
+    return treeNode;
+}

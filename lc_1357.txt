@@ -1,0 +1,28 @@
+1357.Apply Discount Every n Orders
+public Map<Integer, Integer> map;
+public int count;
+public int target;
+public int disCount;
+
+public Cashier(int n, int discount, int[] products, int[] prices) {
+    map = new HashMap<Integer, Integer>();
+    count = 0;
+    target = n;
+    disCount = discount;
+    for (int i = 0; i < products.length; i++) {
+        map.put(products[i], prices[i]);
+    }
+}
+
+public double getBill(int[] product, int[] amount) {
+    double sum = 0;
+    for (int i = 0; i < product.length; i++) {
+        sum += map.get(product[i]) * amount[i];
+    }
+    count++;
+    if (count == target) {
+        count = 0;
+        return sum  - sum * (disCount / (double) 100);
+    }
+    return sum;
+}
