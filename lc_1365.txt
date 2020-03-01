@@ -1,0 +1,17 @@
+1365.How Many Numbers Are Smaller Than the Current Number
+public int[] smallerNumbersThanCurrent(int[] nums) {
+    int[] map = new int[101];
+    for (int num : nums) {
+        map[num]++;
+    }
+    int sum = 0;
+    for (int i = 0; i < 101; i++) {
+        int tmp = map[i];
+        map[i] = sum;
+        sum += tmp;
+    }
+    for (int i = 0; i < nums.length; i++) {
+        nums[i] = map[nums[i]];
+    }
+    return nums;
+}
