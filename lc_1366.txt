@@ -1,0 +1,29 @@
+1366.Rank Teams by Votes
+public String rankTeams(String[] votes) {
+    Map<Character, int[]> map = new HashMap<Character, int[]>();
+    for (String vote : votes) {
+        char[] cs = vote.toCharArray();
+        for (int i = 0; i < cs.length; i++) {
+            if (!map.containsKey(cs[i])) {
+                map.put(cs[i], new int[cs.length]);
+            }
+            map.get(cs[i])[i]++;
+        }
+    }
+    List<Character> list = new ArrayList<Character>(map.keySet());
+    Collections.sort(list, (a, b) -> {
+        int[] as = map.get(a);
+        int[] bs = map.get(b);
+        for (int i = 0; i < as.length; i++) {
+            if (as[i] != bs[i]) {
+                return bs[i] - as[i];
+            }
+        }
+        return a - b;
+    });
+    StringBuilder sb = new StringBuilder();
+    for (char c : list) {
+        sb.append(c);
+    }
+    return sb.toString();
+}
