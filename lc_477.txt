@@ -1,0 +1,13 @@
+477.Total Hamming Distance
+public int totalHammingDistance(int[] nums) {
+    int sum = 0;
+    for (int i = 0; i < 32; i++) {
+        int count_1 = 0;
+        for (int j = 0; j < nums.length; j++) {
+            count_1 += nums[j] & 1;
+            nums[j] = nums[j] >> 1;
+        }
+        sum += count_1 * (nums.length - count_1);
+    }
+    return sum;
+}
