@@ -1,0 +1,48 @@
+966.Vowel Spellchecker
+public String[] spellchecker(String[] wordlist, String[] queries) {
+    Map<String, String> map_0 = new HashMap<String, String>();
+    Map<String, String> map_1 = new HashMap<String, String>();
+    Map<String, String> map_2 = new HashMap<String, String>();
+    for (String word : wordlist) {
+        map_0.put(word, word);
+        if (!map_1.containsKey(word.toLowerCase())) {
+            map_1.put(word.toLowerCase(), word);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : word.toLowerCase().toCharArray()) {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                sb.append('a');
+            } else {
+                sb.append(c);
+            }
+        }
+        String s = sb.toString();
+        if (!map_2.containsKey(s)) {
+            map_2.put(s, word);
+        }
+    }
+    String[] ss = new String[queries.length];
+    for (int i = 0; i < queries.length; i++) {
+        String s_0 = queries[i];
+        String s_1 = queries[i].toLowerCase();
+        StringBuilder sb = new StringBuilder();
+        for (char c : s_1.toCharArray()) {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                sb.append('a');
+            } else {
+                sb.append(c);
+            }
+        }
+        String s_2 = sb.toString().toLowerCase();
+        if (map_0.containsKey(s_0)) {
+            ss[i] = map_0.get(s_0);
+        } else if (map_1.containsKey(s_1)) {
+            ss[i] = map_1.get(s_1);
+        } else if (map_2.containsKey(s_2)) {
+            ss[i] = map_2.get(s_2);
+        } else {
+            ss[i] = "";
+        }
+    }
+    return ss;
+}

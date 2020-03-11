@@ -1,0 +1,15 @@
+242.Valid Anagram
+public boolean isAnagram(String s, String t) {
+    int[] map = new int[26];
+    for (char c : s.toCharArray()) {
+        map[c - 'a']++;
+    }
+    for (char c : t.toCharArray()) {
+        map[c - 'a']--;
+    }
+    boolean res = true;
+    for (int i : map) {
+        res &= i == 0;
+    }
+    return res;
+}

@@ -1,0 +1,31 @@
+1081.Smallest Subsequence of Distinct Characters
+316
+stack
+1.stack.peek() < c
+2.stack.peek() is the last one
+3.no duplicate character in stack
+public String smallestSubsequence(String text) {
+    Stack<Character> stack = new Stack<Character>();
+    Set<Character> set = new HashSet<Character>();
+    int[] map = new int[26];
+    for (char c : text.toCharArray()) {
+        map[c - 'a']++;
+    }
+    for (int i = 0; i < text.length(); i++) {
+        char c = text.charAt(i);
+        map[c - 'a']--;
+        if (set.contains(c)) {
+            continue;
+        }
+        while (!stack.isEmpty() && c < stack.peek() && map[stack.peek() - 'a'] != 0) {
+            set.remove(stack.pop());
+        }
+        set.add(c);
+        stack.push(c);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (char c : stack) {
+        sb.append(c);
+    }
+    return sb.toString();
+}

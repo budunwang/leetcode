@@ -1,0 +1,56 @@
+347.Top K Frequent Elements
+274
+1.O(N)
+bucket
+public List<Integer> topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> n_map = new HashMap<Integer, Integer>();
+    for (int num : nums) {
+        n_map.put(num, n_map.getOrDefault(num, 0) + 1);
+    }
+    List<Integer>[] f_map = (List<Integer>[]) new List[nums.length + 1];
+    for (Map.Entry<Integer, Integer> entry : n_map.entrySet()) {
+        int key = entry.getKey();
+        int val = entry.getValue();
+        if (f_map[val] == null) {
+            f_map[val] = new ArrayList<Integer>();
+        }
+        f_map[val].add(key);
+    }
+    List<Integer> res = new ArrayList<Integer>();
+    for (int i = nums.length; i >= 0 && res.size() < k; i--) {
+        if (f_map[i] != null) {
+            res.addAll(f_map[i]);
+        }
+    }
+    return res;
+}
+
+2.O(NlgN)
+heap
+public List<Integer> topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> n_map = new HashMap<Integer, Integer>();
+    for (int num : nums) {
+        n_map.put(num, n_map.getOrDefault(num, 0) + 1);
+    }
+    Map<Integer, List<Integer>> f_map = new HashMap<Integer, List<Integer>>();
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>(k, (a, b) -> b - a);
+    for (Map.Entry<Integer, Integer> entry : n_map.entrySet()) {
+        int key = entry.getKey();
+        int val = entry.getValue();
+        if (f_map.containsKey(val)) {
+            f_map.get(val).add(key);
+        } else {
+            List<Integer> list = new ArrayList<Integer>();
+            list.add(key);
+            f_map.put(val, list);
+            pq.offer(val);
+        }
+    }
+    List<Integer> res = new ArrayList<Integer>();
+    while (!pq.isEmpty() && res.size() < k) {
+        List<Integer> list = f_map.get(pq.poll());
+        res.addAll(list);
+    }
+    return res;
+}
+

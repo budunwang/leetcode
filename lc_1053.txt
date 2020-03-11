@@ -1,0 +1,26 @@
+1053.Previous Permutation With One Swap
+greedy
+First Swap index: the last point before increasing sequence
+Second Swap index: the first point after first swap index and value is the closest to first swap value (smaller)
+public int[] prevPermOpt1(int[] A) {
+    int length = A.length;
+    int index_0 = 0;
+    for (int i = length - 2; i >= 0; i--) {
+        if (A[i] > A[i + 1]) {
+            index_0 = i;
+            break;
+        }
+    }
+    int index_1 = 0;
+    int last_max = 0;
+    for (int i = index_0 + 1; i < length; i++) {
+        if (A[i] < A[index_0] && A[i] > last_max) {
+            index_1 = i;
+            last_max = A[i];
+        }
+    }
+    int tmp = A[index_0];
+    A[index_0] = A[index_1];
+    A[index_1] = tmp;
+    return A;
+}

@@ -1,0 +1,33 @@
+1094.Car Pooling
+253
+1.O(n)
+public boolean carPooling(int[][] trips, int capacity) {
+    int[] map = new int[1001];
+    for (int[] trip : trips) {
+        map[trip[1]] += trip[0];
+        map[trip[2]] -= trip[0];
+    }
+    int sum = 0;
+    for (int i = 0; i < 1001; i++) {
+        sum += map[i];
+        if (sum > capacity) {
+            return false;
+        }
+    }
+    return true;
+}
+
+2.O(mn)
+public boolean carPooling(int[][] trips, int capacity) {
+    Arrays.sort(trips, (a, b) -> a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]);
+    int[] map = new int[1001];
+    for (int[] trip : trips) {
+        for (int i = trip[1]; i < trip[2]; i++) {
+            map[i] += trip[0];
+            if (map[i] > capacity) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

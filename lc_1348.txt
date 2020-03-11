@@ -1,0 +1,41 @@
+1348.Tweet Counts Per Frequency
+bucket
+start from startTime, end to endTime, gap is freq last time
+public HashMap<String, List<Integer>> map;
+
+public TweetCounts() {
+    map = new HashMap<String, List<Integer>>();
+}
+
+public void recordTweet(String tweetName, int time) {
+    if (!map.containsKey(tweetName)) {
+        map.put(tweetName, new ArrayList<Integer>());
+    }
+    map.get(tweetName).add(time);
+}
+
+public List<Integer> getTweetCountsPerFrequency(String freq, String tweetName, int startTime, int endTime) {
+    int delta = 60;
+    if (freq.equals("hour")) {
+        delta = 3600;
+    } else if (freq.equals("day")) {
+        delta = 86400;
+    }
+    if (!map.containsKey(tweetName)) {
+        return null;
+    }
+    List<Integer> list = map.get(tweetName);
+    int size = (endTime - startTime) / delta + 1;
+    int[] bucket = new int[size];
+    for (int num : list) {
+        if (num >= startTime && num <= endTime) {
+            int index = (num - startTime) / delta;
+            bucket[index]++;
+        }
+    }
+    List<Integer> res = new ArrayList<Integer>();
+    for (int num : bucket) {
+        res.add(num);
+    }
+    return res;
+}

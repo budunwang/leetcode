@@ -1,0 +1,39 @@
+1054.Distant Barcodes
+767
+greedy
+public int[] rearrangeBarcodes(int[] barcodes) {
+    int[] map = new int[10001];
+    for (int barcode : barcodes) {
+        map[barcode]++;
+    }
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[1] - a[1]);
+    for (int i = 1; i <= 10000; i++) {
+        if (map[i] != 0) {
+            pq.offer(new int[] { i, map[i] });
+        }
+    }
+    int[] arr = new int[barcodes.length];
+    int i = 0;
+    while (!pq.isEmpty()) {
+        int[] first = pq.poll();
+        if (i == 0 || arr[i - 1] != first[0]) {
+            arr[i] = first[0];
+            first[1]--;
+            if (first[1] != 0) {
+                pq.offer(first);
+            }
+        } else {
+            if (!pq.isEmpty()) {
+                int[] second = pq.poll();
+                arr[i] = second[0];
+                second[1]--;
+                pq.offer(first);
+                if (second[1] != 0) {
+                    pq.offer(second);
+                }
+            }
+        }
+        i++;
+    }
+    return arr;
+}

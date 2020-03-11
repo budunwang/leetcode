@@ -1,0 +1,23 @@
+797.All Paths From Source to Target
+public List<List<Integer>> res;
+
+public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+    res = new ArrayList<List<Integer>>();
+    List<Integer> list = new ArrayList<Integer>();
+    list.add(0);
+    dfs(graph, 0, list);
+    return res;
+}
+
+public void dfs(int[][] graph, int start, List<Integer> list) {
+    int end = graph.length - 1;
+    if (start == end) {
+        res.add(new ArrayList(list));
+        return;
+    }
+    for (int i : graph[start]) {
+        list.add(i);
+        dfs(graph, i, list);
+        list.remove(list.size() - 1);
+    }
+}

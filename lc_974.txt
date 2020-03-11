@@ -1,0 +1,16 @@
+974.Subarray Sums Divisible by K
+presum + hashmap
+525
+sum may be negative. Add K to get correct mod.
+public int subarraysDivByK(int[] A, int K) {
+    int[] map = new int[K];
+    int sum = 0;
+    int res = 0;
+    map[0] = 1;
+    for (int i = 0; i < A.length; i++) {
+        sum = (sum + A[i] % K + K) % K;
+        res += map[sum];
+        map[sum]++;
+    }
+    return res;
+}

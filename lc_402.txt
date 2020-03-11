@@ -1,0 +1,33 @@
+402.Remove K Digits
+1.mono increasing stack to keep smallest possible number
+2.remove extra end if k is still positive
+3.remove 0 begin
+4.handle "0" case
+public String removeKdigits(String num, int k) {
+    Stack<Character> stack = new Stack<Character>();
+    for (int i = 0; i < num.length(); i++) {
+        while (k > 0 && !stack.isEmpty() && stack.peek() > num.charAt(i)) {
+            stack.pop();
+            k--;
+        }
+        stack.push(num.charAt(i));
+    }
+    while (!stack.isEmpty() && k > 0) {
+        stack.pop();
+        k--;
+    }
+    StringBuilder sb = new StringBuilder();
+    while (!stack.isEmpty()) {
+        sb.append(stack.pop());
+    }
+    sb.reverse();
+    int i = 0;
+    while (i < sb.length() && sb.charAt(i) == '0') {
+        i++;
+    }
+    String str = sb.substring(i, sb.length()).toString();
+    if (str.length() == 0) {
+        return "0";
+    }
+    return str;
+}

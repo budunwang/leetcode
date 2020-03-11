@@ -1,0 +1,47 @@
+241.Different Ways to Add Parentheses
+95
+public List<Integer> diffWaysToCompute(String input) {
+    if (input.equals("")) {
+        return new ArrayList<Integer>();
+    }
+    List<String> list = new ArrayList<String>();
+    StringBuilder sb = new StringBuilder();
+    for (char c : input.toCharArray()) {
+        if (c == '+' || c == '-' || c == '*') {
+            list.add(sb.toString());
+            sb = new StringBuilder();
+            list.add(c + "");
+        } else {
+            sb.append(c);
+        }
+    }
+    list.add(sb.toString());
+    return dfs(list, 0, list.size() - 1);
+}
+
+public List<Integer> dfs(List<String> list, int start, int end) {
+    List<Integer> arr = new ArrayList<Integer>();
+    if (start == end) {
+        arr.add(Integer.valueOf(list.get(start)));
+        return arr;
+    }
+    for (int i = start; i <= end; i++) {
+        if (i % 2 != 0) {
+            List<Integer> left = dfs(list, start, i - 1);
+            List<Integer> right = dfs(list, i + 1, end);
+            String str = list.get(i);
+            for (int l : left) {
+                for (int r : right) {
+                    if (str.equals("+")) {
+                        arr.add(l + r);
+                    } else if (str.equals("-")) {
+                        arr.add(l - r);
+                    } else {
+                        arr.add(l * r);
+                    }
+                }
+            }
+        }
+    }
+    return arr;
+}

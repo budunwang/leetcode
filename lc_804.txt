@@ -1,0 +1,13 @@
+804.Unique Morse Code Words
+public int uniqueMorseRepresentations(String[] words) {
+    String[] map = new String[] {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+    Set<String> set = new HashSet<String>();
+    for (String word : words) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : word.toCharArray()) {
+            sb.append(map[c - 'a']);
+        }
+        set.add(sb.toString());
+    }
+    return set.size();
+}

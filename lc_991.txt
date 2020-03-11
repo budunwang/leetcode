@@ -1,0 +1,14 @@
+991.Broken Calculator
+greedy
+public int brokenCalc(int X, int Y) {
+    int sum = 0;
+    while (Y > X) {
+        if (Y % 2 == 0) {
+            Y /= 2;
+        } else {
+            Y += 1;
+        }
+        sum++;
+    }
+    return sum + X - Y;
+}

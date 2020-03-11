@@ -1,0 +1,50 @@
+556.Next Greater Element III
+31
+1.find the lastest increasing index i(decreasing order does not have next element)
+2.find the first number larger than arr[i] after index i from end
+3.swap
+4.swap i to end
+5.num may overflow
+public int nextGreaterElement(int n) {
+    List<Integer> arr = new ArrayList<Integer>();
+    while (n != 0) {
+        arr.add(0, n % 10);
+        n /= 10;
+    }
+    int i = arr.size() - 2;
+    while (i >= 0 && arr.get(i) >= arr.get(i + 1)) {
+        i--;
+    }
+    if (i >= 0) {
+        int j = arr.size() - 1;
+        while (j > i && arr.get(i) >= arr.get(j)) {
+            j--;
+        }
+        swap(arr, i, j);
+    } else {
+        return -1;
+    }
+    reverse(arr, i + 1, arr.size() - 1);
+    int sum = 0;
+    for (int j = 0; j < arr.size(); j++) {
+        if (sum > (Integer.MAX_VALUE - arr.get(j)) / 10) {
+            return -1;
+        }
+        sum = sum * 10 + arr.get(j);
+    }
+    return sum;
+}
+
+public void swap(List<Integer> arr, int i, int j) {
+    int tmp = arr.get(j);
+    arr.set(j, arr.get(i));
+    arr.set(i, tmp);
+}
+
+public void reverse(List<Integer> arr, int i, int j) {
+    while (i < j) {
+        swap(arr, i, j);
+        i++;
+        j--;
+    }
+}

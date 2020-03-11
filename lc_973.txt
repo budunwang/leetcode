@@ -1,0 +1,15 @@
+973.K Closest Points to Origin
+public int[][] kClosest(int[][] points, int K) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>(K, (a, b) -> 
+        a[0] * a[0] + a[1] * a[1] - b[0] * b[0] - b[1] * b[1]
+    );
+    for (int[] point : points) {
+        pq.offer(point);
+    }
+    int[][] res = new int[K][2];
+    int i = 0;
+    while (!pq.isEmpty() && i < K) {
+        res[i++] = pq.poll();
+    }
+    return res;
+}

@@ -1,0 +1,47 @@
+1334.Find the City With the Smallest Number of Neighbors at a Threshold Distance
+743
+MST for largest weight (smallest number)
+Dijkstra
+public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+    Map<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
+    for (int[] edge : edges) {
+        int p1 = edge[0];
+        int p2 = edge[1];
+        int w = edge[2];
+        if (!map.containsKey(p1)) {
+            map.put(p1, new ArrayList<int[]>());
+        }
+        map.get(p1).add(new int[] { p2, w });
+        if (!map.containsKey(p2)) {
+            map.put(p2, new ArrayList<int[]>());
+        }
+        map.get(p2).add(new int[] { p1, w });
+    }
+    int res = 0;
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < n; i++) {
+        Set<Integer> visited = new HashSet<Integer>();
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[1] - a[1]);
+        pq.offer(new int[] { i, distanceThreshold });
+        while (!pq.isEmpty()) {
+            int[] arr = pq.poll();
+            if (visited.contains(arr[0])) {
+                continue;
+            }
+            visited.add(arr[0]);
+            if (!map.containsKey(arr[0])) {
+                continue;
+            }
+            for (int[] point : map.get(arr[0])) {
+                if (arr[1] >= point[1]) {
+                    pq.offer(new int[] { point[0], arr[1] - point[1] });
+                }
+            }
+        }
+        if (visited.size() - 1 <= min) {
+            res = i;
+            min = visited.size() - 1;
+        }
+    }
+    return res;
+}

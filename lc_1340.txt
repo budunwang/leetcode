@@ -1,0 +1,39 @@
+1340.Jump Game V
+public int[] dp;
+
+public int maxJumps(int[] arr, int d) {
+    dp = new int[arr.length];
+    int max = 0;
+    for (int i = 0; i < arr.length; i++) {
+        max = Math.max(max, dfs(arr, i, d));
+    }
+    return max;
+}
+
+public int dfs(int[] arr, int start, int d) {
+    if (dp[start] != 0) {
+        return dp[start];
+    }
+    boolean block_left = false;
+    boolean block_right = false;
+    int max = 0;
+    for (int i = 1; i <= d; i++) {
+        int left = Math.max(0, start - i);
+        int right = Math.min(arr.length - 1, start + i);
+        if (arr[start] > arr[left] && !block_left) {
+            max = Math.max(max, dfs(arr, left, d));
+        } else {
+            block_left = true;
+        }
+        if (arr[start] > arr[right] && !block_right) {
+            max = Math.max(max, dfs(arr, right, d));
+        } else {
+            block_right = true;
+        }
+        if (block_left && block_right) {
+            break;
+        }
+    }
+    dp[start] = max + 1;
+    return max + 1;
+}

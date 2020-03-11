@@ -1,0 +1,38 @@
+777.Swap Adjacent in LR String
+1.L and R in start and end have same order and same number
+2.L index in start cannot smaller than that in end
+3.R index in start cannot larger than that in end
+public boolean canTransform(String start, String end) {
+    if (!start.replace("X", "").equals(end.replace("X", ""))) {
+        return false;
+    }
+    char[] ss = start.toCharArray();
+    char[] es = end.toCharArray();
+    List<Integer> l_s = new ArrayList<Integer>();
+    List<Integer> l_e = new ArrayList<Integer>();
+    List<Integer> r_s = new ArrayList<Integer>();
+    List<Integer> r_e = new ArrayList<Integer>();
+    for (int i = 0; i < ss.length; i++) {
+        if (ss[i] == 'L') {
+            l_s.add(i);
+        } else if (ss[i] == 'R') {
+            r_s.add(i);
+        }
+        if (es[i] == 'L') {
+            l_e.add(i);
+        } else if (es[i] == 'R') {
+            r_e.add(i);
+        }
+    }
+    for (int i = 0; i < l_s.size(); i++) {
+        if (l_s.get(i) < l_e.get(i)) {
+            return false;
+        }
+    }
+    for (int i = 0; i < r_s.size(); i++) {
+        if (r_s.get(i) > r_e.get(i)) {
+            return false;
+        }
+    }
+    return true;
+}

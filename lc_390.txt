@@ -1,0 +1,16 @@
+390.Elimination Game
+public int lastRemaining(int n) {
+    int count = n;
+    int head = 1;
+    int step = 1;
+    boolean isLeft = true;
+    while (count > 1) {
+        if (isLeft || count % 2 == 1) {
+            head += step;
+        }
+        count /= 2;
+        step *= 2;
+        isLeft = !isLeft;
+    }
+    return head;
+}

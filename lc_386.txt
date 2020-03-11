@@ -1,0 +1,23 @@
+386.Lexicographical Numbers
+preorder
+public List<Integer> list;
+
+public List<Integer> lexicalOrder(int n) {
+    list = new ArrayList<Integer>();
+    dfs(0, n);
+    return list;
+}
+
+public void dfs(int num, int n) {
+    for (int i = 0; i < 10; i++) {
+        if (num == 0 && i == 0) {
+            continue;
+        }
+        int sum = num * 10 + i;
+        if (sum > n) {
+            break;
+        }
+        list.add(sum);
+        dfs(sum, n);
+    }
+}

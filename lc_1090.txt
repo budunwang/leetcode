@@ -1,0 +1,32 @@
+1090.Largest Values From Labels
+347
+bucket
+public int largestValsFromLabels(int[] values, int[] labels, int num_wanted, int use_limit) {
+    List<Integer>[] bucket = new List[20001];
+    for (int i = 0; i < values.length; i++) {
+        if (bucket[values[i]] == null) {
+            bucket[values[i]] = new ArrayList<Integer>();
+        }
+        bucket[values[i]].add(i);
+    }
+    int[] l_map = new int[20001];
+    int sum = 0;
+    int count = 0;
+    for (int i = 20000; i >= 0; i--) {
+        if (bucket[i] != null) {
+            List<Integer> list = bucket[i];
+            for (int j = 0; j < list.size(); j++) {
+                int k = list.get(j);
+                if (l_map[labels[k]] < use_limit) {
+                    sum += values[k];
+                    l_map[labels[k]]++;  
+                    count++;
+                }
+                if (count == num_wanted) {
+                    return sum;
+                }
+            }
+        }
+    }
+    return sum;
+}

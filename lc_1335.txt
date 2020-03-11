@@ -1,0 +1,38 @@
+1335.Minimum Difficulty of a Job Schedule
+public int[][] dp;
+
+public int minDifficulty(int[] jobDifficulty, int d) {
+    if (jobDifficulty.length < d) {
+        return -1;
+    }
+    dp = new int[jobDifficulty.length + 1][d + 1];
+    for (int i = 0; i <= jobDifficulty.length; i++) {
+        for (int j = 0; j <= d; j++) {
+            dp[i][j] = -1;
+        }
+    }
+    return dfs(jobDifficulty, 0, d);
+}
+
+public int dfs(int[] jobDifficulty, int start, int d) {
+    if (d == 0 && start == jobDifficulty.length) {
+        return 0;
+    }
+    if (d == 0 || start == jobDifficulty.length) {
+        return Integer.MAX_VALUE;
+    }
+    if (dp[start][d] != -1) {
+        return dp[start][d];
+    }
+    int curMax = jobDifficulty[start];
+    int min = Integer.MAX_VALUE;
+    for (int i = start; i < jobDifficulty.length; i++) {
+        curMax = Math.max(curMax, jobDifficulty[i]);
+        int sum = dfs(jobDifficulty, i + 1, d - 1);
+        if (sum != Integer.MAX_VALUE) {
+            min = Math.min(min, sum + curMax);
+        }
+    }
+    dp[start][d] = min;
+    return min;
+}

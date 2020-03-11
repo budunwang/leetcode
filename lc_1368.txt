@@ -1,0 +1,39 @@
+1368.Minimum Cost to Make at Least One Valid Path in a Grid
+MST
+always find the closest cost points
+public Queue<int[]> queue;
+public int[][] map;
+public int[][] dirs;
+
+public int minCost(int[][] grid) {
+    int row = grid.length;
+    int col = grid[0].length;
+    queue = new LinkedList<int[]>();
+    map = new int[row][col];
+    dirs = new int[][] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    queue.add(new int[] { 0, 0 });
+    int level = 1;
+    dfs(grid, 0, 0, level);
+    while (!queue.isEmpty()) {
+        level++;
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] p = queue.poll();
+            for (int[] dir : dirs) {
+                dfs(grid, p[0] + dir[0], p[1] + dir[1], level);
+            }
+        }
+    }
+    return map[row - 1][col - 1] - 1;
+}
+
+public void dfs(int[][] grid, int x, int y, int level) {
+    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || map[x][y] != 0) {
+        return;
+    }
+    queue.offer(new int[] { x, y });
+    map[x][y] = level;
+    int n_x = x + dirs[grid[x][y] - 1][0];
+    int n_y = y + dirs[grid[x][y] - 1][1];
+    dfs(grid, n_x, n_y, level);
+}

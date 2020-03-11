@@ -1,0 +1,17 @@
+754.Reach a Number
+1 + 2 + 3 + ... + d + ... + k - d - d = target
+1 + ... + k - 2d = target (d is integer)
+public int reachNumber(int target) {
+    int num = Math.abs(target);
+    int sum = 0;
+    int step = 0;
+    while (sum < num) {
+        step++;
+        sum += step;
+    }
+    while ((sum - num) % 2 != 0) {
+        step++;
+        sum += step;
+    }
+    return step;
+}

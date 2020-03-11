@@ -1,0 +1,18 @@
+1048.Longest String Chain
+LIS
+300
+public int longestStrChain(String[] words) {
+    Arrays.sort(words, (a, b) -> a.length() - b.length());
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    int max = 0;
+    for (int i = 0; i < words.length; i++) {
+        int curMax = 1;
+        for (int j = 0; j < words[i].length(); j++) {
+            String str = words[i].substring(0, j) + words[i].substring(j + 1, words[i].length());
+            curMax = Math.max(curMax, map.getOrDefault(str, 0) + 1);
+        }
+        map.put(words[i], curMax);
+        max = Math.max(max, curMax);
+    }
+    return max;
+}

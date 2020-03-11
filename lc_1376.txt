@@ -1,0 +1,27 @@
+1376.Time Needed to Inform All Employees
+public int max;
+
+public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (int i = 0; i < manager.length; i++) {
+        if (!map.containsKey(manager[i])) {
+            map.put(manager[i], new ArrayList<Integer>());
+        }
+        map.get(manager[i]).add(i);
+    }
+    max = 0;
+    dfs(headID, map, informTime, 0);
+    return max;
+}
+
+public void dfs(int n, Map<Integer, List<Integer>> map, int[] informTime, int curSum) {
+    int sum = curSum + informTime[n];
+    if (!map.containsKey(n)) {
+        max = Math.max(max, sum);
+        return;
+    }
+    List<Integer> list = map.get(n);
+    for (int i = 0; i < list.size(); i++) {
+        dfs(list.get(i), map, informTime, sum);
+    }
+}
