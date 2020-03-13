@@ -1,0 +1,15 @@
+203.Remove Linked List Elements
+public ListNode removeElements(ListNode head, int val) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode pre = dummy;
+    while (pre != null && pre.next != null) {
+        ListNode next = pre.next;
+        if (next.val == val) {
+            pre.next = next.next;
+        } else {
+            pre = pre.next;
+        }
+    }
+    return dummy.next;
+}
