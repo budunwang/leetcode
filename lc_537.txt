@@ -1,0 +1,12 @@
+537.Complex Number Multiplication
+public String complexNumberMultiply(String a, String b) {
+    String[] as = a.split("\\+");
+    String[] bs = b.split("\\+");
+    int n_a = Integer.parseInt(as[0]);
+    int i_a = Integer.parseInt(as[1].substring(0, as[1].length() - 1));
+    int n_b = Integer.parseInt(bs[0]);
+    int i_b = Integer.parseInt(bs[1].substring(0, bs[1].length() - 1));
+    int n = n_a * n_b - i_a * i_b;
+    int i = n_a * i_b + n_b * i_a;
+    return n + "+" + i + "i";
+}
