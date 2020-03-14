@@ -1,0 +1,22 @@
+949.Largest Time for Given Digits
+public String largestTimeFromDigits(int[] A) {
+    int max = -1;
+    String str = "";
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            for (int k = 0; k < 4; k++) {
+                if (i != j && i != k && j != k) {
+                    int l = 6 - i - j - k;
+                    int h = A[i] * 10 + A[j];
+                    int m = A[k] * 10 + A[l];
+                    int sum = h * 60 + m;
+                    if (h < 24 && m < 60 && sum > max) {
+                        max = sum;
+                        str = A[i] + "" + A[j] + ":" + A[k] + "" +A[l];
+                    }
+                }
+            }
+        }
+    }
+    return str;
+}
