@@ -1,0 +1,28 @@
+1380.Lucky Numbers in a Matrix
+public List<Integer> luckyNumbers (int[][] matrix) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int[] rs = new int[row];
+    int[] cs = new int[col];
+    for (int i = 0; i < row; i++) {
+        rs[i] = Integer.MAX_VALUE;
+    }
+    for (int i = 0; i < col; i++) {
+        cs[i] = Integer.MIN_VALUE;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            rs[i] = Math.min(rs[i], matrix[i][j]);
+            cs[j] = Math.max(cs[j], matrix[i][j]);
+        }
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (matrix[i][j] == rs[i] && matrix[i][j] == cs[j]) {
+                list.add(matrix[i][j]);
+            }
+        }
+    }
+    return list;
+}
