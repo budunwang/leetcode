@@ -1,0 +1,31 @@
+473.Matchsticks to Square
+public boolean makesquare(int[] nums) {
+    if (nums.length < 4) {
+        return false;
+    }
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    if (sum % 4 != 0) {
+        return false;
+    }
+    int[] arr = new int[4];
+    return dfs(nums, arr, 0, sum / 4);
+}
+
+public boolean dfs(int[] nums, int[] arr, int index, int target) {
+    if (index == nums.length) {
+        return arr[0] == target && arr[1] == target && arr[2] == target;
+    }
+    for (int i = 0; i < 4; i++) {
+        if (arr[i] + nums[index] <= target) {
+            arr[i] += nums[index];
+            if (dfs(nums, arr, index + 1, target)) {
+                return true;
+            }
+            arr[i] -= nums[index];
+        }
+    }
+    return false;
+}
