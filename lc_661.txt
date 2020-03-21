@@ -1,0 +1,23 @@
+661.Image Smoother
+public int[][] imageSmoother(int[][] M) {
+    int row = M.length;
+    int col = M[0].length;
+    int[][] m = new int[row][col];
+    int[][] dirs = new int[][] {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            int count = 0;
+            int sum = 0;
+            for (int[] dir : dirs) {
+                int n_i = i + dir[0];
+                int n_j = j + dir[1];
+                if (n_i >= 0 && n_i < row && n_j >= 0 && n_j < col) {
+                    count += M[n_i][n_j];
+                    sum++;
+                }
+            }
+            m[i][j] = count / sum;
+        }
+    }
+    return m;
+}
