@@ -1,0 +1,27 @@
+1387.Sort Integers by The Power Value
+public Map<Integer, Integer> map;
+
+public int getKth(int lo, int hi, int k) {
+    map = new HashMap<Integer, Integer>();
+    map.put(1, 0);
+    List<int[]> list = new ArrayList<int[]>();
+    for (int i = lo; i <= hi; i++) {
+        list.add(new int[] { i, getPower(i) });
+    }
+    Collections.sort(list, (a, b) -> a[1] - b[1]);
+    return list.get(k - 1)[0];
+}
+
+public int getPower(int n) {
+    if (map.containsKey(n)) {
+        return map.get(n);
+    }
+    int num = 0;
+    if (n % 2 == 0) {
+        num = 1 + getPower(n / 2);
+    } else {
+        num = 1 + getPower(3 * n + 1);
+    }
+    map.put(n, num);
+    return num;
+}
