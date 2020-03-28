@@ -1,0 +1,34 @@
+1390.Four Divisors
+public int[] map;
+
+public int sumFourDivisors(int[] nums) {
+    map = new int[100001];
+    int sum = 0;
+    for (int num : nums) {
+        int curSum = getSum(num);
+        if (curSum != -1) {
+            sum += curSum;
+        }
+    }
+    return sum;
+}
+
+public int getSum(int num) {
+    if (map[num] != 0) {
+        return map[num];
+    }
+    int sum = 0;
+    int count = 0;
+    for (int i = 1; i <= Math.sqrt(num); i++) {
+        if (num % i == 0) {
+            sum += i + num / i;
+            count += 2;
+        }
+        if (count > 4 || i * i == num) {
+            map[num] = -1;
+            return map[num];
+        }
+    }
+    map[num] = count == 4 ? sum : -1;
+    return map[num];
+}
