@@ -1,0 +1,33 @@
+1395.Count Number of Teams
+public int numTeams(int[] rating) {
+    int length = rating.length;
+    int sum = 0;
+    for (int i = 1; i < length - 1; i++) {
+        int l_s = 0;
+        int l_g = 0;
+        int r_s = 0;
+        int r_g = 0;
+        for (int j = 0; j < length; j++) {
+            if (i == j) {
+                continue;
+            }
+            if (i > j) {
+                if (rating[i] > rating[j]) {
+                    l_s++; 
+                }
+                if (rating[i] < rating[j]) {
+                    l_g++;
+                }
+            } else {
+                if (rating[i] > rating[j]) {
+                    r_s++; 
+                }
+                if (rating[i] < rating[j]) {
+                    r_g++;
+                }
+            }
+        }
+        sum += l_s * r_g + l_g * r_s;
+    }
+    return sum;
+}

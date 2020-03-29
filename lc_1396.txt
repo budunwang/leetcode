@@ -1,0 +1,41 @@
+1396.Design Underground System
+public class IdInfo {
+    String station;
+    int time;
+    IdInfo(String str, int n) {
+        station = str;
+        time = n;
+    }
+}
+
+public Map<Integer, IdInfo> idMap;
+public Map<String, List<Integer>> stationMap;
+
+public UndergroundSystem() {
+    idMap = new HashMap<Integer, IdInfo>();
+    stationMap = new HashMap<String, List<Integer>>();
+}
+
+public void checkIn(int id, String stationName, int t) {
+    idMap.put(id, new IdInfo(stationName, t));
+}
+
+public void checkOut(int id, String stationName, int t) {
+    IdInfo idInfo = idMap.get(id);
+    String str = idInfo.station + "_" + stationName;
+    int num = t - idInfo.time;
+    if (!stationMap.containsKey(str)) {
+        stationMap.put(str, new ArrayList<Integer>());
+    }
+    stationMap.get(str).add(num);
+}
+
+public double getAverageTime(String startStation, String endStation) {
+    String str = startStation + "_" + endStation;
+    List<Integer> list = stationMap.get(str);
+    int sum = 0;
+    for (int num : list) {
+        sum += num;
+    }
+    return sum / (double) list.size();
+}
