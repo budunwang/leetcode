@@ -1,0 +1,21 @@
+565.Array Nesting
+public int[] map;
+
+public int arrayNesting(int[] nums) {
+    map = new int[nums.length];
+    int sum = 0;
+    for (int i = 0; i < nums.length; i++) {
+        if (map[i] == 0) {
+            sum = Math.max(sum, dfs(nums, i));
+        }
+    }
+    return sum;
+}
+
+public int dfs(int[] nums, int index) {
+    if (map[nums[index]] != 0) {
+        return 0;
+    }
+    map[nums[index]] = 1;
+    return 1 + dfs(nums, nums[index]);
+}
