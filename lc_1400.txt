@@ -1,0 +1,16 @@
+1400.Construct K Palindrome Strings
+greedy
+public boolean canConstruct(String s, int k) {
+    if (k > s.length()) {
+        return false;
+    }
+    int[] map = new int[26];
+    for (char c : s.toCharArray()) {
+        map[c - 'a']++;
+    }
+    int odd = 0;
+    for (int i = 0; i < 26; i++) {
+        odd += map[i] % 2;
+    }
+    return odd <= k;
+}
