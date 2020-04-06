@@ -1,0 +1,18 @@
+1403.Minimum Subsequence in Non-Increasing Order
+public List<Integer> minSubsequence(int[] nums) {
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    Arrays.sort(nums);
+    List<Integer> list = new ArrayList<Integer>();
+    int curSum = 0;
+    for (int i = nums.length - 1; i >= 0; i--) {
+        curSum += nums[i];
+        list.add(nums[i]);
+        if (curSum * 2 > sum) {
+            break;
+        }
+    }
+    return list;
+}
