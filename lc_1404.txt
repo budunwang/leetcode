@@ -1,0 +1,32 @@
+1404.Number of Steps to Reduce a Number in Binary Representation to One
+public int numSteps(String s) {
+    if (s.charAt(s.length() - 1) == '0') {
+        return getEven(s);
+    } else {
+        return getOdd(s);
+    }
+    return s;
+}
+
+public String getOdd(String s) {
+    StringBuilder sb = new StringBuilder();
+    int s = 1;
+    int c = 0;
+    while (i < s.length() || c == 1) {
+        int n = i < s.length() ? s.charAr(s.length() - i - 1) - '0' : 0;
+        int tmp = n + s + c;
+        s = tmp % 2;
+        c = tmp / 2;
+        sb.append(s);
+    }
+    return sb.toString().reverse();
+}
+
+public String getEven(String s) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+        sb.append(s.length() - i - 2);
+    }
+    sb.append(0);
+    return sb.toString().reverse();
+}
