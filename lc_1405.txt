@@ -1,0 +1,51 @@
+1405.Longest Happy String
+greedy
+767
+984
+public String longestDiverseString(int a, int b, int c) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a1, b1) -> b1[1] - a1[1]);
+    if (a != 0) {
+        pq.add(new int[] { 0, a });
+    }
+    if (b != 0) {
+        pq.add(new int[] { 1, b });
+    }
+    if (c != 0) {
+        pq.add(new int[] { 2, c });
+    }
+    StringBuilder sb = new StringBuilder();
+    while (!pq.isEmpty()) {
+        int[] arr = pq.poll();
+        char s = (char)(arr[0] + 'a');
+        if (sb.length() >= 2) {
+            int length = sb.length();
+            char c0 = sb.charAt(length - 2);
+            char c1 = sb.charAt(length - 1);
+            if (c0 == c1 && c1 == s) {
+                if (pq.isEmpty()) {
+                    break;
+                }
+                int[] next = pq.poll();
+                sb.append((char)(next[0] + 'a'));
+                pq.add(arr);
+                next[1]--;
+                if (next[1] > 0) {
+                    pq.add(next);
+                }
+            } else {
+                sb.append((char)(arr[0] + 'a'));
+                arr[1]--;
+                if (arr[1] > 0) {
+                    pq.add(arr);
+                }
+            }
+        } else {
+            sb.append((char)(arr[0] + 'a'));
+            arr[1]--;
+            if (arr[1] > 0) {
+                pq.add(arr);
+            }
+        }
+    }
+    return sb.toString();
+}
