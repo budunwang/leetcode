@@ -1,0 +1,7 @@
+1401.Circle and Rectangle Overlapping
+public boolean checkOverlap(int radius, int x_center, int y_center, int x1, int y1, int x2, int y2) {
+    int closeX = Math.max(x1, Math.min(x_center, x2));
+    int closeY = Math.max(y1, Math.min(y_center, y2));
+    int dis = (closeX - x_center) * (closeX - x_center) + (closeY - y_center) * (closeY - y_center);
+    return dis - radius * radius <= 0;
+}
