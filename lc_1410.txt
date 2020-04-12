@@ -1,0 +1,33 @@
+1410.HTML Entity Parser
+public String entityParser(String text) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = text.length() - 1; i >= 0; i--) {
+        char c = text.charAt(i);
+        if (c == ';') {
+            if (i >= 5 && text.substring(i - 5, i + 1).equals("&quot;")) {
+                sb.append('\"');
+                i -= 5;
+            } else if (i >= 5 && text.substring(i - 5, i + 1).equals("&apos;")) {
+                sb.append('\'');
+                i -= 5;
+            } else if (i >= 4 && text.substring(i - 4, i + 1).equals("&amp;")) {
+                sb.append('&');
+                i -= 4;
+            } else if (i >= 3 && text.substring(i - 3, i + 1).equals("&gt;")) {
+                sb.append('>');
+                i -= 3;
+            } else if (i >= 3 && text.substring(i - 3, i + 1).equals("&lt;")) {
+                sb.append('<');
+                i -= 3;
+            } else if (i >= 6 && text.substring(i - 6, i + 1).equals("&frasl;")) {
+                sb.append('/');
+                i -= 6;
+            } else {
+                sb.append(c);
+            }
+        } else {
+            sb.append(c);
+        }
+    }
+    return sb.reverse().toString();
+}
