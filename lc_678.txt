@@ -1,0 +1,22 @@
+678.Valid Parenthesis String
+public boolean checkValidString(String s) {
+    return dfs(s, 0, 0);
+}
+
+public boolean dfs(String s, int index, int count) {
+    for (int i = index; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == '(') {
+            count++;
+        } else if (c == ')') {
+            if (count > 0) {
+                count--;
+            } else {
+                return false;
+            }
+        } else {
+            return dfs(s, i + 1, count + 1) || dfs(s, i + 1, count - 1) || dfs(s, i + 1, count);
+        }
+    }
+    return count == 0;
+}
