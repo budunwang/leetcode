@@ -1,0 +1,22 @@
+400.Nth Digit
+public int findNthDigit(int n) {
+    int count = 0;
+    long sum = 0;
+    long preSum = 0;
+    while (n > sum) {
+        long cur = (count + 1) * 9 * (long) Math.pow(10, count);
+        preSum = sum;
+        sum += cur;
+        count++;
+    }
+    long left = n - preSum - 1;
+    long num = (long) Math.pow(10, count - 1) + left / count;
+    long index = left % count;
+    int res = 0;
+    while (count - index != 0) {
+        res = (int) (num % 10);
+        num /= 10;
+        index++;
+    }
+    return res;
+}
