@@ -1,0 +1,22 @@
+1414.Find the Minimum Number of Fibonacci Numbers Whose Sum Is K
+public int findMinFibonacciNumbers(int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> b - a);
+    int n1 = 1;
+    int n2 = 1;
+    pq.offer(n1);
+    while (n2 <= k) {
+        int tmp = n1;
+        n1 = n2;
+        pq.offer(n2);
+        n2 += tmp;
+    }
+    int count = 0;
+    while (k != 0) {
+        int num = pq.poll();
+        if (num <= k) {
+            k -= num;
+            count++;
+        }
+    }
+    return count;
+}

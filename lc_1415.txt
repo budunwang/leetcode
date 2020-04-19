@@ -1,0 +1,25 @@
+1415.The k-th Lexicographical String of All Happy Strings of Length n
+public List<String> list;
+
+public String getHappyString(int n, int k) {
+    if (3 * Math.pow(2, n - 1) < k) {
+        return "";
+    }
+    list = new ArrayList<String>();
+    dfs("", n);
+    return list.get(k - 1);
+}
+
+public void dfs(String str, int n) {
+    if (str.length() == n) {
+        list.add(str);
+        return;
+    }
+    char[] cs = new char[] {'a', 'b', 'c'};
+    for (char c : cs) {
+        if (str.length() != 0 && str.charAt(str.length() - 1) == c) {
+            continue;
+        }
+        dfs(str + c, n);
+    }
+}
