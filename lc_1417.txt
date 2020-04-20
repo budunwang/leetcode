@@ -1,0 +1,33 @@
+1417.Reformat The String
+public String reformat(String s) {
+    List<Character> ls = new ArrayList<Character>();
+    List<Character> ds = new ArrayList<Character>();
+    for (char c : s.toCharArray()) {
+        if (c >= '0' && c <= '9') {
+            ds.add(c);
+        } else {
+            ls.add(c);
+        }
+    }
+    if (Math.abs(ls.size() - ds.size()) > 1) {
+        return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    boolean isLetter = ls.size() > ds.size();
+    int l_idx = 0;
+    int d_idx = 0;
+    while (l_idx != ls.size() || d_idx != ds.size()) {
+        if (isLetter) {
+            char c = ls.get(l_idx);
+            l_idx++;
+            isLetter = false;
+            sb.append(c);
+        } else {
+            char c = ds.get(d_idx);
+            d_idx++;
+            isLetter = true;
+            sb.append(c);
+        }
+    }
+    return sb.toString();
+}

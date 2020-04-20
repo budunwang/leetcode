@@ -1,0 +1,39 @@
+1418.Display Table of Food Orders in a Restaurant
+public List<List<String>> displayTable(List<List<String>> orders) {
+    Map<Integer, Map<String, Integer>> map = new HashMap<Integer, Map<String, Integer>>();
+    List<Integer> tableList = new ArrayList<Integer>();
+    Set<String> foodSet = new HashSet<String>();
+    for (List<String> order : orders) {
+        int table = Integer.parseInt(order.get(1));
+        String food = order.get(2);
+        if (!map.containsKey(table)) {
+            map.put(table, new HashMap<String, Integer>());
+            tableList.add(table);
+        }
+        Map<String, Integer> foodMap = map.get(table);
+        int num = foodMap.getOrDefault(food, 0);
+        foodMap.put(food, num + 1);
+        foodSet.add(food);
+    }
+    List<String> foodList = new ArrayList<String>(foodSet);
+    Collections.sort(tableList, (a, b) -> a - b);
+    Collections.sort(foodList, (a, b) -> a.compareTo(b));
+    List<List<String>> res = new ArrayList<List<String>>();
+    List<String> header = new ArrayList<String>();
+    header.add("Table");
+    for (String food: foodList) {
+        header.add(food);
+    }
+    res.add(header);
+    for (Integer table : tableList) {
+        List<String> list = new ArrayList<String>();
+        list.add(String.valueOf(table));
+        Map<String, Integer> foodMap = map.get(table);
+        for (String food: foodList) {
+            int num = foodMap.getOrDefault(food, 0);
+            list.add(String.valueOf(num));
+        }
+        res.add(list);
+    }
+    return res;
+}
