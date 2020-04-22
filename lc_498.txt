@@ -1,0 +1,27 @@
+498.Diagonal Traverse
+public int[] findDiagonalOrder(int[][] matrix) {
+    if (matrix.length == 0) {
+        return new int[0];
+    }
+    int row = matrix.length;
+    int col = matrix[0].length;
+    List<Integer>[] map = new ArrayList[row + col - 1];
+    for (int i = 0; i < row + col - 1; i++) {
+        map[i] = new ArrayList<Integer>();
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            map[i + j].add(matrix[i][j]);
+        }
+    }
+    int idx = 0;
+    int[] arr = new int[row * col];
+    for (int i = 0; i < row + col - 1; i++) {
+        List<Integer> list = map[i];
+        for (int j = 0; j < list.size(); j++) {
+            int k = i % 2 == 0 ? list.size() - 1 - j : j;
+            arr[idx++] = list.get(k);
+        }
+    }
+    return arr;
+}
