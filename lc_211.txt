@@ -1,0 +1,57 @@
+211.Add and Search Word - Data structure design
+class TrieNode {
+    TrieNode[] children;
+    boolean isEnd;
+    TrieNode() {
+        children = new TrieNode[26];
+        isEnd = false;
+    }
+}
+
+public TrieNode root;
+
+/** Initialize your data structure here. */
+public WordDictionary() {
+    root = new TrieNode();
+}
+
+/** Adds a word into the data structure. */
+public void addWord(String word) {
+    TrieNode node = root;
+    for (char c : word.toCharArray()) {
+        int idx = c - 'a';
+        if (node.children[idx] == null) {
+            node.children[idx] = new TrieNode();
+        }
+        node = node.children[idx];
+    }
+    node.isEnd = true;
+}
+
+/** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+public boolean search(String word) {
+    return dfs(word, 0, root);
+}
+
+public boolean dfs(String word, int idx, TrieNode node) {
+    if (idx == word.length()) {
+        return node.isEnd;
+    }
+    char c = word.charAt(idx);
+    if (c != '.') {
+        if (node.children[c - 'a'] == null) {
+            return false;
+        } else {
+            return dfs(word, idx + 1, node.children[c - 'a']);
+        }
+    } else {
+        for (TrieNode trieNode : node.children) {
+            if (trieNode != null) {
+                if (dfs(word, idx + 1, trieNode)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
