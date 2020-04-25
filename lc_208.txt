@@ -1,4 +1,5 @@
 208.Implement Trie (Prefix Tree)
+trie
 class TrieNode {
     TrieNode[] children;
     boolean isEnd;

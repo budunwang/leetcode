@@ -1,0 +1,68 @@
+146.LRU Cache
+hashMap + double linked list
+class Node {
+    int key;
+    int val;
+    Node pre;
+    Node next;
+    Node(int k, int v) {
+        key = k;
+        val = v;
+    }
+}
+
+public Map<Integer, Node> map;
+public int count;
+public int total;
+public Node head;
+public Node tail;
+
+public LRUCache(int capacity) {
+    map = new HashMap<Integer, Node>();
+    count = 0;
+    total = capacity;
+    head = new Node(0, 0);
+    tail = new Node(0, 0);
+    head.next = tail;
+    tail.pre = head;
+}
+
+public int get(int key) {
+    if (map.containsKey(key)) {
+        Node node = map.get(key);
+        removeNode(node);
+        insertHead(node);
+        return node.val;
+    }
+    return -1;
+}
+
+public void put(int key, int value) {
+    if (map.containsKey(key)) {
+        Node node = map.get(key);
+        node.val = value;
+        removeNode(node);
+        insertHead(node);
+    } else {
+        count++;
+        Node node = new Node(key, value);
+        map.put(key, node);
+        insertHead(node);
+        if (count > total) {
+            map.remove(tail.pre.key);
+            removeNode(tail.pre);
+        }
+    }
+}
+
+public void removeNode(Node node) {
+    node.pre.next = node.next;
+    node.next.pre = node.pre;
+}
+
+public void insertHead(Node node) {
+    head.next.pre = node;
+    node.next = head.next;
+    head.next = node;
+    node.pre = head;
+}
