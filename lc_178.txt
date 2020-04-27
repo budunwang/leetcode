@@ -1,0 +1,10 @@
+178.Rank Scores
+SQL
+get rank count
+SELECT Score, (SELECT COUNT(DISTINCT Score) FROM Scores where Score >= s.Score order by Score DESC) as Rank FROM Scores s order by Score DESC;
+
+get count table
+SELECT
+Score,
+(SELECT COUNT(*) FROM (SELECT DISTINCT Score from Scores) tmp WHERE Score >= s.Score) as Rank 
+FROM Scores s order by Score DESC;

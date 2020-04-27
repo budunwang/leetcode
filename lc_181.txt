@@ -1,0 +1,10 @@
+181.Employees Earning More Than Their Managers
+SQL
+Non-Join
+SELECT e.Name as Employee FROM Employee e WHERE e.Salary > (SELECT tmp.Salary from Employee tmp WHERE tmp.id = e.ManagerId);
+
+Join
+SELECT
+t1.Name as Employee
+FROM Employee t1 JOIN Employee t2 ON t1.ManagerId = t2.Id
+WHERE t1.Salary > t2.Salary;

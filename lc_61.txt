@@ -1,0 +1,28 @@
+61.Rotate List
+two point
+public ListNode rotateRight(ListNode head, int k) {
+    if (head == null) {
+        return null;
+    }
+    ListNode dummy = head;
+    int count = 0;
+    while (head != null) {
+        head = head.next;
+        count++;
+    }
+    count = k % count;
+    ListNode fast = dummy;
+    while (count != 0) {
+        fast = fast.next;
+        count--;
+    }
+    ListNode slow = dummy;
+    while (fast.next != null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+    fast.next = dummy;
+    ListNode res = slow.next;
+    slow.next = null;
+    return res;
+}

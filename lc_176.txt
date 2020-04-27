@@ -1,0 +1,4 @@
+176.Second Highest Salary
+SQL
+Add select as to handle null value
+SELECT (SELECT DISTINCT Salary from Employee order by Salary DESC limit 1,1) as SecondHighestSalary;
