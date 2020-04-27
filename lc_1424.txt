@@ -1,0 +1,30 @@
+1424.Diagonal Traverse II
+498
+public int[] findDiagonalOrder(List<List<Integer>> nums) {
+    int row = nums.size();
+    int col = 0;
+    for (List<Integer> num : nums) {
+        col = Math.max(col, num.size());
+    }
+    List<Integer>[] arr = new ArrayList[row + col - 1];
+    for (int i = 0; i < row + col - 1; i++) {
+        arr[i] = new ArrayList<Integer>();
+    }
+    int count = 0;
+    for (int i = 0; i < row; i++) {
+        List<Integer> num = nums.get(i);
+        for (int j = 0; j < num.size(); j++) {
+            arr[i + j].add(num.get(j));
+            count++;
+        }
+    }
+    int[] res = new int[count];
+    int idx = 0;
+    for (int i = 0; i < row + col - 1; i++) {
+        List<Integer> num = arr[i];
+        for (int j = num.size() - 1; j >= 0; j--) {
+            res[idx++] = num.get(j);
+        }
+    }
+    return res;
+}

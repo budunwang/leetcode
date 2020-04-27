@@ -1,0 +1,21 @@
+1423.Maximum Points You Can Obtain from Cards
+sliding window
+public int maxScore(int[] cardPoints, int k) {
+    int length = cardPoints.length;
+    int sum = 0;
+    int curSum = 0;
+    int left = 0;
+    int min = Integer.MAX_VALUE;
+    for (int right = 0; right < length; right++) {
+        sum += cardPoints[right];
+        curSum += cardPoints[right];
+        while (right - left + 1 > length - k) {
+            curSum -= cardPoints[left];
+            left++;
+        }
+        if (right - left + 1 == length - k) {
+            min = Math.min(min, curSum);
+        }
+    }
+    return sum - min;
+}

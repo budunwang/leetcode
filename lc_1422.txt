@@ -1,0 +1,19 @@
+1422.Maximum Score After Splitting a String
+public int maxScore(String s) {
+    int max = 0;
+    int length = s.length();
+    int n0 = 0;
+    for (int i = 0; i < length; i++) {
+        if (s.charAt(i) == '0') {
+            n0++;
+        }
+    }
+    int c0 = 0;
+    for (int i = 0; i < length - 1; i++) {
+        if (s.charAt(i) == '0') {
+            c0++;
+        }
+        max = Math.max(max, c0 + length - n0 - (i + 1 - c0));
+    }
+    return max;
+}
