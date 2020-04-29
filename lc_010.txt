@@ -1,0 +1,29 @@
+10.Regular Expression Matching
+public boolean isMatch(String s, String p) {
+    return dfs(s, p, 0, 0);
+}
+
+public boolean dfs(String s, String p, int idx1, int idx2) {
+    if (idx2 == p.length()) {
+        return idx1 == s.length();
+    }
+    if (idx2 + 1 == p.length() || p.charAt(idx2 + 1) != '*') {
+        if (idx1 == s.length()) {
+            return false;
+        }
+        if (p.charAt(idx2) == '.' || s.charAt(idx1) == p.charAt(idx2)) {
+            return dfs(s, p, idx1 + 1, idx2 + 1);
+        } else {
+            return false;
+        }
+    } else {
+        int i = -1;
+        while (idx1 + i != s.length() && (i == -1 || s.charAt(idx1 + i) == p.charAt(idx2) || p.charAt(idx2) == '.')) {
+            if (dfs(s, p, idx1 + i + 1, idx2 + 2)) {
+                return true;
+            }
+            i++;
+        }
+    }
+    return false;
+}
