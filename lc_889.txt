@@ -1,0 +1,24 @@
+889.Construct Binary Tree from Preorder and Postorder Traversal
+public Map<Integer, Integer> map;
+
+public TreeNode constructFromPrePost(int[] pre, int[] post) {
+    map = new HashMap<Integer, Integer>();
+    for (int i = 0; i < post.length; i++) {
+        map.put(post[i], i);
+    }
+    return dfs(pre, post, 0, pre.length - 1, 0, post.length - 1);
+}
+
+public TreeNode dfs(int[] pre, int[] post, int pre_l, int pre_r, int post_l, int post_r) {
+    if (pre_l > pre_r || post_l > post_r) {
+        return null;
+    }
+    TreeNode treeNode = new TreeNode(pre[pre_l]);
+    if (pre_l != pre_r) {
+        int index = map.get(pre[pre_l + 1]);
+        int offset = index - post_l;
+        treeNode.left = dfs(pre, post, pre_l + 1, pre_l + 1 + offset, post_l, post_l + offset);
+        treeNode.right = dfs(pre, post, pre_l + 2 + offset, pre_r, post_l + offset + 1, post_r - 1);
+    }
+    return treeNode;
+}
