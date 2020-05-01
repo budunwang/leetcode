@@ -1,0 +1,35 @@
+655.Print Binary Tree
+public List<List<String>> printTree(TreeNode root) {
+    int depth = getDepth(root);
+    int sum = (int) Math.pow(2, depth) - 1;
+    List<List<String>> res = new ArrayList<List<String>>();
+    for (int i = 0; i < depth; i++) {
+        List<String> list = new ArrayList<String>();
+        for (int j = 0; j < sum; j++) {
+            list.add("");
+        }
+        res.add(list);
+    }
+    dfs(root, res, 0, 0, sum - 1);
+    return res;
+}
+
+public void dfs(TreeNode root, List<List<String>> res, int level, int i, int j) {
+    if (root == null) {
+        return;
+    }
+    List<String> list = res.get(level);
+    int mid = (i + j) / 2;
+    list.set(mid, Integer.toString(root.val));
+    dfs(root.left, res, level + 1, i, mid - 1);
+    dfs(root.right, res, level + 1, mid + 1, j);
+}
+
+public int getDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = getDepth(root.left);
+    int right = getDepth(root.right);
+    return 1 + Math.max(left, right);
+}
