@@ -1,0 +1,41 @@
+1432.Max Difference You Can Get From Changing an Integer
+public int maxDiff(int num) {
+    List<Integer> list = toArray(num);
+    int max = num;
+    for (int i : list) {
+        if (i != 9) {
+            max = replace(list, i, 9);
+            break;
+        }
+    }
+    int min = num;
+    for (int i = 0; i < list.size(); i++) {
+        int n = list.get(i);
+        if (i == 0 && n != 1) {
+            min = replace(list, n, 1);
+            break;
+        }
+        if (i != 0 && n != 0 && list.get(0) != n) {
+            min = replace(list, n, 0);
+            break;
+        }
+    }
+    return max - min;
+}
+
+public List<Integer> toArray(int num) {
+    List<Integer> list = new ArrayList<Integer>();
+    while (num != 0) {
+        list.add(0, num % 10);
+        num /= 10;
+    }
+    return list;
+}
+
+public int replace(List<Integer> list, int x, int y) {
+    int num = 0;
+    for (int i : list) {
+        num = num * 10 + (i == x ? y : i);
+    }
+    return num;
+}
