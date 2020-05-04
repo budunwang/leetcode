@@ -1,0 +1,45 @@
+1439.Find the Kth Smallest Sum of a Matrix With Sorted Rows
+373
+Dijkstra
+public int kthSmallest(int[][] mat, int k) {
+    int row = mat.length;
+    int col = mat[0].length;
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[row] - b[row]);
+    int sum = 0;
+    for (int[] m : mat) {
+        sum += m[0];
+    }
+    int[] arr = new int[row + 1];
+    arr[row] = sum;
+    pq.offer(arr);
+    Set<String> set = new HashSet<String>();
+    while (k != 1) {
+        int[] tmp = pq.poll();
+        for (int i = 0; i < row; i++) {
+            if (tmp[i] == col - 1) {
+                continue;
+            }
+            tmp[i] += 1;
+            int curSum = 0;
+            for (int j = 0; j < row; j++) {
+                curSum += mat[j][tmp[j]];
+            }
+            int[] map = new int[row + 1];
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < row; j++) {
+                map[j] = tmp[j];
+                sb.append(tmp[j]);
+                sb.append(" ");
+            }
+            map[row] = curSum;
+            tmp[i] -= 1;
+            if (set.contains(sb.toString())) {
+                continue;
+            }
+            set.add(sb.toString());
+            pq.offer(map);
+        }
+        k--;
+    }
+    return pq.peek()[row];
+}

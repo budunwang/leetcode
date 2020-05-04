@@ -1,0 +1,31 @@
+1438.Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+sliding window + monotonic stack
+window size is Math.abs(curMax - curMin) <= k
+monotonic stack to keep curMax and curMin
+public int longestSubarray(int[] nums, int limit) {
+    Deque<Integer> min = new LinkedList<Integer>();
+    Deque<Integer> max = new LinkedList<Integer>();
+    int left = 0;
+    int res = 0;
+    for (int right = 0; right < nums.length; right++) {
+        while (!min.isEmpty() && nums[right] < min.peekLast()) {
+            min.removeLast();
+        }
+        min.addLast(nums[right]);
+        while (!max.isEmpty() && nums[right] > max.peekLast()) {
+            max.removeLast();
+        }
+        max.addLast(nums[right]);
+        while (Math.abs(max.peekFirst()  - min.peekFirst()) > limit) {
+            int num = nums[left++];
+            if (max.peekFirst() == num) {
+                max.pollFirst();
+            }
+            if (min.peekFirst() == num) {
+                min.pollFirst();
+            }
+        }
+        res = Math.max(res, right - left + 1);
+    }
+    return res;
+}
