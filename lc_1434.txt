@@ -1,0 +1,43 @@
+1434.Number of Ways to Wear Different Hats to Each Other
+dfs + memo + bit
+dfs on hat instead of people
+int[][] dp cannot pass test
+public Integer[][] dp;
+public int mod;
+
+public int numberWays(List<List<Integer>> hats) {
+    List<Integer>[] list = new ArrayList[41];
+    dp = new Integer[41][1024];
+    mod = (int) 1e9 + 7;
+    for (int i = 1; i < 41; i++) {
+        list[i] = new ArrayList<Integer>();
+    }
+    for (int i = 0; i < hats.size(); i++) {
+        for (int hat : hats.get(i)) {
+            list[hat].add(i);
+        }
+    }
+    return dfs(list, 1, (1 << hats.size()) - 1, 0);
+}
+
+public int dfs(List<Integer>[] list, int hat, int count, int visited) {
+    if (count == visited) {
+        return 1;
+    }
+    if (hat == 41) {
+        return 0;
+    }
+    if (dp[hat][visited] != null) {
+        return dp[hat][visited];
+    }
+    List<Integer> arr = list[hat];
+    int sum = dfs(list, hat + 1, count, visited);
+    for (int i : arr) {
+        if (((visited >> i) & 1) != 1) {
+            sum += dfs(list, hat + 1, count, visited | (1 << i));
+            sum %= mod;
+        }
+    }
+    dp[hat][visited] = sum;
+    return sum;
+}
