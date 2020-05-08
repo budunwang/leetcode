@@ -1,6 +1,6 @@
 1434.Number of Ways to Wear Different Hats to Each Other
 dfs + memo + bit
-dfs on hat instead of people
+dfs on hat (40 * (2 ^ 10)) instead of people (10 * (2 ^ 40))
 int[][] dp cannot pass test
 public Integer[][] dp;
 public int mod;

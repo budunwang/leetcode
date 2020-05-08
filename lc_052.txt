@@ -1,0 +1,37 @@
+52.N-Queens II
+dfs
+51
+public int[] col;
+public int[] l_45;
+public int[] l_135;
+
+public int totalNQueens(int n) {
+    col = new int[n];
+    l_45 = new int[2 * n - 1];
+    l_135 = new int[2 * n - 1];
+    return dfs(0, 0, n);
+}
+
+public int dfs(int count, int i, int n) {
+    if (count == n) {
+        return 1;
+    }
+    if (i == n) {
+        return 0;
+    }
+    int sum = 0;
+    for (int j = 0; j < n; j++) {
+        int n_45 = i + j;
+        int n_135 = i - j + n - 1;
+        if (col[j] == 0 && l_45[n_45] == 0 && l_135[n_135] == 0) {
+            col[j] = 1;
+            l_45[n_45] = 1;
+            l_135[n_135] = 1;
+            sum += dfs(count + 1, i + 1, n);
+            col[j] = 0;
+            l_45[n_45] = 0;
+            l_135[n_135] = 0;
+        }
+    }
+    return sum;
+}
