@@ -1,0 +1,19 @@
+729.My Calendar I
+public TreeMap<Integer, Integer> treeMap;
+
+public MyCalendar() {
+    treeMap = new TreeMap<Integer, Integer>();
+}
+
+public boolean book(int start, int end) {
+    Integer floor = treeMap.floorKey(start);
+    if (floor != null && treeMap.get(floor) > start) {
+        return false;
+    }
+    Integer ceiling = treeMap.ceilingKey(start);
+    if (ceiling != null && ceiling < end) {
+        return false;
+    }
+    treeMap.put(start, end);
+    return true;
+}
