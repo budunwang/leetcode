@@ -1,0 +1,26 @@
+1443.Minimum Time to Collect All Apples in a Tree
+public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (int[] edge : edges) {
+        if (!map.containsKey(edge[0])) {
+            map.put(edge[0], new ArrayList<Integer>());
+        }
+        map.get(edge[0]).add(edge[1]);
+    }
+    return dfs(map, hasApple, 0);
+}
+
+public int dfs(Map<Integer, List<Integer>> map, List<Boolean> hasApple, int root) {
+    int sum = 0;
+    if (map.containsKey(root)) {
+        for (int num : map.get(root)) {
+            int curSum = dfs(map, hasApple, num);
+            if (curSum != 0) {
+                sum += 2 + curSum;
+            } else {
+                sum += hasApple.get(num) ? 2 : 0;
+            }
+        }
+    }
+    return sum;
+}
