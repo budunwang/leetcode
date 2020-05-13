@@ -1,0 +1,12 @@
+775.Global and Local Inversions
+A[i] >= curMax[i - 2]
+public boolean isIdealPermutation(int[] A) {
+    int preMax = 0;
+    for (int i = 2; i < A.length; i++) {
+        preMax = Math.max(preMax, A[i - 2]);
+        if (A[i] < preMax) {
+            return false;
+        }
+    }
+    return true;
+}
