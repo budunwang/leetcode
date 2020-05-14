@@ -1,0 +1,24 @@
+649.Dota2 Senate
+greedy
+public String predictPartyVictory(String senate) {
+    Queue<Integer> q_R = new LinkedList<Integer>();
+    Queue<Integer> q_D = new LinkedList<Integer>();
+    int length = senate.length();
+    for (int i = 0; i < length; i++) {
+        if (senate.charAt(i) == 'R') {
+            q_R.offer(i);
+        } else {
+            q_D.offer(i);
+        }
+    }
+    while (!q_R.isEmpty() && !q_D.isEmpty()) {
+        int i_R = q_R.poll();
+        int i_D = q_D.poll();
+        if (i_R < i_D) {
+            q_R.offer(i_R + length);
+        } else {
+            q_D.offer(i_D + length);
+        }
+    }
+    return q_R.size() > 0 ? "Radiant" : "Dire";
+}
