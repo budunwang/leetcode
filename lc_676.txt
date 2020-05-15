@@ -1,0 +1,56 @@
+676.Implement Magic Dictionary
+trie
+public class Node {
+    Node[] children;
+    boolean isEnd;
+    Node() {
+        this.children = new Node[26];
+        this.isEnd = false;
+    }
+}
+
+public Node root;
+
+/** Initialize your data structure here. */
+public MagicDictionary() {
+    root = new Node();
+}
+
+/** Build a dictionary through a list of words */
+public void buildDict(String[] dict) {
+    for (String str : dict) {
+        Node node = root;
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new Node();
+            }
+            node = node.children[c - 'a'];
+        }
+        node.isEnd = true;
+    }
+}
+
+/** Returns if there is any word in the trie that equals to the given word after modifying exactly one character */
+public boolean search(String word) {
+    return dfs(word, 0, false, root);
+}
+
+public boolean dfs(String word, int idx, boolean isModified, Node node) {
+    if (idx == word.length()) {
+        return isModified && node.isEnd;
+    }
+    char c = word.charAt(idx);
+    if (node.children[c - 'a'] != null && dfs(word, idx + 1, isModified, node.children[c - 'a'])) {
+        return true;
+    }
+    if (isModified) {
+        return false;
+    }
+    for (int i = 0; i < 26; i++) {
+        if (node.children[i] != null && i != c - 'a' && dfs(word, idx + 1, true, node.children[i])) {
+            return true;
+        }
+    }
+    return false;
+}
