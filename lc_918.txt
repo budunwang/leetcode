@@ -1,0 +1,21 @@
+918.Maximum Sum Circular Subarray
+53
+1.Maximum sum in one array (53)
+2.Maximun sum in two array => Minimun sum in one array
+Get max except all negative number array
+public int maxSubarraySumCircular(int[] A) {
+    int length = A.length;
+    int max = Integer.MIN_VALUE;
+    int curMax = -30000;
+    int min = Integer.MAX_VALUE;
+    int curMin = 30000;
+    int sum = 0;
+    for (int i = 0; i < length; i++) {
+        curMax = Math.max(curMax + A[i], A[i]);
+        max = Math.max(curMax, max);
+        curMin = Math.min(curMin + A[i], A[i]);
+        min = Math.min(curMin, min);
+        sum += A[i];
+    }
+    return sum == min ? max : Math.max(max, sum - min);
+}
