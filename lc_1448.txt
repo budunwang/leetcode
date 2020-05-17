@@ -1,0 +1,20 @@
+1448.Count Good Nodes in Binary Tree
+public int sum;
+
+public int goodNodes(TreeNode root) {
+    sum = 0;
+    dfs(root, Integer.MIN_VALUE);
+    return sum;
+}
+
+public void dfs(TreeNode root, int curMax) {
+    if (root == null) {
+        return;
+    }
+    if (root.val >= curMax) {
+        curMax = root.val;
+        sum++;
+    }
+    dfs(root.left, curMax);
+    dfs(root.right, curMax);
+}
