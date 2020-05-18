@@ -1,0 +1,11 @@
+1451.Rearrange Words in a Sentence
+public String arrangeWords(String text) {
+    String[] ss = text.split(" ");
+    Arrays.sort(ss, (a, b) -> a.length() - b.length());
+    List<String> list = new ArrayList<String>();
+    for (String str : ss) {
+        list.add(str.toLowerCase());
+    }
+    String str = String.join(" ", list);
+    return Character.toUpperCase(str.charAt(0)) + str.substring(1, str.length());
+}

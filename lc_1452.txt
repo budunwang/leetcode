@@ -1,0 +1,39 @@
+1452.People Whose List of Favorite Companies Is Not a Subset of Another List
+public List<Integer> peopleIndexes(List<List<String>> favoriteCompanies) {
+    int length = favoriteCompanies.size();
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    Set<Integer>[] arr = new Set[length];
+    int idx = 0;
+    for (int i = 0; i < length; i++) {
+        arr[i] = new HashSet<Integer>();
+        for (String company : favoriteCompanies.get(i)) {
+            if (!map.containsKey(company)) {
+                map.put(company, idx++);
+            }
+            arr[i].add(map.get(company));
+        }
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; i < length; i++) {
+        boolean isValid = false;
+        for (int j = 0; j < length; j++) {
+            if (j == i) {
+                continue;
+            }
+            Set<Integer> set_a = arr[i];
+            Set<Integer> set_b = arr[j];
+            boolean isSub = true;
+            for (int a : set_a) {
+                if (!set_b.contains(a)) {
+                    isSub = false;
+                    break;
+                }
+            }
+            isValid |= isSub;
+        }
+        if (!isValid) {
+            list.add(i);
+        }
+    }
+    return list;
+}
