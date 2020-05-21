@@ -38,17 +38,15 @@ public double dfs(Map<String, Map<String, Double>> map, String a, String b, Set<
     if (tmp.containsKey(b)) {
         return tmp.get(b);
     }
+    visited.add(a);
     for (Map.Entry<String, Double> entry : tmp.entrySet()) {
         String c = entry.getKey();
         Double num = entry.getValue();
-        if (visited.contains(c)) {
-            continue;
-        }
-        visited.add(c);
-        Double res = dfs(map, c, b, visited);
-        visited.remove(c);
-        if (res != -1.0) {
-            return num * res;
+        if (!visited.contains(c)) {
+            Double res = dfs(map, c, b, visited);
+            if (res != -1.0) {
+                return num * res;
+            }
         }
     }
     return -1.0;
