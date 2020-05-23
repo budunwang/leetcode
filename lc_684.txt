@@ -19,8 +19,8 @@ public int[] findRedundantConnection(int[][] edges) {
 }
 
 public int find(int[] arr, int num) {
-    if (arr[num] == num) {
-        return num;
+    if (arr[num] != num) {
+        arr[num] = find(arr, arr[num]);
     }
-    return find(arr, arr[num]);
+    return arr[num];
 }
