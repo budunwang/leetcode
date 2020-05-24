@@ -1,0 +1,19 @@
+535.Encode and Decode TinyURL
+public Map<String, String> encodeMap = new HashMap<String, String>();
+public Map<String, String> decodeMap = new HashMap<String, String>();
+public int count = 0;
+
+// Encodes a URL to a shortened URL.
+public String encode(String longUrl) {
+    if (!encodeMap.containsKey(longUrl)) {
+        count++;
+        encodeMap.put(longUrl, String.valueOf(count));
+        decodeMap.put(String.valueOf(count), longUrl);
+    }
+    return encodeMap.get(longUrl);
+}
+
+// Decodes a shortened URL to its original URL.
+public String decode(String shortUrl) {
+    return decodeMap.get(shortUrl);
+}
