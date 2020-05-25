@@ -1,0 +1,15 @@
+1456.Maximum Number of Vowels in a Substring of Given Length
+sliding window
+public int maxVowels(String s, int k) {
+    int[] map = new int[26];
+    int left = 0;
+    int max = 0;
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right) - 'a']++;
+        while (right - left >= k) {
+            map[s.charAt(left++) - 'a']--;
+        }
+        max = Math.max(max, map['a' - 'a'] + map['e' - 'a'] + map['i' - 'a'] + map['o' - 'a'] + map['u' - 'a']);
+    }
+    return max;
+}
