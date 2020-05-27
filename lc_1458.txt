@@ -1,5 +1,11 @@
 1458.Max Dot Product of Two Subsequences
-dp
+LCS
+1143
+1.Use current column
+// add last column if it is positive
+nums1[i - 1] * nums2[j - 1] + Math.max(dp[i - 1][j - 1], 0)
+2.Do not use current column
+Math.max(dp[i - 1][j], dp[i][j - 1])
 public int maxDotProduct(int[] nums1, int[] nums2) {
     int l1 = nums1.length;
     int l2 = nums2.length;
@@ -12,9 +18,7 @@ public int maxDotProduct(int[] nums1, int[] nums2) {
     }
     for (int i = 1; i <= l1; i++) {
         for (int j = 1; j <= l2; j++) {
-            dp[i][j] = nums1[i - 1] * nums2[j - 1];
-            dp[i][j] += Math.max(dp[i - 1][j - 1], 0);
-            dp[i][j] = Math.max(dp[i][j], Math.max(dp[i - 1][j], dp[i][j - 1]));
+            dp[i][j] = Math.max(nums1[i - 1] * nums2[j - 1] + Math.max(dp[i - 1][j - 1], 0), Math.max(dp[i - 1][j], dp[i][j - 1]));
         }
     }
     return dp[l1][l2];
