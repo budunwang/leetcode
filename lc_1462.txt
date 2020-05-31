@@ -1,0 +1,26 @@
+1462.Course Schedule IV
+dfs
+public List<Boolean> checkIfPrerequisite(int n, int[][] prerequisites, int[][] queries) {
+    int[][] graph = new int[n][n];
+    for (int[] prerequisite : prerequisites) {
+        graph[prerequisite[0]][prerequisite[1]] = 1;
+    }
+    int[][] connects = new int[n][n];
+    for (int i = 0; i < n; i++) {
+        dfs(graph, connects[i], i);
+    }
+    List<Boolean> list = new ArrayList<Boolean>();
+    for (int[] query : queries) {
+        list.add(connects[query[0]][query[1]] == 1);
+    }
+    return list;
+}
+
+public void dfs(int[][] graph, int[] visited, int idx) {
+    for (int i = 0; i < graph[idx].length; i++) {
+        if (graph[idx][i] == 1 && visited[i] == 0) {
+            visited[i] = 1;
+            dfs(graph, visited, i);
+        }
+    }
+}
