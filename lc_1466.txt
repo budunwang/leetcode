@@ -1,0 +1,35 @@
+1466.Reorder Routes to Make All Paths Lead to the City Zero
+dfs
+public int minReorder(int n, int[][] connections) {
+    Map<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
+    for (int[] connection : connections) {
+        if (!map.containsKey(connection[0])) {
+            map.put(connection[0], new ArrayList<int[]>());
+        }
+        if (!map.containsKey(connection[1])) {
+            map.put(connection[1], new ArrayList<int[]>());
+        }
+        map.get(connection[0]).add(new int[] { connection[1], -1 });
+        map.get(connection[1]).add(new int[] { connection[0], 1 });
+    }
+    int[] visited = new int[n];
+    visited[0] = 1;
+    return dfs(map, visited, 0);
+}
+
+public int dfs(Map<Integer, List<int[]>> map, int[] visited, int idx) {
+    if (!map.containsKey(idx)) {
+        return 0;
+    }
+    int sum = 0;
+    for (int[] arr : map.get(idx)) {
+        if (visited[arr[0]] == 0) {
+            visited[arr[0]] = 1;
+            if (arr[1] == -1) {
+                sum++;
+            }
+            sum += dfs(map, visited, arr[0]);
+        }
+    }
+    return sum;
+}
