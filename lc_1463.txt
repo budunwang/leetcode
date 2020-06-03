@@ -1,0 +1,42 @@
+1463.Cherry Pickup II
+dfs + memo
+public int[][][] dp;
+
+public int cherryPickup(int[][] grid) {
+    int row = grid.length;
+    int col = grid[0].length;
+    dp = new int[row + 1][col][col];
+    for (int i = 0; i <= row; i++) {
+        for (int j = 0; j < col; j++) {
+            for (int k = 0; k < col; k++) {
+                dp[i][j][k] = -1;
+            }
+        }
+    }
+    return dfs(grid, 0, 0, col - 1);
+}
+
+public int dfs(int[][] grid, int i, int j_1, int j_2) {
+    if (dp[i][j_1][j_2] != -1) {
+        return dp[i][j_1][j_2];
+    }
+    int row = grid.length;
+    int col = grid[0].length;
+    if (i == row) {
+        dp[i][j_1][j_2] = 0;
+        return dp[i][j_1][j_2];
+    }
+    int sum = j_1 == j_2 ? grid[i][j_1] : grid[i][j_1] + grid[i][j_2];
+    int max = 0;
+    for (int k = -1; k <= 1; k++) {
+        for (int l = -1; l <= 1; l++) {
+            int n_j_1 = j_1 + k;
+            int n_j_2 = j_2 + l;
+            if (n_j_1 >= 0 && n_j_1 < col && n_j_2 >= 0 && n_j_2 < col) {
+                max = Math.max(max, dfs(grid, i + 1, n_j_1, n_j_2));
+            }
+        }
+    }
+    dp[i][j_1][j_2] = sum + max;
+    return dp[i][j_1][j_2];
+}
