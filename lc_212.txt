@@ -1,0 +1,64 @@
+212.Word Search II
+trie
+public class Node {
+    Node[] children;
+    String isEnd;
+    Node() {
+        this.children = new Node[26];
+    }
+}
+
+public List<String> list;
+
+public List<String> findWords(char[][] board, String[] words) {
+    list = new ArrayList<String>();
+    int row = board.length;
+    int col = board[0].length;
+    Node root = new Node();
+    for (String word : words) {
+        build(word, root);
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            dfs(board, i, j, root);
+        }
+    }
+    return list;
+}
+
+public void dfs(char[][] board, int i, int j, Node root) {
+    int row = board.length;
+    int col = board[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    if (board[i][j] == '0') {
+        return;
+    }
+    if (root.children[board[i][j] - 'a'] == null) {
+        return;
+    }
+    if (root.children[board[i][j] - 'a'].isEnd != null) {
+        list.add(root.children[board[i][j] - 'a'].isEnd);
+        root.children[board[i][j] - 'a'].isEnd = null;
+    }
+    root = root.children[board[i][j] - 'a'];
+    char tmp = board[i][j];
+    board[i][j] = '0';
+    for (int[] dir : dirs) {
+        int n_i = i + dir[0];
+        int n_j = j + dir[1];
+        if (n_i >= 0 && n_i < row && n_j >= 0 && n_j < col) {
+            dfs(board, n_i, n_j, root);
+        }
+    }
+    board[i][j] = tmp;
+}
+
+public void build(String word, Node root) {
+    for (char c : word.toCharArray()) {
+        if (root.children[c - 'a'] == null) {
+            root.children[c - 'a'] = new Node();
+        }
+        root = root.children[c - 'a'];
+    }
+    root.isEnd = word;
+}
