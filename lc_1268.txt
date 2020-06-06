@@ -1,5 +1,46 @@
 1268.Search Suggestions System
 trie tree
+1.
+public class Node {
+    Node[] children;
+    List<String> suggestions;
+    Node() {
+        this.children = new Node[26];
+        this.suggestions = new ArrayList<String>();
+    }
+}
+
+public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+    Arrays.sort(products);
+    Node root = new Node();
+    for (String product : products) {
+        build(product, root);
+    }
+    List<List<String>> res = new ArrayList<List<String>>();
+    for (char c : searchWord.toCharArray()) {
+        if (root == null || root.children[c - 'a'] == null) {
+            res.add(new ArrayList<String>());
+            root = null;
+        } else {
+            res.add(root.children[c - 'a'].suggestions);
+            root = root.children[c - 'a'];
+        }
+    }
+    return res;
+}
+
+public void build(String str, Node root) {
+    for (char c : str.toCharArray()) {
+        if (root.children[c - 'a'] == null) {
+            root.children[c - 'a'] = new Node();
+        }
+        root = root.children[c - 'a'];
+        if (root.suggestions.size() < 3) {
+            root.suggestions.add(str);
+        }
+    }
+}
+2.
 public class TrieNode {
     Character val;
     List<TrieNode> list;
