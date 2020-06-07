@@ -1,0 +1,16 @@
+253.Meeting Rooms II
+729
+public int minMeetingRooms(int[][] intervals) {
+    Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+    for (int[] interval : intervals) {
+        map.put(interval[0], map.getOrDefault(interval[0], 0) + 1);
+        map.put(interval[1], map.getOrDefault(interval[1], 0) - 1);
+    }
+    int max = 0;
+    int cur = 0;
+    for (int n : map.values()) {
+        cur += n;
+        max = Math.max(max, cur);
+    }
+    return max;
+}
