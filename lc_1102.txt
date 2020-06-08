@@ -1,0 +1,32 @@
+1102.Path With Maximum Minimum Value
+743
+Dijkstra
+Find Maximum Cost Path
+public int maximumMinimumPath(int[][] A) {
+    int row = A.length;
+    int col = A[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[2] - a[2]);
+    pq.offer(new int[] { 0, 0, A[0][0] });
+    A[0][0] = -1;
+    int min = Integer.MAX_VALUE;
+    while (!pq.isEmpty()) {
+        int size = pq.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = pq.poll();
+            min = Math.min(min, arr[2]);
+            if (arr[0] == row - 1 && arr[1] == col - 1) {
+                return min;
+            }
+            for (int[] dir : dirs) {
+                int n_x = arr[0] + dir[0];
+                int n_y = arr[1] + dir[1];
+                if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && A[n_x][n_y] != -1) {
+                    pq.offer(new int[] { n_x, n_y, A[n_x][n_y] });
+                    A[n_x][n_y] = -1;
+                }
+            }
+        }
+    }
+    return min;
+}

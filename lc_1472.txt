@@ -1,0 +1,27 @@
+1472.Design Browser History
+public List<String> list;
+public int idx;
+
+public BrowserHistory(String homepage) {
+    list = new ArrayList<String>();
+    idx = -1;
+    visit(homepage);
+}
+
+public void visit(String url) {
+    while (list.size() > idx + 1) {
+        list.remove(list.size() - 1);
+    }
+    list.add(url);
+    idx++;
+}
+
+public String back(int steps) {
+    idx = Math.max(0, idx - steps);
+    return list.get(idx);
+}
+
+public String forward(int steps) {
+    idx = Math.min(list.size() - 1, idx + steps);
+    return list.get(idx);
+}
