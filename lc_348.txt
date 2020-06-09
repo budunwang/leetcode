@@ -1,0 +1,35 @@
+348.Design Tic-Tac-Toe
+public int[] rows;
+public int[] cols;
+public int line_45;
+public int line_135;
+
+/** Initialize your data structure here. */
+public TicTacToe(int n) {
+    rows = new int[n];
+    cols = new int[n];
+    line_45 = 0;
+    line_135 = 0;
+}
+
+/** Player {player} makes a move at ({row}, {col}).
+    @param row The row of the board.
+    @param col The column of the board.
+    @param player The player, can be either 1 or 2.
+    @return The current winning condition, can be either:
+            0: No one wins.
+            1: Player 1 wins.
+            2: Player 2 wins. */
+public int move(int row, int col, int player) {
+    int num = player == 1 ? 1 : -1;
+    int length = rows.length;
+    rows[row] += num;
+    cols[col] += num;
+    if (row == col) {
+        line_135 += num;
+    }
+    if (row + col == length - 1) {
+        line_45 += num;
+    }
+    return Math.abs(rows[row]) == length || Math.abs(cols[col]) == length || Math.abs(line_45) == length || Math.abs(line_135) == length ? player : 0;
+}
