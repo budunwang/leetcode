@@ -1,0 +1,39 @@
+490.The Maze
+dfs + bfs
+public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+    int row = maze.length;
+    int col = maze[0].length;
+    int[][] visited = new int[row][col];
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    Queue<int[]> queue = new LinkedList<int[]>();
+    queue.offer(start);
+    visited[start[0]][start[1]] = 1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            if (arr[0] == destination[0] && arr[1] == destination[1]) {
+                return true;
+            }
+            for (int[] dir : dirs) {
+                int[] next = toEnd(maze, arr[0], arr[1], dir);
+                if (visited[next[0]][next[1]] == 0) {
+                    visited[next[0]][next[1]] = 1;
+                    queue.offer(next);
+                }
+            }
+        }
+    }
+    return false;
+}
+
+public int[] toEnd(int[][] maze, int x, int y, int[] dir) {
+    int row = maze.length;
+    int col = maze[0].length;
+    int n_x = x + dir[0];
+    int n_y = y + dir[1];
+    if (n_x < 0 || n_x >= row || n_y < 0 || n_y >= col || maze[n_x][n_y] == 1) {
+        return new int[] { x, y };
+    }
+    return toEnd(maze, n_x, n_y, dir);
+}
