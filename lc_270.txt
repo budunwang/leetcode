@@ -1,0 +1,20 @@
+270.Closest Binary Search Tree Value
+public int min;
+
+public int closestValue(TreeNode root, double target) {
+    min = root.val;
+    dfs(root, target);
+    return min;
+}
+
+public void dfs(TreeNode root, double target) {
+    if (root == null) {
+        return;
+    }
+    min = Math.abs(root.val - target) < Math.abs(min - target) ? root.val : min;
+    if (root.val > target) {
+        dfs(root.left, target);
+    } else {
+        dfs(root.right, target);
+    }
+}

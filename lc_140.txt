@@ -1,0 +1,73 @@
+140.Word Break II
+1.dfs + trie
+212
+public class Node {
+    Node[] children;
+    boolean isEnd;
+    Node() {
+        children = new Node[26];
+        isEnd = false;
+    }
+}
+
+public Node root;
+public List<String> res;
+
+public List<String> wordBreak(String s, List<String> wordDict) {
+    root = new Node();
+    res = new ArrayList<String>();
+    for (String word : wordDict) {
+        build(word, root);
+    }
+    if (!isValid(s, wordDict)) {
+        return res;
+    }
+    dfs(s, 0, 0, root, new ArrayList<String>());
+    return res;
+}
+
+public void build(String word, Node node) {
+    for (char c : word.toCharArray()) {
+        if (node.children[c - 'a'] == null) {
+            node.children[c - 'a'] = new Node();
+        }
+        node = node.children[c - 'a'];
+    }
+    node.isEnd = true;
+}
+
+public boolean isValid(String s, List<String> wordDict) {
+    int[] map = new int[128];
+    for (String word : wordDict) {
+        for (char c : word.toCharArray()) {
+            map[(int) c] = 1;
+        }
+    }
+    for (char c : s.toCharArray()) {
+        if (map[(int) c] != 1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public void dfs(String s, int idx, int count, Node node, List<String> list) {
+    if (idx == s.length()) {
+        if (count >= 1) {
+            res.add(String.join(" ", list));
+        }
+        return;
+    }
+    for (int i = idx; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (node.children[c - 'a'] == null) {
+            return;
+        }
+        node = node.children[c - 'a'];
+        if (node.isEnd) {
+            list.add(s.substring(idx, i + 1));
+            dfs(s, i + 1, count + 1, root, list);
+            list.remove(list.size() - 1);
+        }
+    }
+}
