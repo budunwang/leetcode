@@ -1,0 +1,25 @@
+249.Group Shifted Strings
+public List<List<String>> groupStrings(String[] strings) {
+    Map<String, List<String>> map = new HashMap<String, List<String>>();
+    for (String str : strings) {
+        String diff = getDiff(str);
+        map.putIfAbsent(diff, new ArrayList<String>());
+        map.get(diff).add(str);
+    }
+    List<List<String>> lists = new ArrayList<List<String>>();
+    for (List<String> list : map.values()) {
+        lists.add(list);
+    }
+    return lists;
+}
+
+public String getDiff(String str) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("0");
+    for (int i = 1; i < str.length(); i++) {
+        int num = (str.charAt(i) + 26 - str.charAt(i - 1)) % 26;
+        sb.append("_");
+        sb.append(num);
+    }
+    return sb.toString();
+}

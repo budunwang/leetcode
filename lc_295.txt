@@ -1,0 +1,28 @@
+295.Find Median from Data Stream
+MaxHeap: ... mid (max in left)
+MinHeap: mid (min in right) ...
+get max from left, get min from right, to keep balance
+public PriorityQueue<Integer> minHeap;
+public PriorityQueue<Integer> maxHeap;
+
+/** initialize your data structure here. */
+public MedianFinder() {
+    minHeap = new PriorityQueue<Integer>((a, b) -> a - b);
+    maxHeap = new PriorityQueue<Integer>((a, b) -> b - a);
+}
+
+public void addNum(int num) {
+    maxHeap.offer(num);
+    minHeap.offer(maxHeap.poll());
+    if (minHeap.size() > maxHeap.size()) {
+        maxHeap.offer(minHeap.poll());
+    }
+}
+
+public double findMedian() {
+    if (minHeap.size() != maxHeap.size()) {
+        return maxHeap.peek();
+    } else {
+        return (maxHeap.peek() + minHeap.peek()) / 2.0;
+    }
+}

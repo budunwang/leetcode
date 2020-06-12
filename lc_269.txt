@@ -1,0 +1,58 @@
+269.Alien Dictionary
+210
+create graph, topological sort
+public String alienOrder(String[] words) {
+    List<Integer>[] map = new ArrayList[26];
+    for (int i = 0; i < 26; i++) {
+        map[i] = new ArrayList<Integer>();
+    }
+    int[] exist = new int[26];
+    for (String word : words) {
+        for (char c : word.toCharArray()) {
+            exist[c - 'a'] = 1;
+        }
+    }
+    int[] arr = new int[26];
+    for (int i = 1; i < words.length; i++) {
+        String w1 = words[i - 1];
+        String w2 = words[i];
+        if (w1.length() > w2.length() && w1.indexOf(w2) == 0) {
+            return "";
+        }
+        int length = Math.min(w1.length(), w2.length());
+        for (int j = 0; j < length; j++) {
+            char c1 = w1.charAt(j);
+            char c2 = w2.charAt(j);
+            if (c1 != c2) {
+                map[c1 - 'a'].add(c2 - 'a');
+                arr[c2 - 'a']++;
+                break;
+            }
+        }
+    }
+    Queue<Integer> queue = new LinkedList<Integer>();
+    for (int i = 0; i < 26; i++) {
+        if (arr[i] == 0 && exist[i] == 1) {
+            queue.offer(i);
+        }
+    }
+    StringBuilder sb = new StringBuilder();
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int num = queue.poll();
+            sb.append((char)('a' + num));
+            for (int n : map[num]) {
+                arr[n]--;
+                if (arr[n] == 0) {
+                    queue.offer(n);
+                }
+            }
+        }
+    }
+    int count = 0;
+    for (int i = 0; i < 26; i++) {
+        count += exist[i];
+    }
+    return sb.length() == count ? sb.toString() : "";
+}

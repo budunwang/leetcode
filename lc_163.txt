@@ -1,0 +1,24 @@
+163.Missing Ranges
+public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+    List<Long> arr = new ArrayList<Long>();
+    arr.add((long)lower - 1);
+    for (int num : nums) {
+        arr.add((long)num);
+    }
+    arr.add((long)upper + 1);
+    List<String> list = new ArrayList<String>();
+    for (int i = 1; i < arr.size(); i++) {
+        long prev = arr.get(i - 1);
+        long cur = arr.get(i);
+        if (cur - prev == 2) {
+            list.add(String.valueOf(prev + 1));
+        } else if (cur - prev > 2) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(prev + 1);
+            sb.append("->");
+            sb.append(cur - 1);
+            list.add(sb.toString());
+        }
+    }
+    return list;
+}
