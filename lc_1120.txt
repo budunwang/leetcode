@@ -1,0 +1,21 @@
+1120.Maximum Average Subtree
+public double max;
+
+public double maximumAverageSubtree(TreeNode root) {
+    max = 0;
+    dfs(root);
+    return max;
+}
+
+public int[] dfs(TreeNode root) {
+    if (root == null) {
+        return new int[] { 0, 0 };
+    }
+    int[] left = dfs(root.left);
+    int[] right = dfs(root.right);
+    int sum = left[1] + right[1] + root.val;
+    int count = left[0] + right[0] + 1;
+    double average = sum / (double) count;
+    max = Math.max(max, average);
+    return new int[] { count, sum };
+}

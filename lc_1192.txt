@@ -1,0 +1,50 @@
+1192.Critical Connections in a Network
+Tarjan
+order: dfs visiting order
+low: the lowest order of the node that is connected to current node
+If the low of the connected node is smaller than the order of current node, the current node is in one circle.
+Block prev visited node to get rid of error low for current node.
+public List<List<Integer>> res;
+public int[] orders;
+public int[] lows;
+public int[] visited;
+public int idx;
+
+public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+    res = new ArrayList<List<Integer>>();
+    orders = new int[n];
+    lows = new int[n];
+    visited = new int[n];
+    idx = 0;
+    List<Integer>[] lists = new ArrayList[n];
+    for (int i = 0; i < n; i++) {
+        lists[i] = new ArrayList<Integer>();
+    }
+    for (List<Integer> connection : connections) {
+        lists[connection.get(0)].add(connection.get(1));
+        lists[connection.get(1)].add(connection.get(0));
+    }
+    dfs(lists, 0, -1);
+    return res;
+}
+
+public void dfs(List<Integer>[] lists, int n, int pre) {
+    orders[n] = idx;
+    lows[n] = idx;
+    visited[n] = 1;
+    idx++;
+    for (int next : lists[n]) {
+        if (next == pre) {
+            continue;
+        }
+        if (visited[next] == 0) {
+            dfs(lists, next, n);
+            lows[n] = Math.min(lows[n], lows[next]);
+            if (lows[next] > orders[n]) {
+                res.add(Arrays.asList(n, next));
+            }
+        } else {
+            lows[n] = Math.min(lows[n], lows[next]);
+        }
+    }
+}
