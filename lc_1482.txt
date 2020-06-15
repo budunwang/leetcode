@@ -1,0 +1,34 @@
+1482.Minimum Number of Days to Make m Bouquets
+binary search
+ceiling key
+public int minDays(int[] bloomDay, int m, int k) {
+    if (m * k > bloomDay.length) {
+        return -1;
+    }
+    int left = 0;
+    int right = 1000000000;
+    int ceil = -1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        int sum = 0;
+        int cur = 0;
+        for (int i = 0; i < bloomDay.length; i++) {
+            if(bloomDay[i] <= mid) {
+                cur++;
+                if (cur == k) {
+                    sum++;
+                    cur = 0;
+                }
+            } else {
+                cur = 0;
+            }
+        }
+        if (sum < m) {
+            left = mid + 1;
+        } else {
+            ceil = mid;
+            right = mid - 1;
+        }
+    }
+    return ceil;
+}
