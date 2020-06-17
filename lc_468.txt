@@ -1,0 +1,74 @@
+468.Validate IP Address
+public String validIPAddress(String IP) {
+    if (isIPv4(IP)) {
+        return "IPv4";
+    }
+    if (isIPv6(IP)) {
+        return "IPv6";
+    }
+    return "Neither";
+}
+
+public boolean isIPv4(String IP) {
+    if (IP.equals("") || IP.charAt(0) == '.' || IP.charAt(IP.length() - 1) == '.') {
+        return false;
+    }
+    String[] ss = IP.split("\\.");
+    if (ss.length != 4) {
+        return false;
+    }
+    for (int i = 0; i < 4; i++) {
+        if (!isIPv4Num(ss[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean isIPv6(String IP) {
+    if (IP.equals("") || IP.charAt(0) == ':' || IP.charAt(IP.length() - 1) == ':') {
+        return false;
+    }
+    String[] ss = IP.split(":");
+    if (ss.length != 8) {
+        return false;
+    }
+    for (int i = 0; i < 8; i++) {
+        if (!isIPv6Num(ss[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean isIPv4Num(String str) {
+    if (str.equals("") || (str.length() > 1 && str.charAt(0) == '0') || str.length() > 3) {
+        return false;
+    }
+    int sum = 0;
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (!Character.isDigit(c)) {
+            return false;
+        }
+        sum = sum * 10 + (c - '0');
+    }
+    if (sum > 255) {
+        return false;
+    }
+    return true;
+}
+
+public boolean isIPv6Num(String str) {
+    if (str.equals("") || str.length() > 4) {
+        return false;
+    }
+    String n_str = str.toLowerCase();
+    for (int i = 0; i < n_str.length(); i++) {
+        char c = n_str.charAt(i);
+        if (!Character.isDigit(c) && (c < 'a' || c > 'f')) {
+            return false;
+        }
+    }
+    return true;
+}
