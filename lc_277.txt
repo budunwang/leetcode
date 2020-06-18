@@ -1,0 +1,17 @@
+277.Find the Celebrity
+first loop find idx, which the left ones are not valid and the right ones all know idx
+second loop check the left ones knows idx
+public int findCelebrity(int n) {
+    int idx = 0;
+    for (int i = 1; i < n; i++) {
+        if (!knows(i, idx)) {
+            idx = i;
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (i != idx && (!knows(i, idx) || knows(idx, i))) {
+            return -1;
+        }
+    }
+    return idx;
+}
