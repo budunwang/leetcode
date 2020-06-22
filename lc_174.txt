@@ -1,0 +1,26 @@
+174.Dungeon Game
+public int[][] dp;
+
+public int calculateMinimumHP(int[][] dungeon) {
+    int row = dungeon.length;
+    int col = dungeon[0].length;
+    dp = new int[row][col];
+    return Math.max(1, dfs(dungeon, 0, 0));
+}
+
+public int dfs(int[][] dungeon, int i, int j) {
+    int row = dungeon.length;
+    int col = dungeon[0].length;
+    if (i < 0 || i >= row || j < 0 || j >= col) {
+        return Integer.MAX_VALUE;
+    }
+    if (i == row - 1 && j == col - 1) {
+        return 0 - dungeon[i][j] + 1;
+    }
+    if (dp[i][j] != 0) {
+        return dp[i][j];
+    }
+    int min = Math.max(1, Math.min(dfs(dungeon, i + 1, j), dfs(dungeon, i, j + 1)));
+    dp[i][j] = 0 - dungeon[i][j] + min;
+    return dp[i][j];
+}
