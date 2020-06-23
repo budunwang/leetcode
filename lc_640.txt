@@ -1,0 +1,47 @@
+640.Solve the Equation
+public String solveEquation(String equation) {
+    if (equation.equals("")) {
+        return "Infinite solutions";
+    }
+    String[] ss = equation.split("=");
+    int[] e0 = getNum(ss[0]);
+    int[] e1 = getNum(ss[1]);
+    if (e0[0] == e1[0]) {
+        return e0[1] == e1[1] ? "Infinite solutions" : "No solution";
+    }
+    int num = (e1[1] - e0[1]) / (e0[0] - e1[0]);
+    return "x=" + Integer.toString(num);
+}
+
+public int[] getNum(String str) {
+    str += "+";
+    int num = 0;
+    int sign = 1;
+    boolean isX = false;
+    int sum_x = 0;
+    int sum_num = 0;
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (Character.isDigit(c)) {
+            num = num * 10 + (c - '0');
+        } else if (c == 'x') {
+            isX = true;
+        } else {
+            if (isX) {
+                if (num == 0) {
+                    if (i < 2 || str.charAt(i - 2) != '0') {
+                        sum_x += sign * 1;
+                    }
+                } else {
+                    sum_x += sign * num;
+                }
+            } else {
+                sum_num += sign * num;
+            }
+            num = 0;
+            sign = c == '+' ? 1 : -1;
+            isX = false;
+        }
+    }
+    return new int[] { sum_x, sum_num };
+}
