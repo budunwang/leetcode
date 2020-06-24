@@ -1,0 +1,12 @@
+285.Inorder Successor in BST
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    if (root == null) {
+        return null;
+    }
+    if (p.val >= root.val) {
+        return inorderSuccessor(root.right, p);
+    } else {
+        TreeNode treeNode = inorderSuccessor(root.left, p);
+        return treeNode == null ? root : treeNode;
+    }
+}
