@@ -1,0 +1,24 @@
+366.Find Leaves of Binary Tree
+public Map<Integer, List<Integer>> map;
+
+public List<List<Integer>> findLeaves(TreeNode root) {
+    map = new HashMap<Integer, List<Integer>>();
+    int max = dfs(root);
+    List<List<Integer>> lists = new ArrayList<List<Integer>>();
+    for (int i = 1; i <= max; i++) {
+        lists.add(map.get(i));
+    }
+    return lists;
+}
+
+public int dfs(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = dfs(root.left);
+    int right = dfs(root.right);
+    int level = Math.max(left, right) + 1;
+    map.putIfAbsent(level, new ArrayList<Integer>());
+    map.get(level).add(root.val);
+    return level;
+}
