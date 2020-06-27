@@ -1,0 +1,21 @@
+735.Asteroid Collision
+stack
+public int[] asteroidCollision(int[] asteroids) {
+    Stack<Integer> stack = new Stack<Integer>();
+    for (int i = 0; i < asteroids.length; i++) {
+        while (!stack.isEmpty() && stack.peek() < -1 * asteroids[i] && stack.peek() > 0 && asteroids[i] < 0) {
+            stack.pop();
+        }
+        if (asteroids[i] > 0 || stack.isEmpty() || stack.peek() < 0) {
+            stack.add(asteroids[i]);
+        } else if (stack.peek() == -1 * asteroids[i]) {
+            stack.pop();
+        }
+    }
+    List<Integer> list = new ArrayList<Integer>(stack);
+    int[] arr = new int[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+        arr[i] = list.get(i);
+    }
+    return arr;
+}
