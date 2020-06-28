@@ -1,0 +1,12 @@
+1491.Average Salary Excluding the Minimum and Maximum Salary
+public double average(int[] salary) {
+    int max = Integer.MIN_VALUE;
+    int min = Integer.MAX_VALUE;
+    int sum = 0;
+    for (int num : salary) {
+        max = Math.max(max, num);
+        min = Math.min(min, num);
+        sum += num;
+    }
+    return (double)(sum - max - min) / (salary.length - 2);
+}
