@@ -1,0 +1,24 @@
+1496.Path Crossing
+public boolean isPathCrossing(String path) {
+    Set<String> set = new HashSet<String>();
+    int x = 0;
+    int y = 0;
+    set.add(x + "_" + y);
+    for (int i = 0; i < path.length(); i++) {
+        char c = path.charAt(i);
+        if (c == 'N') {
+            x--;
+        } else if (c == 'S') {
+            x++;
+        } else if (c == 'E') {
+            y++;
+        } else {
+            y--;
+        }
+        if (set.contains(x + "_" + y)) {
+            return true;
+        }
+        set.add(x + "_" + y);
+    }
+    return false;
+}

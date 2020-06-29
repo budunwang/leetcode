@@ -1,0 +1,13 @@
+1497.Check If Array Pairs Are Divisible by k
+public boolean canArrange(int[] arr, int k) {
+    int[] map = new int[k];
+    for (int num : arr) {
+        map[(num % k + k) % k]++;
+    }
+    for (int i = 1; i < k; i++) {
+        if (map[i] != map[k - i]) {
+            return false;
+        }
+    }
+    return map[0] % 2 == 0;
+}
