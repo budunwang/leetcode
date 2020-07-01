@@ -1,0 +1,24 @@
+333.Largest BST Subtree
+1373
+check BST and get node number in one search
+public int max;
+
+public int largestBSTSubtree(TreeNode root) {
+    max = 0;
+    dfs(root);
+    return max;
+}
+
+public int[] dfs(TreeNode root) {
+    if (root == null) {
+        return new int[] { Integer.MAX_VALUE, Integer.MIN_VALUE, 1, 0 };
+    }
+    int[] left = dfs(root.left);
+    int[] right = dfs(root.right);
+    if (root.val <= left[1] || root.val >= right[0] || left[2] == 0 || right[2] == 0) {
+        return new int[] { 0, 0, 0, 0 };
+    }
+    int curMax = left[3] + right[3] + 1;
+    max = Math.max(max, curMax);
+    return new int[] { Math.min(root.val, left[0]), Math.max(root.val, right[1]), 1, curMax };
+}
