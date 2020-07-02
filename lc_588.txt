@@ -1,0 +1,96 @@
+588.Design In-Memory File System
+Like Trie tree
+use map instead of array
+public class File {
+    Map<String, File> children;
+    boolean isFile;
+    String content;
+    File() {
+        this.children = new HashMap<String, File>();
+        this.isFile = true;
+        this.content = null;
+    }
+}
+
+public File root;
+
+public FileSystem() {
+    root = new File();
+}
+
+public List<String> ls(String path) {
+    File file = root;
+    String[] paths = path.split("/");
+    for (String str : paths) {
+        if (str.equals("")) {
+            continue;
+        }
+        Map<String, File> map = file.children;
+        if (!map.containsKey(str)) {
+            return new ArrayList<String>();
+        }
+        file = map.get(str);
+    }
+    if (!file.isFile) {
+        List<String> list = new ArrayList<String>();
+        list.add(paths[paths.length - 1]);
+        return list;
+    }
+    List<String> list = new ArrayList<String>(file.children.keySet());
+    Collections.sort(list);
+    return list;
+}
+
+public void mkdir(String path) {
+    File file = root;
+    String[] paths = path.split("/");
+    for (String str : paths) {
+        if (str.equals("")) {
+            continue;
+        }
+        Map<String, File> map = file.children;
+        if (!map.containsKey(str)) {
+            File newFile = new File();
+            map.put(str, newFile);
+        }
+        file = map.get(str);
+    }
+}
+
+public void addContentToFile(String filePath, String content) {
+    File file = root;
+    String[] paths = filePath.split("/");
+    for (String str : paths) {
+        if (str.equals("")) {
+            continue;
+        }
+        Map<String, File> map = file.children;
+        if (!map.containsKey(str)) {
+            File newFile = new File();
+            map.put(str, newFile);
+        }
+        file = map.get(str);
+    }
+    if (file.isFile) {
+        file.content = content;
+    } else {
+        file.content += content;
+    }
+    file.isFile = false;
+}
+
+public String readContentFromFile(String filePath) {
+    File file = root;
+    String[] paths = filePath.split("/");
+    for (String str : paths) {
+        if (str.equals("")) {
+            continue;
+        }
+        Map<String, File> map = file.children;
+        if (!map.containsKey(str)) {
+            return "";
+        }
+        file = map.get(str);
+    }
+    return file.content;
+}
