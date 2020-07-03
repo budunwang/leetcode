@@ -1,0 +1,57 @@
+362.Design Hit Counter
+1.queue
+public Queue<Integer> queue;
+
+/** Initialize your data structure here. */
+public HitCounter() {
+    queue = new LinkedList<Integer>();
+}
+
+/** Record a hit.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public void hit(int timestamp) {
+    queue.offer(timestamp);
+}
+
+/** Return the number of hits in the past 5 minutes.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public int getHits(int timestamp) {
+    while (!queue.isEmpty() && timestamp - queue.peek() >= 300) {
+        queue.poll();
+    }
+    return queue.size();
+}
+
+2.array
+public int[] hit;
+public int[] time;
+
+/** Initialize your data structure here. */
+public HitCounter() {
+    hit = new int[300];
+    time = new int[300];
+}
+
+/** Record a hit.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public void hit(int timestamp) {
+    int idx = timestamp % 300;
+    if (time[idx] == timestamp) {
+        hit[idx]++;
+    } else {
+        hit[idx] = 1;
+        time[idx] = timestamp;
+    }
+}
+
+/** Return the number of hits in the past 5 minutes.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public int getHits(int timestamp) {
+    int sum = 0;
+    for (int i = 0; i < 300; i++) {
+        if (timestamp - time[i] < 300) {
+            sum += hit[i];
+        }
+    }
+    return sum;
+}
