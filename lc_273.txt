@@ -1,0 +1,48 @@
+273.Integer to English Words
+public String numberToWords(int num) {
+    if (num == 0) {
+        return "Zero";
+    }
+    String[] thousands = new String[] { "", "Thousand", "Million", "Billion" };
+    int idx = 0;
+    String str = "";
+    while (num != 0) {
+        int n = num % 1000;
+        num /= 1000;
+        if (n != 0) {
+            str = getThreeNum(n) + " " + thousands[idx] + str;
+        }
+        idx++;
+    }
+    return str.trim();
+}
+
+public String getThreeNum(int num) {
+    String[] tys = new String[] { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+    String[] tens = new String[] { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+    String[] ones = new String[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+    int n3 = num / 100;
+    int n2 = num % 100 / 10;
+    int n1 = num % 10;
+    StringBuilder sb = new StringBuilder();
+    if (n3 != 0) {
+        sb.append(" ");
+        sb.append(ones[n3]);
+        sb.append(" ");
+        sb.append("Hundred");
+    }
+    if (n2 != 0) {
+        sb.append(" ");
+        if (n2 == 1) {
+            sb.append(tens[n1]);
+            return sb.toString();
+        } else {
+            sb.append(tys[n2]);
+        }
+    }
+    if (n1 != 0) {
+        sb.append(" ");
+        sb.append(ones[n1]);
+    }
+    return sb.toString();
+}
