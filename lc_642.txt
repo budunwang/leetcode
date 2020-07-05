@@ -1,0 +1,73 @@
+642.Design Search Autocomplete System
+trie
+public class Node {
+    Node[] children;
+    Map<String, Integer> map;
+    Node() {
+        this.children = new Node[128];
+        this.map = new HashMap<String, Integer>();
+    }
+}
+
+public Node root;
+public StringBuilder sb;
+
+public AutocompleteSystem(String[] sentences, int[] times) {
+    root = new Node();
+    sb = new StringBuilder();
+    for (int i = 0; i < sentences.length; i++) {
+        add(sentences[i], times[i]);
+    }
+}
+
+public List<String> input(char c) {
+    Node node = root;
+    List<String> res = new ArrayList<String>();
+    if (c != '#') {
+        sb.append(c);
+        for (int i = 0; i < sb.length(); i++) {
+            char tmp = sb.charAt(i);
+            if (node.children[(int) tmp] == null) {
+                node.children[(int) tmp] = new Node();
+            }
+            node = node.children[(int) tmp];
+        }
+        PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<Map.Entry<String, Integer>>((a, b) -> {
+            String strA = a.getKey();
+            int numA = a.getValue();
+            String strB = b.getKey();
+            int numB = b.getValue();
+            if (numA != numB) {
+                return numA - numB;
+            } else {
+                return strB.compareTo(strA);
+            }
+        });
+        for (Map.Entry<String, Integer> entry : node.map.entrySet()) {
+            pq.offer(entry);
+            if (pq.size() > 3) {
+                pq.poll();
+            }
+        }
+        while (!pq.isEmpty()) {
+            res.add(0, pq.poll().getKey());
+        }
+    } else {
+        add(sb.toString(), 1);
+        sb = new StringBuilder();
+    }
+    return res;
+}
+
+public void add(String str, int count) {
+    Node node = root;
+    for (int i = 0; i < str.length(); i++) {
+        char tmp = str.charAt(i);
+        if (node.children[(int) tmp] == null) {
+            node.children[(int) tmp] = new Node();
+        }
+        node = node.children[(int) tmp];
+        Map<String, Integer> map = node.map;
+        map.put(str, map.getOrDefault(str, 0) + count);
+    }
+}
