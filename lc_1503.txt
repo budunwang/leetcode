@@ -1,0 +1,13 @@
+1503.Last Moment Before All Ants Fall Out of a Plank
+Max distance for meeting ant = Math.max(left, n - right)
+public int getLastMoment(int n, int[] left, int[] right) {
+    int max_left = 0;
+    int max_right = 0;
+    for (int num : left) {
+        max_left = Math.max(max_left, num);
+    }
+    for (int num : right) {
+        max_right = Math.max(max_right, n - num);
+    }
+    return Math.max(max_left, max_right);
+}
