@@ -1,0 +1,44 @@
+716.Max Stack
+public Stack<Integer> stack;
+public Stack<Integer> maxStack;
+
+/** initialize your data structure here. */
+public MaxStack() {
+    stack = new Stack<Integer>();
+    maxStack = new Stack<Integer>();
+}
+
+public void push(int x) {
+    if (maxStack.isEmpty()) {
+        maxStack.push(x);
+    } else {
+        maxStack.push(Math.max(x, maxStack.peek()));
+    }
+    stack.push(x);
+}
+
+public int pop() {
+    maxStack.pop();
+    return stack.pop();
+}
+
+public int top() {
+    return stack.peek();
+}
+
+public int peekMax() {
+    return maxStack.peek();
+}
+
+public int popMax() {
+    int curMax = maxStack.peek();
+    Stack<Integer> tmp = new Stack<Integer>();
+    while (stack.peek() < curMax) {
+        tmp.push(pop());
+    }
+    pop();
+    while (!tmp.isEmpty()) {
+        push(tmp.pop());
+    }
+    return curMax;
+}
