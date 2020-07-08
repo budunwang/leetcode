@@ -1,0 +1,66 @@
+726.Number of Atoms
+public String countOfAtoms(String formula) {
+    Map<String, Integer> map = dfs(formula, 0, formula.length() - 1);
+    List<String> list = new ArrayList<String>(map.keySet());
+    Collections.sort(list);
+    StringBuilder sb = new StringBuilder();
+    for (String str : list) {
+        sb.append(str);
+        if (map.get(str) != 1) {
+            sb.append(map.get(str));
+        }
+    }
+    return sb.toString();
+}
+
+public Map<String, Integer> dfs(String str, int start, int end) {
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    for (int i = start; i <= end; i++) {
+        char c = str.charAt(i);
+        if (c == '(') {
+            int count = 1;
+            int j = i + 1;
+            while (count != 0) {
+                char t = str.charAt(j);
+                if (t == '(') {
+                    count++;
+                }
+                if (t == ')') {
+                    count--;
+                }
+                j++;
+            }
+            j--;
+            Map<String, Integer> curMap = dfs(str, i + 1, j - 1);
+            j++;
+            int num = 0;
+            while (j <= end && Character.isDigit(str.charAt(j))) {
+                num = num * 10 + (str.charAt(j) - '0');
+                j++;
+            }
+            for (Map.Entry<String, Integer> entry : curMap.entrySet()) {
+                String atom = entry.getKey();
+                int sum = entry.getValue();
+                map.put(atom, map.getOrDefault(atom, 0) + sum * num);
+            }
+            i = j - 1;
+        } else {
+            StringBuilder atom = new StringBuilder();
+            atom.append(c);
+            int j = i + 1;
+            while (j <= end && str.charAt(j) >= 'a' && str.charAt(j) <= 'z') {
+                atom.append(str.charAt(j));
+                j++;
+            }
+            int num = 0;
+            while (j <= end && Character.isDigit(str.charAt(j))) {
+                num = num * 10 + (str.charAt(j) - '0');
+                j++;
+            }
+            num = num == 0 ? 1 : num;
+            map.put(atom.toString(), map.getOrDefault(atom.toString(), 0) + num);
+            i = j - 1;
+        }
+    }
+    return map;
+}
