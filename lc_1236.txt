@@ -1,0 +1,24 @@
+1236.Web Crawler
+public List<String> crawl(String startUrl, HtmlParser htmlParser) {
+    Queue<String> queue = new LinkedList<String>();
+    Set<String> set = new HashSet<String>();
+    queue.offer(startUrl);
+    set.add(startUrl);
+    String hostName = startUrl.split("/")[2];
+    List<String> list = new ArrayList<String>();
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            String str = queue.poll();
+            list.add(str);
+            for (String next : htmlParser.getUrls(str)) {
+                String nextHostName = next.split("/")[2];
+                if (!set.contains(next) && hostName.equals(nextHostName)) {
+                    queue.offer(next);
+                    set.add(next);
+                }
+            }
+        }
+    }
+    return list;
+}
