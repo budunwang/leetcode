@@ -1,0 +1,61 @@
+737.Sentence Similarity II
+public Set<String> set;
+public Set<String> visited;
+
+public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
+    if (words1.length != words2.length) {
+        return false;
+    }
+    Map<String, List<String>> map = new HashMap<String, List<String>>();
+    for (List<String> pair : pairs) {
+        String str1 = pair.get(0);
+        String str2 = pair.get(1);
+        if (!map.containsKey(str1)) {
+            map.put(str1, new ArrayList<String>());
+        }
+        map.get(str1).add(str2);
+        if (!map.containsKey(str2)) {
+            map.put(str2, new ArrayList<String>());
+        }
+        map.get(str2).add(str1);
+    }
+    visited = new HashSet<String>();
+    List<Set<String>> list = new ArrayList<Set<String>>();
+    for (List<String> pair : pairs) {
+        String str = pair.get(0);
+        if (!visited.contains(str)) {
+            set = new HashSet<String>();
+            dfs(map, str);
+            list.add(set);
+        }
+    }
+    for (int i = 0; i < words1.length; i++) {
+        String str1 = words1[i];
+        String str2 = words2[i];
+        if (str1.equals(str2)) {
+            continue;
+        }
+        boolean isSimilar = false;
+        for (Set<String> tmp : list) {
+            if (tmp.contains(str1) && tmp.contains(str2)) {
+                isSimilar = true;
+                break;
+            }
+        }
+        if (!isSimilar) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public void dfs(Map<String, List<String>> map, String str) {
+    if (visited.contains(str)) {
+        return;
+    }
+    visited.add(str);
+    set.add(str);
+    for (String next : map.get(str)) {
+        dfs(map, next);
+    }
+}
