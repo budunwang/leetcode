@@ -1,0 +1,25 @@
+430.Flatten a Multilevel Doubly Linked List
+public Node flatten(Node head) {
+    Node node = new Node();
+    node = head;
+    while (head != null) {
+        if (head.child == null) {
+            head = head.next;
+        } else {
+            Node flatHead = head.child;
+            while (flatHead.next != null) {
+                flatHead = flatHead.next;
+            }
+            if (head.next != null) {
+                Node next = head.next;
+                flatHead.next = next;
+                next.prev = flatHead;
+            }
+            head.next = head.child;
+            head.child.prev = head;
+            head.child = null;
+            head = head.next;
+        }
+    }
+    return node;
+}
