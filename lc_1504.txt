@@ -1,0 +1,18 @@
+1504.Count Submatrices With All Ones
+public int numSubmat(int[][] mat) {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[] dp = new int[col];
+    int res = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            dp[j] = mat[i][j] == 1 ? dp[j] + 1 : 0;
+            int min = dp[j];
+            for (int k = j; k >= 0; k--) {
+                min = Math.min(min, dp[k]);
+                res += min;
+            }
+        }
+    }
+    return res;
+}

@@ -1,0 +1,15 @@
+1507.Reformat Date
+public String reformatDate(String date) {
+    String[] ss = date.split("\\s+");
+    String[] months = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    String year = ss[2];
+    String month = "";
+    for (int i = 0; i < 12; i++) {
+        if (months[i].equals(ss[1])) {
+            month = (i < 9 ? "0" : "") + String.valueOf(i + 1);
+            break;
+        }
+    }
+    String day = (ss[0].length() == 3 ? "0" : "") + ss[0].substring(0, ss[0].length() - 2);
+    return year + "-" + month + "-" + day;
+}
