@@ -1,0 +1,15 @@
+1513.Number of Substrings With Only 1s
+public int numSub(String s) {
+    int mod = (int)(1e9 + 7);
+    int sum = 0;
+    int count = 0;
+    for (char c : s.toCharArray()) {
+        if (c == '1') {
+            count++;
+            sum = (sum + count) % mod;
+        } else {
+            count = 0;
+        }
+    }
+    return sum;
+}
