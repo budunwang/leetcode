@@ -1,0 +1,19 @@
+159.Longest Substring with At Most Two Distinct Characters
+sliding window
+public int lengthOfLongestSubstringTwoDistinct(String s) {
+    int[] map = new int[128];
+    int max = 0;
+    int count = 0;
+    int left = 0;
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right)]++;
+        count += map[s.charAt(right)] == 1 ? 1 : 0;
+        while (count > 2) {
+            map[s.charAt(left)]--;
+            count -= map[s.charAt(left)] == 0 ? 1 : 0;
+            left++;
+        }
+        max = Math.max(max, right - left + 1);
+    }
+    return max;
+}
