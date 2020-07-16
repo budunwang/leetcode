@@ -1,0 +1,15 @@
+156.Binary Tree Upside Down
+public TreeNode upsideDownBinaryTree(TreeNode root) {
+    if (root == null) {
+        return null;
+    }
+    if (root.left == null && root.right == null) {
+        return root;
+    }
+    TreeNode nextRoot = upsideDownBinaryTree(root.left);
+    root.left.right = root;
+    root.left.left = root.right;
+    root.left = null;
+    root.right = null;
+    return nextRoot;
+}
