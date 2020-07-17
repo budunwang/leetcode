@@ -1,0 +1,23 @@
+186.Reverse Words in a String II
+public void reverseWords(char[] s) {
+    int length = s.length;
+    reverse(s, 0, length - 1);
+    for (int i = 0; i < length; i++) {
+        int j = i;
+        while (j < length && s[j] != ' ') {
+            j++;
+        }
+        reverse(s, i, j - 1);
+        i = j;
+    }
+}
+
+public void reverse(char[] s, int i, int j) {
+    while (i < j) {
+        char c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+        i++;
+        j--;
+    }
+}
