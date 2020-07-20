@@ -1,0 +1,51 @@
+1520.Maximum Number of Non-Overlapping Substrings
+1.find start index and end index of each letter
+2.extend each letter range by checking internal letters
+if internal letter between start index and end index has larger range, the letter should extend its range.
+check until the range of letter and internal letter are same
+3.merge internal
+sort by end index
+find unoverlap internal
+public List<String> maxNumOfSubstrings(String s) {
+    int[][] map = new int[26][2];
+    for (int i = 0; i < 26; i++) {
+        map[i][0] = -1;
+    }
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (map[c - 'a'][0] == -1) {
+            map[c - 'a'][0] = i;
+        }
+        map[c - 'a'][1] = i;
+    }
+    List<int[]> list = new ArrayList<int[]>();
+    for (int i = 0; i < 26; i++) {
+        if (map[i][0] == -1) {
+            continue;
+        }
+        int start = -1;
+        int end = -1;
+        while (start != map[i][0] || end != map[i][1]) {
+            start = map[i][0];
+            end = map[i][1];
+            for (int j = start + 1; j < end; j++) {
+                char c = s.charAt(j);
+                if (map[c - 'a'][0] < start || map[c - 'a'][1] > end) {
+                    map[i][0] = Math.min(map[i][0], map[c - 'a'][0]);
+                    map[i][1] = Math.max(map[i][1], map[c - 'a'][1]);
+                }
+            }
+        }
+        list.add(map[i]); 
+    }
+    List<String> res = new ArrayList<String>();
+    Collections.sort(list, (a, b) -> a[1] - b[1]);
+    int prev = -1;
+    for (int[] arr : list) {
+        if (arr[0] > prev) {
+            res.add(s.substring(arr[0], arr[1] + 1));
+            prev = arr[1];
+        }
+    }
+    return res;
+}

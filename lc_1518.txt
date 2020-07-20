@@ -1,0 +1,10 @@
+1518.Water Bottles
+public int numWaterBottles(int numBottles, int numExchange) {
+    int total = numBottles;
+    int sum = numBottles;
+    while (total >= numExchange) {
+        sum += total / numExchange;
+        total = total / numExchange + total % numExchange;
+    }
+    return sum;
+}
