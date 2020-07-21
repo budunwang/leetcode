@@ -1,0 +1,35 @@
+76.Minimum Window Substring
+sliding window
+public String minWindow(String s, String t) {
+    int[] map = new int[128];
+    for (char c : t.toCharArray()) {
+        map[c]++;
+    }
+    int[] arr = new int[128];
+    int[] min = new int[] { 0, s.length() };
+    int left = 0;
+    for (int right = 0; right < s.length(); right++) {
+        arr[s.charAt(right)]++;
+        while (left <= right && isValid(arr, map)) {
+            if (right - left < min[1] - min[0]) {
+                min[0] = left;
+                min[1] = right;
+            }
+            arr[s.charAt(left)]--;
+            left++;
+        }
+    }
+    if (min[1] == s.length()) {
+        return "";
+    }
+    return s.substring(min[0], min[1] + 1);
+}
+
+public boolean isValid(int[] arr, int[] map) {
+    for (int i = 0; i < 128; i++) {
+        if (arr[i] < map[i]) {
+            return false;
+        }
+    }
+    return true;
+}

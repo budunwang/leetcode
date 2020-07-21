@@ -1,7 +1,7 @@
 1520.Maximum Number of Non-Overlapping Substrings
 1.find start index and end index of each letter
 2.extend each letter range by checking internal letters
-if internal letter between start index and end index has larger range, the letter should extend its range.
+if internal letter between start index and end index has larger range, the letter should extend its range
 check until the range of letter and internal letter are same
 3.merge internal
 sort by end index
