@@ -1,0 +1,78 @@
+99.Recover Binary Search Tree
+1.O(n) space
+in-order traversal
+find two unsorted value
+change in tree
+public List<Integer> list;
+
+public void recoverTree(TreeNode root) {
+    list = new ArrayList<Integer>();
+    inOrder(root);
+    Integer n1 = null;
+    Integer n2 = null;
+    for (int i = 0; i < list.size() - 1; i++) {
+        if (list.get(i) > list.get(i + 1)) {
+            if (n1 == null) {
+                n1 = list.get(i);
+            }
+            n2 = list.get(i + 1);
+        }
+    }
+    reverse(root, n1, n2);
+}
+
+public void inOrder(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    inOrder(root.left);
+    list.add(root.val);
+    inOrder(root.right);
+}
+
+public void reverse(TreeNode root, int n1, int n2) {
+    if (root == null) {
+        return;
+    }
+    if (root.val == n1) {
+        root.val = n2;
+    } else if (root.val == n2) {
+        root.val = n1;
+    }
+    reverse(root.left, n1, n2);
+    reverse(root.right, n1, n2);
+}
+
+2.O(1) space
+find two unsorted treeNode during in-order traversal
+swap treeNode
+public TreeNode n1;
+public TreeNode n2;
+public TreeNode prev;
+
+public void recoverTree(TreeNode root) {
+    n1 = null;
+    n2 = null;
+    prev = null;
+    inOrder(root);
+    int tmp = n1.val;
+    n1.val = n2.val;
+    n2.val = tmp;
+}
+
+public void inOrder(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    inOrder(root.left);
+    if (prev != null) {
+        if (prev.val > root.val) {
+            if (n1 == null) {
+                n1 = prev;
+            }
+            n2 = root;
+        }
+    }
+    prev = root;
+    inOrder(root.right);
+}
