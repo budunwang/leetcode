@@ -1,0 +1,22 @@
+247.Strobogrammatic Number II
+public List<String> findStrobogrammatic(int n) {
+    return dfs(n, n);
+}
+
+public List<String> dfs(int idx, int n) {
+    if (idx < 2) {
+        return idx == 0 ? new ArrayList<String>(Arrays.asList("")) : new ArrayList<String>(Arrays.asList("0", "1", "8"));
+    }
+    List<String> res = new ArrayList<String>();
+    List<String> list = dfs(idx - 2, n);
+    for (String str : list) {
+        if (idx != n) {
+            res.add("0" + str + "0"); 
+        }
+        res.add("1" + str + "1");
+        res.add("6" + str + "9");
+        res.add("8" + str + "8");
+        res.add("9" + str + "6");
+    }
+    return res;
+}
