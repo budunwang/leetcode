@@ -1,0 +1,35 @@
+360.Sort Transformed Array
+public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
+    int left = 0;
+    int right = nums.length - 1;
+    int idx = a >= 0 ? nums.length - 1 : 0;
+    int[] arr = new int[nums.length];
+    while (left <= right) {
+        int n1 = getNum(nums[left], a, b, c);
+        int n2 = getNum(nums[right], a, b, c);
+        if (a >= 0) {
+            if (n1 > n2) {
+                arr[idx] = n1;
+                left++;
+            } else {
+                arr[idx] = n2;
+                right--;
+            }
+            idx--;
+        } else {
+            if (n1 < n2) {
+                arr[idx] = n1;
+                left++;
+            } else {
+                arr[idx] = n2;
+                right--;
+            }
+            idx++;
+        }
+    }
+    return arr;
+}
+
+public int getNum(int n, int a, int b, int c) {
+    return a * n * n + b * n + c;
+}

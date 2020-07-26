@@ -1,9 +1,29 @@
 294.Flip Game II
+minimax
+public Map<String, Boolean> map;
+
 public boolean canWin(String s) {
-    for (int i = 0; i < s.length() - 1; i++) {
-        if (s.charAt(i) == '+' && s.charAt(i + 1) == '+' && !canWin(s.substring(0, i) + "--" + s.substring(i + 2, s.length()))) {
-            return true;
+    map = new HashMap<String, Boolean>();
+    return dfs(s);
+}
+
+public boolean dfs(String s) {
+    if (map.containsKey(s)) {
+        return map.get(s);
+    }
+    char[] cs = s.toCharArray();
+    for (int i = 0; i < cs.length - 1; i++) {
+        if (cs[i] == '+' && cs[i + 1] == '+') {
+            cs[i] = '-';
+            cs[i + 1] = '-';
+            if (!dfs(new String(cs))) {
+                map.put(s, true);
+                return true;
+            }
+            cs[i] = '+';
+            cs[i + 1] = '+';
         }
     }
+    map.put(s, false);
     return false;
 }

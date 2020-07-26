@@ -1,0 +1,15 @@
+1524.Number of Sub-arrays With Odd Sum
+public int numOfSubarrays(int[] arr) {
+    int mod = (int)(1e9 + 7);
+    int sum = 0;
+    int odd = 0;
+    int even = 0;
+    for (int num : arr) {
+        int cur_odd = num % 2 == 0 ? odd : even + 1;
+        int cur_even = num % 2 == 0 ? even + 1 : odd;
+        odd = cur_odd;
+        even = cur_even;
+        sum = (sum + odd) % mod;
+    }
+    return sum;
+}
