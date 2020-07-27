@@ -1,0 +1,29 @@
+1525.Number of Good Ways to Split a String
+public int numSplits(String s) {
+    char[] cs = s.toCharArray();
+    int[] right_map = new int[26];
+    int right = 0;
+    for (char c : cs) {
+        if (right_map[c - 'a'] == 0) {
+            right++;
+        }
+        right_map[c - 'a']++;
+    }
+    int sum = 0;
+    int[] left_map = new int[26];
+    int left = 0;
+    for (char c : cs) {
+        if (left_map[c - 'a'] == 0) {
+            left++;
+        }
+        left_map[c - 'a']++;
+        right_map[c - 'a']--;
+        if (right_map[c - 'a'] == 0) {
+            right--;
+        }
+        if (left == right) {
+            sum++;
+        }
+    }
+    return sum;
+}

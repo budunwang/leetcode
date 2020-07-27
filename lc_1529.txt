@@ -1,0 +1,13 @@
+1529.Bulb Switcher IV
+public int minFlips(String target) {
+    char[] cs = target.toCharArray();
+    char c = '0';
+    int sum = 0;
+    for (int i = 0; i < cs.length; i++) {
+        if (cs[i] != c) {
+            c = cs[i];
+            sum++;
+        }
+    }
+    return sum;
+}
