@@ -1,0 +1,32 @@
+621.Task Scheduler
+greedy
+public int leastInterval(char[] tasks, int n) {
+    int[] map = new int[26];
+    for (char task : tasks) {
+        map[task - 'A']++;
+    }
+    Arrays.sort(map);
+    int sum = 0;
+    int prev = 0;
+    while (true) {
+        int count = 0;
+        for (int i = 25; i >= 0; i--) {
+            if (map[i] != 0) {
+                map[i]--;
+                count++;
+            }
+            if (count == n + 1) {
+                break;
+            }
+        }
+        if (count == 0) {
+            sum = sum - n - 1 + prev;
+            break;
+        } else {
+            sum += n + 1;
+            prev = count;
+        }
+        Arrays.sort(map);
+    }
+    return sum;
+}
