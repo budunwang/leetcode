@@ -1,0 +1,29 @@
+312.Burst Balloons
+public int[][] dp;
+
+public int maxCoins(int[] nums) {
+    int length = nums.length;
+    dp = new int[length + 2][length + 2];
+    int[] arr = new int[length + 2];
+    arr[0] = 1;
+    arr[length + 1] = 1;
+    for (int i = 0; i < length; i++) {
+        arr[i + 1] = nums[i];
+    }
+    return dfs(arr, 0, arr.length - 1);
+}
+
+public int dfs(int[] arr, int left, int right) {
+    if (left + 1 == right) {
+        return 0;
+    }
+    if (dp[left][right] > 0) {
+        return dp[left][right];
+    }
+    int max = 0;
+    for (int i = left + 1; i < right; i++) {
+        max = Math.max(max, arr[left] * arr[right] * arr[i] + dfs(arr, left, i) + dfs(arr, i, right));
+    }
+    dp[left][right] = max;
+    return max;
+}
