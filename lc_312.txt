@@ -1,4 +1,7 @@
 312.Burst Balloons
+divide by the last burst balloon instead of the first burst balloon
+divide the first burst ballon need recalculate the array, which cannot be memoization.
+divide the last burst ballon can use the left burst sum and the right burst sum
 public int[][] dp;
 
 public int maxCoins(int[] nums) {
