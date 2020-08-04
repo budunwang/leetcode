@@ -1,0 +1,22 @@
+667.Beautiful Arrangement II
+public int[] constructArray(int n, int k) {
+    int[] arr = new int[n];
+    int left = 1;
+    int right = n;
+    for (int i = 0; i < n; i++) {
+        if (k > 1) {
+            if (k % 2 != 0) {
+                arr[i] = left;
+                left++;
+            } else {
+                arr[i] = right;
+                right--;
+            }
+            k--;
+        } else {
+            arr[i] = left;
+            left++;
+        }
+    }
+    return arr;
+}
