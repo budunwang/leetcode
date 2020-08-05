@@ -1,0 +1,29 @@
+670.Maximum Swap
+public int maximumSwap(int num) {
+    List<Integer> list = new ArrayList<Integer>();
+    while (num != 0) {
+        list.add(0, num % 10);
+        num /= 10;
+    }
+    for (int i = 0; i < list.size(); i++) {
+        int n = list.get(i);
+        int max = n;
+        int idx = i;
+        for (int j = i + 1; j < list.size(); j++) {
+            if (list.get(j) >= max) {
+                max = list.get(j);
+                idx = j;
+            }
+        }
+        if (max != n) {
+            list.set(i, max);
+            list.set(idx, n);
+            break;
+        }
+    }
+    int sum = 0;
+    for (int i = 0; i < list.size(); i++) {
+        sum = sum * 10 + list.get(i);
+    }
+    return sum;
+}
