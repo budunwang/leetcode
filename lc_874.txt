@@ -1,0 +1,31 @@
+874.Walking Robot Simulation
+public int robotSim(int[] commands, int[][] obstacles) {
+    Set<String> set = new HashSet<String>();
+    for (int[] obstacle : obstacles) {
+        set.add(obstacle[0] + "_" + obstacle[1]);
+    }
+    int[][] dirs = new int[][] {{ 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }};
+    int idx = 0;
+    int x = 0;
+    int y = 0;
+    int max = 0;
+    for (int command : commands) {
+        if (command == -1) {
+            idx = (idx + 1) % 4;
+        } else if (command == -2) {
+            idx = (idx + 3) % 4;
+        } else {
+            for (int i = 0; i < command; i++) {
+                x += dirs[idx][0];
+                y += dirs[idx][1];
+                if (set.contains(x + "_" + y)) {
+                    x -= dirs[idx][0];
+                    y -= dirs[idx][1];
+                    break;
+                }
+            }
+            max = Math.max(max, x * x + y * y);
+        }
+    }
+    return max;
+}
