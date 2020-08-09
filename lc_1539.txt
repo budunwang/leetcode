@@ -1,0 +1,15 @@
+1539.Kth Missing Positive Number
+public int findKthPositive(int[] arr, int k) {
+    int num = 0;
+    int idx = 0;
+    int count = 0;
+    while (count != k) {
+        num++;
+        if (idx < arr.length && arr[idx] == num) {
+            idx++;
+        } else {
+            count++;
+        }
+    }
+    return num;
+}

@@ -1,0 +1,28 @@
+1541.Minimum Insertions to Balance a Parentheses String
+public int minInsertions(String s) {
+    int sum = 0;
+    int need = 0;
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == '(') {
+            need++;
+        } else {
+            if (i + 1 != s.length() && s.charAt(i + 1) == ')') {
+                if (need > 0) {
+                    need--;
+                } else {
+                    sum += 1;
+                }
+                i++;
+            } else {
+                if (need > 0) {
+                    sum += 1;
+                    need--;
+                } else {
+                    sum += 2;                        
+                }
+            }
+        }
+    }
+    return sum + need * 2;
+}
