@@ -1,0 +1,24 @@
+1547.Minimum Cost to Cut a Stick
+dfs + memo
+public Map<String, Integer> map;
+
+public int minCost(int n, int[] cuts) {
+    map = new HashMap<String, Integer>();
+    return dfs(cuts, 0, n);
+}
+
+public int dfs(int[] cuts, int left, int right) {
+    String str = left + "_" + right;
+    if (map.containsKey(str)) {
+        return map.get(str);
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < cuts.length; i++) {
+        if (cuts[i] > left && cuts[i] < right) {
+            min = Math.min(min, dfs(cuts, left, cuts[i]) + dfs(cuts, cuts[i], right) + right - left);
+        }
+    }
+    min = min == Integer.MAX_VALUE ? 0 : min;
+    map.put(str, min);
+    return min;
+}
