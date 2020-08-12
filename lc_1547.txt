@@ -1,5 +1,6 @@
 1547.Minimum Cost to Cut a Stick
-dfs + memo
+1.dfs + memo
+divide on n
 public Map<String, Integer> map;
 
 public int minCost(int n, int[] cuts) {
@@ -21,4 +22,58 @@ public int dfs(int[] cuts, int left, int right) {
     min = min == Integer.MAX_VALUE ? 0 : min;
     map.put(str, min);
     return min;
+}
+2.dfs + memo
+divide on index
+sort and add start/end
+public int[][] dp;
+
+public int minCost(int n, int[] cuts) {
+    int length = cuts.length;
+    dp = new int[length + 2][length + 2];
+    for (int i = 0; i < length + 2; i++) {
+        for (int j = 0; j < length + 2; j++) {
+            dp[i][j] = -1;
+        }
+    }
+    Arrays.sort(cuts);
+    int[] arr = new int[length + 2];
+    for (int i = 0; i < length; i++) {
+        arr[i + 1] = cuts[i];
+    }
+    arr[length + 1] = n;
+    return dfs(arr, 0, length + 1);
+}
+
+public int dfs(int[] arr, int left, int right) {
+    if (dp[left][right] != -1) {
+        return dp[left][right];
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = left + 1; i < right; i++) {
+        min = Math.min(min, dfs(arr, left, i) + dfs(arr, i, right) + arr[right] - arr[left]);
+    }
+    dp[left][right] = min == Integer.MAX_VALUE ? 0 : min;
+    return dp[left][right];
+}
+3.dp
+long cut comes from short cut
+public int minCost(int n, int[] cuts) {
+    int length = cuts.length;
+    int[][] dp = new int[length + 2][length + 2];
+    Arrays.sort(cuts);
+    int[] arr = new int[length + 2];
+    for (int i = 0; i < length; i++) {
+        arr[i + 1] = cuts[i];
+    }
+    arr[length + 1] = n;
+    for (int d = 2; d < length + 2; d++) {
+        for (int i = 0; i < length + 2 - d; i++) {
+            dp[i][i + d] = Integer.MAX_VALUE;
+            for (int j = i + 1; j < i + d; j++) {
+                dp[i][i + d] = Math.min(dp[i][i + d], dp[i][j] + dp[j][i + d] + arr[i + d] - arr[i]);
+            }
+        }
+    }
+    return dp[0][length + 1];
 }
