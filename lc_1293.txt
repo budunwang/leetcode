@@ -1,0 +1,42 @@
+1293.Shortest Path in a Grid with Obstacles Elimination
+bfs
+The point can be revisited. It cannot be only marked by x and y.
+It also needs the current obstacles number.
+If the new obstacles number of the pointer is smaller, then the point can be revisited.
+public int shortestPath(int[][] grid, int k) {
+    int row = grid.length;
+    int col = grid[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    Queue<int[]> queue = new LinkedList<int[]>();
+    queue.offer(new int[] { 0, 0, 0 });
+    int[][] visited = new int[row][col];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            visited[i][j] = Integer.MAX_VALUE;
+        }
+    }
+    visited[0][0] = 0;
+    int sum = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            if (arr[0] == row - 1 && arr[1] == col - 1) {
+                return sum;
+            }
+            for (int[] dir : dirs) {
+                int n_x = arr[0] + dir[0];
+                int n_y = arr[1] + dir[1];
+                if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col) {
+                    int n_k = arr[2] + grid[n_x][n_y];
+                    if (n_k <= k && visited[n_x][n_y] > n_k) {
+                        visited[n_x][n_y] = n_k;
+                        queue.offer(new int[] { n_x, n_y, n_k });
+                    }
+                }
+            }
+        }
+        sum++;
+    }
+    return -1;
+}
