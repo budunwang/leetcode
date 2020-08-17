@@ -1,0 +1,19 @@
+664.Strange Printer
+public int strangePrinter(String s) {
+    char[] cs = s.toCharArray();
+    return dfs(cs, 0, cs.length - 1);
+}
+
+public int dfs(char[] cs, int left, int right) {
+    if (left > right) {
+        return 0;
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = left + 1; i < right; i++) {
+        if (cs[i] == cs[right]) {
+            min = Math.min(min, dfs(cs, left, i - 1) + dfs(cs, i + 1, right - 1));              
+        }
+    }
+    min = min == Integer.MAX_VALUE ? dfs(cs, left, right - 1) + 1 : min;
+    return min;
+}
