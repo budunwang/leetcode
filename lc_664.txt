@@ -1,5 +1,16 @@
 664.Strange Printer
+1547
+interval dp
+dfs + memo
+1.if char j does not exist in prev chars i ~ (j - 1), need one paint
+dp[i][j] = dp[i][j - 1] + 1
+2.if char j exists in prev chars i ~ (j - 1) at k, divide string in two parts, no extra paint
+k may be not the single one, so find the min dp[i][j] among ks
+dp[i][j] = min(dp[i][k] + dp[k + 1][j - 1]), cs[j] = cs[k]
+public int[][] dp;
+
 public int strangePrinter(String s) {
+    dp = new int[s.length()][s.length()];
     char[] cs = s.toCharArray();
     return dfs(cs, 0, cs.length - 1);
 }
@@ -8,12 +19,15 @@ public int dfs(char[] cs, int left, int right) {
     if (left > right) {
         return 0;
     }
-    int min = Integer.MAX_VALUE;
-    for (int i = left + 1; i < right; i++) {
+    if (dp[left][right] != 0) {
+        return dp[left][right];
+    }
+    int min = dfs(cs, left, right - 1) + 1;
+    for (int i = left; i < right; i++) {
         if (cs[i] == cs[right]) {
-            min = Math.min(min, dfs(cs, left, i - 1) + dfs(cs, i + 1, right - 1));              
+            min = Math.min(min, dfs(cs, left, i) + dfs(cs, i + 1, right - 1));              
         }
     }
-    min = min == Integer.MAX_VALUE ? dfs(cs, left, right - 1) + 1 : min;
+    dp[left][right] = min;
     return min;
 }
