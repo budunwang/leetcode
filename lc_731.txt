@@ -1,4 +1,5 @@
 731.My Calendar II
+1.Interval array
 Maintain array(book 1 time) and array(book 2 time) when add book event
 List<int[]> book1;
 List<int[]> book2;
@@ -20,5 +21,34 @@ public boolean book(int start, int end) {
         }
     }
     book1.add(new int[] { start, end });
+    return true;
+}
+2.TreeMap
+253
+Remove the count if event is booked over 2
+TreeMap<Integer, Integer> map;
+
+public MyCalendarTwo() {
+    map = new TreeMap<Integer, Integer>();
+}
+
+public boolean book(int start, int end) {
+    map.put(start, map.getOrDefault(start, 0) + 1);
+    map.put(end, map.getOrDefault(end, 0) - 1);
+    int sum = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        sum += entry.getValue();
+        if (sum > 2) {
+            map.put(start, map.get(start) - 1);
+            map.put(end, map.get(end) + 1);
+            if (map.get(start) == 0) {
+                map.remove(start);
+            }
+            if (map.get(end) == 0) {
+                map.remove(end);
+            }
+            return false;
+        }
+    }
     return true;
 }
