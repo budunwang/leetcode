@@ -1,0 +1,24 @@
+731.My Calendar II
+Maintain array(book 1 time) and array(book 2 time) when add book event
+List<int[]> book1;
+List<int[]> book2;
+
+public MyCalendarTwo() {
+    book1 = new ArrayList<int[]>();
+    book2 = new ArrayList<int[]>();
+}
+
+public boolean book(int start, int end) {
+    for (int[] arr : book2) {
+        if (start < arr[1] && end > arr[0]) {
+            return false;
+        }
+    }
+    for (int[] arr : book1) {
+        if (start < arr[1] && end > arr[0]) {
+            book2.add(new int[] { Math.max(start, arr[0]), Math.min(end, arr[1]) });
+        }
+    }
+    book1.add(new int[] { start, end });
+    return true;
+}
