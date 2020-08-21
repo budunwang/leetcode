@@ -1,0 +1,18 @@
+786.K-th Smallest Prime Fraction
+public int[] kthSmallestPrimeFraction(int[] A, int K) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> A[a[0]] * A[b[1]] - A[b[0]] * A[a[1]]);
+    for (int i = 1; i < A.length; i++) {
+        pq.offer(new int[] { 0, i });
+    }
+    while (--K > 0) {
+        int[] arr = pq.poll();
+        int idx = arr[0];
+        int cur = arr[1];
+        while (idx < cur) {
+            idx++;
+            pq.offer(new int[] { idx, arr[1] });
+        }
+    }
+    int[] arr = pq.poll();
+    return new int[] { A[arr[0]], A[arr[1]] };
+}
