@@ -1,0 +1,36 @@
+1563.Stone Game V
+preSum + dfs + memo
+public int[] sums;
+public int[][] dp;
+
+public int stoneGameV(int[] stoneValue) {
+    sums = new int[stoneValue.length + 1];
+    dp = new int[stoneValue.length][stoneValue.length];
+    for (int i = 0; i < stoneValue.length; i++) {
+        sums[i + 1] = sums[i] + stoneValue[i];
+    }
+    return dfs(stoneValue, 0, stoneValue.length - 1);
+}
+
+public int dfs(int[] stoneValue, int left, int right) {
+    if (left == right) {
+        return 0;
+    }
+    if (dp[left][right] != 0) {
+        return dp[left][right];
+    }
+    int max = 0;
+    for (int i = left; i < right; i++) {
+        int sumLeft = sums[i + 1] - sums[left];
+        int sumRight = sums[right + 1] - sums[i + 1];
+        if (sumLeft > sumRight) {
+            max = Math.max(max, sumRight + dfs(stoneValue, i + 1, right));
+        } else if (sumLeft < sumRight) {
+            max = Math.max(max, sumLeft + dfs(stoneValue, left, i));
+        } else {
+            max = Math.max(max, sumLeft + Math.max(dfs(stoneValue, left, i), dfs(stoneValue, i + 1, right)));
+        }
+    }
+    dp[left][right] = max;
+    return max;
+}

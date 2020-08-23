@@ -1,0 +1,24 @@
+1562.Find Latest Group of Size M
+record continguous count and count of continguous count
+combine left count and right count, and update record
+public int findLatestStep(int[] arr, int m) {
+    int[] nums = new int[arr.length + 2];
+    int[] count = new int[arr.length + 1];
+    int step = -1;
+    for (int i = 0; i < arr.length; i++) {
+        int n = arr[i];
+        int left = nums[n - 1];
+        int right = nums[n + 1];
+        int cur = left + right + 1;
+        nums[n] = cur;
+        nums[n - left] = cur;
+        nums[n + right] = cur;
+        count[cur]++;
+        count[left]--;
+        count[right]--;
+        if (count[m] > 0) {
+            step = i + 1;
+        }
+    }
+    return step;
+}

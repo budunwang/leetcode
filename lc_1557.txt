@@ -1,0 +1,14 @@
+1557.Minimum Number of Vertices to Reach All Nodes
+public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
+    int[] arr = new int[n];
+    for (List<Integer> edge : edges) {
+        arr[edge.get(1)]++;
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == 0) {
+            list.add(i);
+        }
+    }
+    return list;
+}

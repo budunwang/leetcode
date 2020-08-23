@@ -1,0 +1,19 @@
+1560.Most Visited Sector in a Circular Track
+most visited sector come from start to end 
+public List<Integer> mostVisited(int n, int[] rounds) {
+    int length = rounds.length;
+    List<Integer> list = new ArrayList<Integer>();
+    if (rounds[0] <= rounds[length - 1]) {
+        for (int i = rounds[0]; i <= rounds[length - 1]; i++) {
+            list.add(i);
+        }
+    } else {
+        for (int i = 1; i <= rounds[length - 1]; i++) {
+            list.add(i);
+        }
+        for (int i = rounds[0]; i <= n; i++) {
+            list.add(i);
+        }
+    }
+    return list;
+}
