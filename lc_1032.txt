@@ -1,0 +1,46 @@
+1032.Stream of Characters
+trie
+reverse word and build trie tree
+public class Node {
+    Node[] children;
+    boolean isEnd;
+    Node() {
+        this.children = new Node[26];
+        this.isEnd = false;
+    }
+}
+
+public Node root;
+public StringBuilder sb;
+
+public StreamChecker(String[] words) {
+    root = new Node();
+    sb = new StringBuilder();
+    for (String word : words) {
+        char[] cs = word.toCharArray();
+        Node node = root;
+        for (int i = cs.length - 1; i >= 0; i--) {
+            if (node.children[cs[i] - 'a'] == null) {
+                node.children[cs[i] - 'a'] = new Node();
+            }
+            node = node.children[cs[i] - 'a'];
+        }
+        node.isEnd = true;
+    }
+}
+
+public boolean query(char letter) {
+    sb.append(letter);
+    Node node = root;
+    for (int i = sb.length() - 1; i >= 0; i--) {
+        char c = sb.charAt(i);
+        if (node.children[c - 'a'] == null) {
+            return false;
+        }
+        node = node.children[c - 'a'];
+        if (node.isEnd) {
+            return true;
+        }
+    }
+    return false;
+}
