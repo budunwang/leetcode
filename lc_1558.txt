@@ -1,0 +1,18 @@
+1558.Minimum Numbers of Function Calls to Make Target Array
+greedy
+set all odd to even
+divide 2
+public int minOperations(int[] nums) {
+    int odd = 0;
+    int even = 0;
+    for (int num : nums) {
+        int curEven = 0;
+        while (num != 0) {
+            odd += num % 2;
+            curEven++;
+            num /= 2;
+        }
+        even = Math.max(even, curEven - 1);
+    }
+    return odd + even;
+}
