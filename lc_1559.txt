@@ -1,0 +1,42 @@
+1559.Detect Cycles in 2D Grid
+public int row;
+public int col;
+public int[][] dirs;
+public Set<Integer> visited;
+
+public boolean containsCycle(char[][] grid) {
+    row = grid.length;
+    col = grid[0].length;
+    dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    visited = new HashSet<Integer>();
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            int num = i * col + j;
+            if (!visited.contains(num) && dfs(grid, -1, i, j)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+public boolean dfs(char[][] grid, int prev, int x, int y) {
+    visited.add(x * col + y);
+    for (int[] dir : dirs) {
+        int n_x = x + dir[0];
+        int n_y = y + dir[1];
+        if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && grid[x][y] == grid[n_x][n_y]) {
+            int num = n_x * col + n_y;
+            if (!visited.contains(num)) {
+                if (dfs(grid, x * col + y, n_x, n_y)) {
+                    return true;
+                }
+            } else {
+                if (num != prev) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
