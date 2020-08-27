@@ -1,18 +1,13 @@
 1559.Detect Cycles in 2D Grid
-public int row;
-public int col;
-public int[][] dirs;
-public Set<Integer> visited;
+public int[][] visited;
 
 public boolean containsCycle(char[][] grid) {
-    row = grid.length;
-    col = grid[0].length;
-    dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
-    visited = new HashSet<Integer>();
+    int row = grid.length;
+    int col = grid[0].length;
+    visited = new int[row][col];
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            int num = i * col + j;
-            if (!visited.contains(num) && dfs(grid, -1, i, j)) {
+            if (visited[i][j] == 0 && dfs(grid, -1, i, j)) {
                 return true;
             }
         }
@@ -21,18 +16,20 @@ public boolean containsCycle(char[][] grid) {
 }
 
 public boolean dfs(char[][] grid, int prev, int x, int y) {
-    visited.add(x * col + y);
+    int row = grid.length;
+    int col = grid[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    visited[x][y] = 1;
     for (int[] dir : dirs) {
         int n_x = x + dir[0];
         int n_y = y + dir[1];
         if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && grid[x][y] == grid[n_x][n_y]) {
-            int num = n_x * col + n_y;
-            if (!visited.contains(num)) {
+            if (visited[n_x][n_y] == 0) {
                 if (dfs(grid, x * col + y, n_x, n_y)) {
                     return true;
                 }
             } else {
-                if (num != prev) {
+                if (n_x * col + n_y != prev) {
                     return true;
                 }
             }

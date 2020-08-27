@@ -1,0 +1,22 @@
+239.Sliding Window Maximum
+monotone stack
+stack keeps idx, which nums[idx] >= current num
+public int[] maxSlidingWindow(int[] nums, int k) {
+    int[] arr = new int[nums.length - k + 1];
+    int idx = 0;
+    Deque<Integer> deque = new ArrayDeque<Integer>();
+    for (int i = 0; i < nums.length; i++) {
+        if (!deque.isEmpty() && i - deque.peekFirst() == k) {
+            deque.pollFirst();
+        }
+        while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+            deque.pollLast();
+        }
+        deque.addLast(i);
+        if (i >= k - 1) {
+            arr[idx] = nums[deque.peekFirst()];
+            idx++;
+        }
+    }
+    return arr;
+}
