@@ -1,14 +1,22 @@
 239.Sliding Window Maximum
-monotone stack
-stack keeps idx, which nums[idx] >= current num
+503
+739
+monotone stack + queue
+When adding one new num, the nums that are smaller than new num in current silding window, can be removed, since they cannot be the largest num. 
+monotone stack keeps idx, nums[idx] >= current num
+The end of stack is used to get the largest num. (queue structure)
+ArrayDeque can be used to get the head(queue structure) and the end(stack structure).
 public int[] maxSlidingWindow(int[] nums, int k) {
     int[] arr = new int[nums.length - k + 1];
     int idx = 0;
     Deque<Integer> deque = new ArrayDeque<Integer>();
     for (int i = 0; i < nums.length; i++) {
+        // remove the largest num if the head of silding window is the largest num
         if (!deque.isEmpty() && i - deque.peekFirst() == k) {
             deque.pollFirst();
         }
+        // monotone stack
+        // remove idx, nums[idx] < nums[i]
         while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
             deque.pollLast();
         }

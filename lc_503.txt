@@ -1,6 +1,7 @@
 503.Next Greater Element II
 739
 1019
+monotone stack
 stack for last smaller element index
 loop twice for circular array
 public int[] nextGreaterElements(int[] nums) {
