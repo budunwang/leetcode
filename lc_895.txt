@@ -1,0 +1,30 @@
+895.Maximum Frequency Stack
+public Map<Integer, Integer> freqMap;
+public Map<Integer, Stack<Integer>> countMap;
+public int maxFreq;
+
+public FreqStack() {
+    freqMap = new HashMap<Integer, Integer>();
+    countMap = new HashMap<Integer, Stack<Integer>>();
+    maxFreq = 0;
+}
+
+public void push(int x) {
+    int curFreq = freqMap.getOrDefault(x, 0) + 1;
+    freqMap.put(x, curFreq);
+    if (curFreq > maxFreq) {
+        maxFreq = curFreq;
+        countMap.put(curFreq, new Stack<Integer>());
+    }
+    countMap.get(curFreq).push(x);
+}
+
+public int pop() {
+    Stack<Integer> stack = countMap.get(maxFreq);
+    int num = stack.pop();
+    freqMap.put(num, maxFreq - 1);
+    if (stack.isEmpty()) {
+        maxFreq--;
+    }
+    return num;
+}
