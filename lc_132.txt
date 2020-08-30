@@ -1,0 +1,33 @@
+132.Palindrome Partitioning II
+public int[][] dp;
+
+public int minCut(String s) {
+    dp = new int[s.length()][s.length()];
+    return dfs(s, 0, s.length() - 1);
+}
+
+public int dfs(String s, int left, int right) {
+    if (isPalindrome(s, left, right)) {
+        return 0;
+    }
+    if (dp[left][right] != 0) {
+        return dp[left][right];
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = left; i < right; i++) {
+        min = Math.min(min, dfs(s, left, i) + dfs(s, i + 1, right) + 1);
+    }
+    dp[left][right] = min;
+    return min;
+}
+
+public boolean isPalindrome(String s, int left, int right) {
+    while (left < right) {
+        if (s.charAt(left) != s.charAt(right)) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
