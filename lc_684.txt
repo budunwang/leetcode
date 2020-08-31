@@ -1,6 +1,7 @@
 684.Redundant Connection
 Union-find
 Find the first edge that creates circle
+1.find
 public int[] findRedundantConnection(int[][] edges) {
     int[] arr = new int[1001];
     for (int i = 0; i < 1001; i++) {
@@ -23,4 +24,52 @@ public int find(int[] arr, int num) {
         arr[num] = find(arr, arr[num]);
     }
     return arr[num];
+}
+2.Union-find with path compression
+public class UnionFind {
+    private int[] parent;
+    private int[] rank;
+    
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;    
+        }
+    }
+    
+    public int find(int num) {
+        if (num != parent[num]) {
+            num = find(parent[num]);
+        }
+        return parent[num];
+    }
+    
+    public boolean union(int num1, int num2) {
+        int parent1 = find(num1);
+        int parent2 = find(num2);
+        if (parent1 == parent2) {
+            return false;
+        } else {
+            if (rank[parent1] > rank[parent2]) {
+                parent[parent2] = parent1; 
+            } else if (rank[parent1] < rank[parent2]) {
+                parent[parent1] = parent2;
+            } else {
+                parent[parent2] = parent1;
+                rank[parent1]++;
+            }
+        }
+        return true;
+    }
+}
+
+public int[] findRedundantConnection(int[][] edges) {
+    UnionFind unionFind = new UnionFind(1001);
+    for (int[] edge : edges) {
+        if (!unionFind.union(edge[0], edge[1])) {
+            return edge;
+        }
+    }
+    return new int[2];
 }

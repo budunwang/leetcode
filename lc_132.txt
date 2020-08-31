@@ -1,33 +1,42 @@
 132.Palindrome Partitioning II
-public int[][] dp;
+dp
+two dp: palindrome dp and partition dp
+palindrome dp: interval dp for palindrome validation
+partition dp: dp for min cut
+dp[i] = min(dp[j]) + 1, j < i && string i ~ j is palindrome
+
+public boolean[][] palindrome;
+public int[] dp;
 
 public int minCut(String s) {
-    dp = new int[s.length()][s.length()];
-    return dfs(s, 0, s.length() - 1);
+    int length = s.length();
+    palindrome = new boolean[length][length];
+    dp = new int[length];
+    for (boolean[] arr : palindrome) {
+        Arrays.fill(arr, true);
+    }
+    for (int d = 2; d <= length; d++) {
+        for (int i = 0; i < length - d + 1 ; i++) {
+            int j = i + d - 1;
+            palindrome[i][j] = s.charAt(i) == s.charAt(j) && palindrome[i + 1][j - 1];
+        }
+    }
+    return dfs(s, length - 1);
 }
 
-public int dfs(String s, int left, int right) {
-    if (isPalindrome(s, left, right)) {
+public int dfs(String s, int idx) {
+    if (palindrome[0][idx]) {
         return 0;
     }
-    if (dp[left][right] != 0) {
-        return dp[left][right];
+    if (dp[idx] != 0) {
+        return dp[idx];
     }
     int min = Integer.MAX_VALUE;
-    for (int i = left; i < right; i++) {
-        min = Math.min(min, dfs(s, left, i) + dfs(s, i + 1, right) + 1);
-    }
-    dp[left][right] = min;
-    return min;
-}
-
-public boolean isPalindrome(String s, int left, int right) {
-    while (left < right) {
-        if (s.charAt(left) != s.charAt(right)) {
-            return false;
+    for (int i = idx; i >= 0; i--) {
+        if (palindrome[i][idx]) {
+            min = Math.min(min, dfs(s, i - 1) + 1);
         }
-        left++;
-        right--;
     }
-    return true;
+    dp[idx] = min;
+    return min;
 }

@@ -1,0 +1,67 @@
+952.Largest Component Size by Common Factor
+684
+Union-Find
+Union common factor of num, find max rank
+public class UnionFind {
+    private int[] parent;
+    private int[] rank;
+    
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    public int find(int num) {
+        while (parent[num] != num) {
+            parent[num] = parent[parent[num]];
+            num = parent[num]; 
+        }
+        return num;
+    }
+    
+    public boolean union(int num1, int num2) {
+        int parent1 = find(num1);
+        int parent2 = find(num2);
+        if (parent1 == parent2) {
+            return false;
+        } else {
+            if (rank[parent1] > rank[parent2]) {
+                parent[parent2] = parent1;
+            } else if (rank[parent1] < rank[parent2]) {
+                parent[parent1] = parent2;
+            } else {
+                parent[parent2] = parent1;
+                rank[parent1]++;
+            }
+        }
+        return true;
+    }
+}
+
+public int largestComponentSize(int[] A) {
+    int max = 0;
+    for (int num : A) {
+        max = Math.max(max, num);
+    }
+    UnionFind unionFind = new UnionFind(max + 1);
+    for (int num : A) {
+        int upper = (int) Math.sqrt(num);
+        for (int i = 2; i <= upper; i++) {
+            if (num % i == 0) {
+                unionFind.union(num, i);
+                unionFind.union(num, num / i);
+            }
+        }
+    }
+    int[] count = new int[max + 1];
+    int res = 0;
+    for (int num : A) {
+        int root = unionFind.find(num);
+        count[root]++;
+        res = Math.max(res, count[root]);
+    }
+    return res;
+}
