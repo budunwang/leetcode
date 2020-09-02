@@ -1,0 +1,52 @@
+1568.Minimum Number of Days to Disconnect Island
+disconnect island need at most 2 days
+public int minDays(int[][] grid) {
+    if (count(grid) != 1) {
+        return 0;
+    }
+    int row = grid.length;
+    int col = grid[0].length;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (grid[i][j] == 1) {
+                grid[i][j] = 0;
+                if (count(grid) != 1) {
+                    return 1;
+                }
+                grid[i][j] = 1;
+            }
+        }
+    }
+    return 2;
+}
+
+public int count(int[][] grid) {
+    int row = grid.length;
+    int col = grid[0].length;
+    int[][] visited = new int[row][col];
+    int sum = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (grid[i][j] == 1 && visited[i][j] == 0) {
+                sum++;
+                visited[i][j] = 1;
+                mark(grid, visited, i, j);
+            }
+        }
+    }
+    return sum;
+}
+
+public void mark(int[][] grid, int[][] visited, int x, int y) {
+    int row = grid.length;
+    int col = grid[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    for (int[] dir : dirs) {
+        int n_x = x + dir[0];
+        int n_y = y + dir[1];
+        if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && grid[n_x][n_y] == 1 && visited[n_x][n_y] == 0) {
+            visited[n_x][n_y] = 1;
+            mark(grid, visited, n_x, n_y);
+        }
+    }
+}
