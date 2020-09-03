@@ -1,0 +1,52 @@
+1569.Number of Ways to Reorder Array to Get Same BST
+dfs
+1.dfs
+第一个数是root
+比root小的数是左子树
+比root大的数是右子树
+组合方式个数 = C(left length + right length, left length)
+f(list) = C(left length + right length, left length) * f(left) * f(right)
+2.组合
+使用pascal triangle求组合
+C(m, n) = triangle[m][n], m是行数, n是列数 
+
+public long[][] comb;
+public int mod;
+
+public int numOfWays(int[] nums) {
+    int length = nums.length;
+    comb = new long[length + 1][length + 1];
+    mod = (int) (1e9 + 7);
+    for (int i = 0; i < length; i++) {
+        comb[i][0] = 1;
+        comb[i][i] = 1;
+    }
+    for (int i = 2; i < length; i++) {
+        for (int j = 1; j < i; j++) {
+            comb[i][j] = (comb[i - 1][j - 1] + comb[i - 1][j]) % mod;
+        }
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int num : nums) {
+        list.add(num);
+    }
+    return (int) dfs(list) - 1;
+}
+
+public long dfs(List<Integer> list) {
+    if (list.size() <= 2) {
+        return 1;
+    }
+    int root = list.get(0);
+    List<Integer> left = new ArrayList<Integer>();
+    List<Integer> right = new ArrayList<Integer>();
+    for (int i = 1; i < list.size(); i++) {
+        int num = list.get(i);
+        if (num > root) {
+            right.add(num);
+        } else {
+            left.add(num);
+        }
+    }
+    return ((comb[left.size() + right.size()][left.size()] * dfs(left)) % mod) * dfs(right) % mod;
+}
