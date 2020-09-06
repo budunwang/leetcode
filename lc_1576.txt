@@ -1,0 +1,25 @@
+1576.Replace All ?'s to Avoid Consecutive Repeating Characters
+public String modifyString(String s) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == '?') {
+            char c1 = i == 0 ? '?' : sb.charAt(i - 1);
+            char c2 = i == s.length() - 1 ? '?' : s.charAt(i + 1);
+            sb.append(getChar(c1, c2));
+        } else {
+            sb.append(c);
+        }
+    }
+    return sb.toString();
+}
+
+public char getChar(char c1, char c2) {
+    for (int i = 0; i < 26; i++) {
+        char c = (char)('a' + i);
+        if (c != c1 && c != c2) {
+            return c;
+        }
+    }
+    return '?';
+}

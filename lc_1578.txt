@@ -1,0 +1,20 @@
+1578.Minimum Deletion Cost to Avoid Repeating Letters
+public int minCost(String s, int[] cost) {
+    int length = s.length();
+    int sum = 0;
+    for (int i = 0; i < length; i++) {
+        int j = i;
+        int cur = 0;
+        int max = 0;
+        while (j != length && s.charAt(i) == s.charAt(j)) {
+            cur += cost[j];
+            max = Math.max(max, cost[j]);
+            j++;
+        }
+        if (j != i) {
+            sum += cur - max;
+        }
+        i = j - 1;
+    }
+    return sum;
+}
