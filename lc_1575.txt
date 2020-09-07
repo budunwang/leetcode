@@ -1,0 +1,25 @@
+1575.Count All Possible Routes
+dfs + memo
+public Integer[][] dp;
+public int mod;
+
+public int countRoutes(int[] locations, int start, int finish, int fuel) {
+    dp = new Integer[locations.length][fuel + 1];
+    mod = (int) 1e9 + 7;
+    return dfs(locations, start, finish, fuel);
+}
+
+public int dfs(int[] locations, int idx, int finish, int fuel) {
+    if (dp[idx][fuel] != null) {
+        return dp[idx][fuel];
+    }
+    int sum = idx == finish ? 1 : 0;
+    for (int i = 0; i < locations.length; i++) {
+        int cost = Math.abs(locations[i] - locations[idx]);
+        if (i != idx && cost <= fuel) {
+            sum = (sum + dfs(locations, i, finish, fuel - cost)) % mod;
+        }
+    }
+    dp[idx][fuel] = sum;
+    return sum;
+}
