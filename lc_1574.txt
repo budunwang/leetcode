@@ -1,0 +1,30 @@
+1574.Shortest Subarray to be Removed to Make Array Sorted
+get first increasing end
+get last decreasing start
+get min removed array length which meets one increasing array for first part and last part 
+public int findLengthOfShortestSubarray(int[] arr) {
+    int length = arr.length;
+    int end = 0;
+    while (end < length - 1 && arr[end] <= arr[end + 1]) {
+        end++;
+    }
+    int start = length - 1;
+    while (start > 0 && arr[start - 1] <= arr[start]) {
+        start--;
+    }
+    if (end == length - 1) {
+        return 0;
+    }
+    int left = 0;
+    int right = start;
+    int min = Math.min(length - end - 1, start);
+    while (left <= end && right < length) {
+        if (arr[left] <= arr[right]) {
+            min = Math.min(min, right - left - 1);
+            left++;                
+        } else {
+            right++;
+        }
+    }
+    return min;
+}
