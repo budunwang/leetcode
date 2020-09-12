@@ -1,0 +1,26 @@
+282.Expression Add Operators
+public List<String> list;
+
+public List<String> addOperators(String num, int target) {
+    list = new ArrayList<String>();
+    char[] cs = num.toCharArray();
+    dfs(cs, 0, 0, target, "");
+    return list;
+}
+
+public void dfs(char[] cs, int idx, int sum, int target, String str) {
+    if (idx == cs.length) {
+        if (sum == target) {
+            list.add(str);
+        }
+        return;
+    }
+    int n1 = cs[idx] - '0';
+    dfs(cs, idx + 1, sum + n1, target, str + "+" + n1);
+    dfs(cs, idx + 1, sum - n1, target, str + "-" + n1);
+    if (idx < cs.length - 1) {
+        int n2 = cs[idx + 1] - '0';
+        dfs(cs, idx + 2, sum + n1 * n2, target, str + "+" + n1 + "*" + n2);
+        dfs(cs, idx + 2, sum - n1 * n2, target, str + "-" + n1 + "*" + n2);
+    }
+}
