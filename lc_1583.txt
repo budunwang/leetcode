@@ -1,0 +1,37 @@
+1583.Count Unhappy Friends
+public int unhappyFriends(int n, int[][] preferences, int[][] pairs) {
+    int[] map = new int[n];
+    boolean[] exist = new boolean[n];
+    for (int[] pair : pairs) {
+        map[pair[0]] = pair[1];
+        map[pair[1]] = pair[0];
+        exist[pair[0]] = true;
+        exist[pair[1]] = true;
+    }
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (exist[i]) {
+            int n0 = i;
+            int n1 = map[i];
+            for (int j = 0; j < preferences[n0].length; j++) {
+                int num = preferences[n0][j];
+                if (num == n1) {
+                    break;
+                } else {
+                    boolean isValid = false;
+                    for (int k = 0; k < preferences[num].length && preferences[num][k] != map[num]; k++) {
+                        if (preferences[num][k] == n0) {
+                            isValid = true;
+                            break;
+                        }
+                    }
+                    if (isValid) {
+                        sum++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return sum;
+}

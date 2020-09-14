@@ -1,26 +1,42 @@
 282.Expression Add Operators
+dfs
 public List<String> list;
 
 public List<String> addOperators(String num, int target) {
+    if (num.length() == 0) {
+        return new ArrayList<String>();
+    }
     list = new ArrayList<String>();
-    char[] cs = num.toCharArray();
-    dfs(cs, 0, 0, target, "");
+    int[] arr = new int[num.length()];
+    for (int i = 0; i < num.length(); i++) {
+        arr[i] = num.charAt(i) - '0';
+    }
+    long n = 0;
+    for (int i = 0; i < arr.length; i++) {
+        n = n * 10 + arr[i];
+        dfs(arr, target, n, n, i + 1, String.valueOf(n));
+        if (n == 0) {
+            break;
+        }
+    }
     return list;
 }
 
-public void dfs(char[] cs, int idx, int sum, int target, String str) {
-    if (idx == cs.length) {
+public void dfs(int[] arr, int target, long sum, long prev, int idx, String str) {
+    if (idx == arr.length) {
         if (sum == target) {
             list.add(str);
         }
         return;
     }
-    int n1 = cs[idx] - '0';
-    dfs(cs, idx + 1, sum + n1, target, str + "+" + n1);
-    dfs(cs, idx + 1, sum - n1, target, str + "-" + n1);
-    if (idx < cs.length - 1) {
-        int n2 = cs[idx + 1] - '0';
-        dfs(cs, idx + 2, sum + n1 * n2, target, str + "+" + n1 + "*" + n2);
-        dfs(cs, idx + 2, sum - n1 * n2, target, str + "-" + n1 + "*" + n2);
+    long n = 0;
+    for (int i = idx; i < arr.length; i++) {
+        n = n * 10 + arr[i];
+        dfs(arr, target, sum + n, n, i + 1, str + "+" + n);
+        dfs(arr, target, sum - n, -n, i + 1, str + "-" + n);
+        dfs(arr, target, sum - prev + prev * n, prev * n, i + 1, str + "*" + n);
+        if (n == 0) {
+            break;
+        }
     }
 }
