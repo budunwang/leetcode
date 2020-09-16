@@ -1,0 +1,37 @@
+1584.Min Cost to Connect All Points
+Minimum Spanning Tree(MST)
+1.Prim
+public int minCostConnectPoints(int[][] points) {
+    int length = points.length;
+    Set<Integer> visited = new HashSet<Integer>();
+    // add start point and update cur minimum path
+    visited.add(0);
+    int[] dist = new int[length];
+    for (int i = 0; i < length; i++) {
+        if (!visited.contains(i)) {
+            dist[i] = Math.abs(points[i][0] - points[0][0]) + Math.abs(points[i][1] - points[0][1]);
+        }
+    }
+    int sum = 0;
+    while (visited.size() != length) {
+        // find next closest point
+        int cur = -1;
+        for (int i = 0; i < length; i++) {
+            if (!visited.contains(i)) {
+                if (cur == -1 || dist[i] < dist[cur]) {
+                    cur = i;
+                }
+            }
+        }
+        sum += dist[cur];
+        visited.add(cur);
+        // update cur minimum path with new closest point
+        for (int i = 0; i < length; i++) {
+            if (!visited.contains(i)) {
+                int curDist = Math.abs(points[i][0] - points[cur][0]) + Math.abs(points[i][1] - points[cur][1]);
+                dist[i] = Math.min(dist[i], curDist);
+            }
+        }
+    }
+    return sum;
+}
