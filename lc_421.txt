@@ -1,0 +1,11 @@
+421.Maximum XOR of Two Numbers in an Array
+public int findMaximumXOR(int[] nums) {
+    int length = nums.length;
+    int max = 0;
+    for (int i = 0; i < length - 1; i++) {
+        for (int j = i + 1; j < length; j++) {
+            max = Math.max(max, nums[i] ^ nums[j]);
+        }
+    }
+    return max;
+}
