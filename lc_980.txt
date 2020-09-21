@@ -1,0 +1,47 @@
+980.Unique Paths III
+dfs
+public int sum;
+public int row;
+public int col;
+public int[][] dirs;
+
+public int uniquePathsIII(int[][] grid) {
+    sum = 0;
+    row = grid.length;
+    col = grid[0].length;
+    dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    int x = 0;
+    int y = 0;
+    Set<Integer> set = new HashSet<Integer>();
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (grid[i][j] == 0 || grid[i][j] == 2) {
+                set.add(i * col + j);
+            } else if (grid[i][j] == 1) {
+                x = i;
+                y = j;
+            }
+        }
+    }
+    dfs(grid, set, x, y);
+    return sum;
+}
+
+public void dfs(int[][] grid, Set<Integer> set, int x, int y) {
+    if (grid[x][y] == 2) {
+        if (set.size() == 0) {
+            sum++;
+        }
+        return;
+    }
+    for (int[] dir : dirs) {
+        int n_x = x + dir[0];
+        int n_y = y + dir[1];
+        int num = n_x * col + n_y;
+        if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && set.contains(num)) {
+            set.remove(num);
+            dfs(grid, set, n_x, n_y);
+            set.add(num);
+        }
+    }
+}
