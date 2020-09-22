@@ -1,0 +1,25 @@
+1593.Split a String Into the Max Number of Unique Substrings
+public int max;
+
+public int maxUniqueSplit(String s) {
+    max = 0;
+    dfs(s.toCharArray(), 0, new HashSet<String>());
+    return max;
+}
+
+public void dfs(char[] cs, int idx, Set<String> set) {
+    if (idx == cs.length) {
+        max = Math.max(max, set.size());
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (int i = idx; i < cs.length; i++) {
+        sb.append(cs[i]);
+        String str = sb.toString();
+        if (!set.contains(str)) {
+            set.add(str);
+            dfs(cs, i + 1, set);
+            set.remove(str);
+        }
+    }
+}
