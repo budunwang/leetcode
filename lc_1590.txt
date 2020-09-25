@@ -5,7 +5,7 @@ presum + hashmap
 (totalSum - (sum[j] - sum[i])) % p = 0, i < j
 => totalSum % p = sum[j] % p  - sum[i] % p
 => sum[i] % p = sum[j] % p - totalSum % p
-即在j位置时，如果存在i满足sum[i] % p = sum[j] % p - totalSum % p，那么去除nums[i] ~ nums[j]后必然被p整除
+即在j位置时，如果存在i，满足sum[i] % p = sum[j] % p - totalSum % p，那么去除nums[i] ~ nums[j]后必然被p整除
 (sum[j] % p - totalSum % p + p) % p，处理小于0的情况
 public int minSubarray(int[] nums, int p) {
     int sum = 0;
