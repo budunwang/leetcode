@@ -1,0 +1,58 @@
+1591.Strange Printer II
+从最后满足长方形条件的数开始清除。
+如果都是相同的数或是已经被清除的数，满足长方形条件。
+public boolean isPrintable(int[][] targetGrid) {
+    int row = targetGrid.length;
+    int col = targetGrid[0].length;
+    int[][] map = new int[61][4];
+    Set<Integer> set = new HashSet<Integer>();
+    for (int i = 0; i < 61; i++) {
+        map[i][0] = Integer.MAX_VALUE;
+        map[i][2] = Integer.MAX_VALUE;
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            int n = targetGrid[i][j];
+            map[n][0] = Math.min(map[n][0], i);
+            map[n][1] = Math.max(map[n][1], i);
+            map[n][2] = Math.min(map[n][2], j);
+            map[n][3] = Math.max(map[n][3], j);
+            set.add(n);
+        }
+    }
+    while (set.size() != 0) {
+        Set<Integer> tmp = new HashSet<Integer>();
+        for (int i = 0; i < 61; i++) {
+            if (set.contains(i)) {
+                int rowMin = map[i][0];
+                int rowMax = map[i][1];
+                int colMin = map[i][2];
+                int colMax = map[i][3];
+                if (!isValid(targetGrid, rowMin, rowMax, colMin, colMax, i)) {
+                    tmp.add(i);
+                }
+            }
+        }
+        if (set.size() == tmp.size()) {
+            return false;
+        }
+        set = tmp;
+    }
+    return true;
+}
+
+public boolean isValid(int[][] targetGrid, int rowMin, int rowMax, int colMin, int colMax, int n) {
+    for (int i = rowMin; i <= rowMax; i++) {
+        for (int j = colMin; j <= colMax; j++) {
+            if (targetGrid[i][j] != n && targetGrid[i][j] != 0) {
+                return false;
+            }
+        }
+    }
+    for (int i = rowMin; i <= rowMax; i++) {
+        for (int j = colMin; j <= colMax; j++) {
+            targetGrid[i][j] = 0;
+        }
+    }
+    return true;
+}
