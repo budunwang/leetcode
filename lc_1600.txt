@@ -1,0 +1,55 @@
+1600.Throne Inheritance
+public Map<String, List<String>> map;
+public Map<String, String> parentMap;
+public String king;
+public Set<String> deathSet;
+public Set<String> visited;
+
+public ThroneInheritance(String kingName) {
+    map = new HashMap<String, List<String>>();
+    parentMap = new HashMap<String, String>();
+    king = kingName;
+    deathSet = new HashSet<String>();
+}
+
+public void birth(String parentName, String childName) {
+    if (!map.containsKey(parentName)) {
+        map.put(parentName, new ArrayList<String>());
+    }
+    map.get(parentName).add(childName);
+    parentMap.put(childName, parentName);
+}
+
+public void death(String name) {
+    deathSet.add(name);
+}
+
+public List<String> getInheritanceOrder() {
+    List<String> list = new ArrayList<String>();
+    visited = new HashSet<String>();
+    String next = king;
+    while (!next.equals("")) {
+        if (!deathSet.contains(next)) {
+            list.add(next);
+        }
+        String tmp = getSuccessor(next);
+        next = tmp;        
+    }
+    return list;
+}
+
+public String getSuccessor(String name) {
+    if (map.containsKey(name)) {
+        for (String childName : map.get(name)) {
+            if (!visited.contains(childName)) {
+                visited.add(childName);
+                return childName;
+            }
+        }
+    }
+    if (name.equals(king)) {
+        return "";
+    } else {
+        return getSuccessor(parentMap.get(name));
+    }
+}

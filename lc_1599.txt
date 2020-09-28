@@ -1,0 +1,23 @@
+1599.Maximum Profit of Operating a Centennial Wheel
+public int minOperationsMaxProfit(int[] customers, int boardingCost, int runningCost) {
+    int left = 0;
+    int sum = 0;
+    int max = 0;
+    int res = -1;
+    int idx = 0;
+    while (idx < customers.length || left > 0) {
+        if (idx < customers.length) {
+            left += customers[idx];
+        }
+        int onboard = Math.min(left, 4);
+        left -= onboard;
+        sum += onboard;
+        int curMax = sum * boardingCost - (idx + 1) * runningCost;
+        if (curMax > max) {
+            res = idx + 1;
+            max = curMax;
+        }
+        idx++;
+    }
+    return res;
+}

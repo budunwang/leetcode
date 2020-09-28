@@ -1,0 +1,14 @@
+1598.Crawler Log Folder
+public int minOperations(String[] logs) {
+    int sum = 0;
+    for (String log : logs) {
+        if (log.equals("../")) {
+            if (sum != 0) {
+                sum--;
+            }
+        } else if (!log.equals("./")) {
+            sum++;
+        }
+    }
+    return sum;
+}
