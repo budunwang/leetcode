@@ -1,4 +1,5 @@
 1601.Maximum Number of Achievable Transfer Requests
+dfs
 public int max;
 
 public int maximumRequests(int n, int[][] requests) {
@@ -12,15 +13,15 @@ public void dfs(int[][] requests, int[] map, int idx, int sum) {
     if (isValid(map)) {
         max = Math.max(sum, max);
     }
-    for (int i = idx; i < requests.length; i++) {
-        map[requests[i][0]]--;
-        map[requests[i][1]]++;
-        sum++;
-        dfs(requests, map, i + 1, sum);
-        map[requests[i][0]]++;
-        map[requests[i][1]]--;
-        sum--;
+    if (idx == requests.length) {
+        return;
     }
+    dfs(requests, map, idx + 1, sum);
+    map[requests[idx][0]]--;
+    map[requests[idx][1]]++;
+    dfs(requests, map, idx + 1, sum + 1);
+    map[requests[idx][0]]++;
+    map[requests[idx][1]]--;
 }
 
 public boolean isValid(int[] map) {

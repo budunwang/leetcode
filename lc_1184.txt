@@ -1,0 +1,16 @@
+1184.Distance Between Bus Stops
+public int distanceBetweenBusStops(int[] distance, int start, int destination) {
+    int length = distance.length;
+    int n1 = Math.min(start, destination);
+    int n2 = Math.max(start, destination);
+    int sum1 = 0;
+    int sum2 = 0;
+    for (int i = 0; i < length; i++) {
+        if (i >= n1 && i < n2) {
+            sum1 += distance[i];
+        } else {
+            sum2 += distance[i];
+        }
+    }
+    return Math.min(sum1, sum2);
+}
