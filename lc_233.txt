@@ -1,0 +1,20 @@
+233.Number of Digit One
+public int countDigitOne(int n) {
+    int sum = 0;
+    for (int i = 1; i <= n; i *= 10) {
+        int prev = n / i;
+        int next = n % i;
+        int num = prev % 10;
+        int prevCount = prev / 10;
+        sum += prevCount * i;
+        if (num == 1) {
+            sum += next + 1;
+        } else if (num > 1) {
+            sum += i;
+        }
+        if (prevCount == 0) {
+            break;
+        }
+    }
+    return sum;
+}
