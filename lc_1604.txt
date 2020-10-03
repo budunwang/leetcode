@@ -1,0 +1,27 @@
+1604.Alert Using Same Key-Card Three or More Times in a One Hour Period
+public List<String> alertNames(String[] keyName, String[] keyTime) {
+    Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
+    for (int i = 0; i < keyName.length; i++) {
+        if (!map.containsKey(keyName[i])) {
+            map.put(keyName[i], new ArrayList<Integer>());
+        }
+        String[] ss = keyTime[i].split(":");
+        map.get(keyName[i]).add(Integer.parseInt(ss[0]) * 60 + Integer.parseInt(ss[1]));
+    }
+    List<String> res = new ArrayList<String>();
+    for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
+        String name = entry.getKey();
+        List<Integer> list = entry.getValue();
+        Collections.sort(list);
+        for (int i = 2; i < list.size(); i++) {
+            int prev = list.get(i - 2);
+            int num = list.get(i);
+            if (num - prev <= 60) {
+                res.add(name);
+                break;
+            }
+        }    
+    }
+    Collections.sort(res);
+    return res;
+}
