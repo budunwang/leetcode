@@ -1,0 +1,17 @@
+1608.Special Array With X Elements Greater Than or Equal X
+public int specialArray(int[] nums) {
+    Arrays.sort(nums);
+    int idx = 0;
+    for (int i = 0; i <= 100; i++) {
+        while (idx < nums.length && nums[idx] < i) {
+            idx++;
+        }
+        if (idx == nums.length) {
+            return -1;
+        }
+        if (nums.length - idx == i) {
+            return i;
+        }
+    }
+    return -1;
+}
