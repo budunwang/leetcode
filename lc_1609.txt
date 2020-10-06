@@ -1,0 +1,31 @@
+1609.Even Odd Tree
+public boolean isEvenOddTree(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.offer(root);
+    int level = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        TreeNode prev = null;
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (level % 2 == 0) {
+                if (treeNode.val % 2 == 0 || (prev != null && treeNode.val <= prev.val)) {
+                    return false;
+                }
+            } else {
+                if (treeNode.val % 2 == 1 || (prev != null && treeNode.val >= prev.val)) {
+                    return false;
+                }
+            }
+            prev = treeNode;
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+            }
+        }
+        level++;
+    }
+    return true;
+}
