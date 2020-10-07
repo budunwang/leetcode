@@ -1,4 +1,6 @@
 1610.Maximum Number of Visible Points
+sliding window
+Add one loop to count corner case
 public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
     List<Double> list = new ArrayList<Double>();
     int sum = 0;
@@ -8,17 +10,21 @@ public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> lo
         if (x == 0 && y == 0) {
             sum++;
         } else {
-            list.add(Math.atan2(y, x) * 180 / Math.PI + 360);
+            list.add(Math.atan2(y, x) * 180 / Math.PI);
         }
     }
     Collections.sort(list);
-    int max = sum;
+    List<Double> tmp = new ArrayList<Double>(list);
+    for (Double num : list) {
+        tmp.add(num + 360);
+    }
+    int max = 0;
     int left = 0;
-    for (int right = 0; right < list.size(); right++) {
-        while (list.get(right) - list.get(left) > angle) {
+    for (int right = 0; right < tmp.size(); right++) {
+        while (tmp.get(right) - tmp.get(left) > angle) {
             left++;
         }
-        max = Math.max(max, sum + right - left + 1);
+        max = Math.max(max, right - left + 1);
     }
-    return max;
+    return sum + max;
 }
