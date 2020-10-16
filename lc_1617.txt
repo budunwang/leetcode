@@ -1,0 +1,41 @@
+1617.Count Subtrees With Max Distance Between Cities
+public Map<Integer, Set<String>> countMap;
+
+public int[] countSubgraphsForEachDiameter(int n, int[][] edges) {
+    countMap = new HashMap<Integer, Set<String>>();
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (int i = 1; i < n + 1; i++) {
+        map.put(i, new ArrayList<Integer>());
+        countMap.put(i, new HashSet<String>());
+    }
+    for (int[] edge : edges) {
+        map.get(edge[0]).add(edge[1]);
+        map.get(edge[1]).add(edge[0]);
+    }
+    for (int i = 1; i < n + 1; i++) {
+        char[] cs = new char[n + 1];
+        for (int j = 1; j < n + 1; j++) {
+            cs[j] = '0';
+        }
+        cs[i] = '1';
+        dfs(map, cs, i, 0);
+    }
+    int[] res = new int[n - 1];
+    for (int i = 0; i < n - 1; i++) {
+        res[i] = countMap.get(i + 1).size(); 
+    }
+    return res;
+}
+
+public void dfs(Map<Integer, List<Integer>> map, char[] cs, int num, int dis) {
+    if (dis != 0) {
+        countMap.get(dis).add(new String(cs));
+    }
+    for (int next : map.get(num)) {
+        if (cs[next] == '0') {
+            cs[next] = '1';
+            dfs(map, cs, next, dis + 1);
+            cs[next] = '0';
+        }
+    }
+}
