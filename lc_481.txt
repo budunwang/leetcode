@@ -1,0 +1,23 @@
+481.Magical String
+public int magicalString(int n) {
+    List<Integer> list = new ArrayList<Integer>(Arrays.asList(1, 2, 2));
+    int num_idx = 2;
+    int count_idx = 2;
+    while (list.size() < n) {
+        int cur = list.get(num_idx) == 1 ? 2 : 1;
+        if (list.get(count_idx) == 1) {
+            list.add(cur);
+            num_idx++;
+        } else {
+            list.add(cur);
+            list.add(cur);
+            num_idx += 2;
+        }
+        count_idx++;
+    }
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += list.get(i) == 1 ? 1 : 0;
+    }
+    return sum;
+}
