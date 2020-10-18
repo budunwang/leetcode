@@ -1,0 +1,25 @@
+251.Flatten 2D Vector
+public int[][] arr;
+public int row;
+public int col;
+
+public Vector2D(int[][] v) {
+    arr = v;
+    row = 0;
+    col = 0;
+}
+
+public int next() {
+    if (hasNext()) {
+        return arr[row][col++];
+    }
+    return -1;
+}
+
+public boolean hasNext() {
+    while (row < arr.length && col == arr[row].length) {
+        row++;
+        col = 0;
+    }
+    return row < arr.length;
+}
