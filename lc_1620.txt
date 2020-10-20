@@ -1,0 +1,21 @@
+1620.Coordinate With Maximum Network Quality
+public int[] bestCoordinate(int[][] towers, int radius) {
+    int[] arr = new int[2];
+    double max = 0;
+    for (int i = 0; i <= 50; i++) {
+        for (int j = 0; j <= 50; j++) {
+            double sum = 0;
+            for (int[] tower : towers) {
+                double dis = Math.sqrt((tower[0] - i) * (tower[0] - i) + (tower[1] - j) * (tower[1] - j));
+                if (dis <= radius) {
+                    sum += Math.floor(tower[2] / (1 + dis));
+                }
+            }
+            if (sum > max) {
+                max = sum;
+                arr = new int[] { i, j };
+            }
+        }
+    }
+    return arr;
+}
