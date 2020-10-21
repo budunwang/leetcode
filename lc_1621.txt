@@ -1,0 +1,33 @@
+1621.Number of Sets of K Non-Overlapping Line Segments
+dfs + memo
+public int[][] dp;
+public int mod;
+
+public int numberOfSets(int n, int k) {
+    dp = new int[n + 1][k + 1];
+    mod = (int) (1e9 + 7);
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= k; j++) {
+            dp[i][j] = -1;
+        }
+    }
+    return dfs(n, k);
+}
+
+public int dfs(int n, int k) {
+    if (k == 0) {
+        return 1;
+    }
+    if (n <= k) {
+        return 0;
+    }
+    if (dp[n][k] != -1) {
+        return dp[n][k];
+    }
+    int sum = dfs(n - 1, k) % mod;
+    for (int i = 1; i <= n - 1; i++) {
+        sum = (sum + dfs(n - i, k - 1)) % mod;
+    }
+    dp[n][k] = sum;
+    return sum;
+}
