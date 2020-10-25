@@ -1,0 +1,28 @@
+948.Bag of Tokens
+greedy
+public int bagOfTokensScore(int[] tokens, int P) {
+    Arrays.sort(tokens);
+    int left = 0;
+    int right = tokens.length - 1;
+    int max = 0;
+    int score = 0;
+    while (left <= right) {
+        if (P < tokens[left]) {
+            break;
+        }
+        while (left <= right && P >= tokens[left]) {
+            P -= tokens[left];
+            left++;
+            score++;
+        }
+        max = Math.max(max, score);
+        if (left < right && score > 0) {
+            P += tokens[right];
+            right--;
+            score--;
+        } else {
+            break;
+        }
+    }
+    return max;
+}

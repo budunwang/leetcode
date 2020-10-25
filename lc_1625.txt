@@ -1,38 +1,32 @@
 1625.Lexicographically Smallest String After Applying Operations
 Set<String> set;
+String min;
 
 public String findLexSmallestString(String s, int a, int b) {
     set = new HashSet<String>();
+    min = s;
     dfs(s, a, b);
-    List<String> list = new ArrayList<String>(set);
-    Collections.sort(list);
-    return list.get(0);
+    return min;
 }
 
 public void dfs(String s, int a, int b) {
-    String s1 = operate(s, a, b, 1);
-    String s2 = operate(s, a, b, 2);
-    if (!set.contains(s1)) {
-        set.add(s1);
-        dfs(s1, a, b);
+    if (set.contains(s)) {
+        return;
     }
-    if (!set.contains(s2)) {
-        set.add(s2);
-        dfs(s2, a, b);
+    set.add(s);
+    if (min.compareTo(s) > 0) {
+        min = s;
     }
-}
-
-public String operate(String s, int a, int b, int operation) {
-    if (operation == 1) {
-        char[] cs = s.toCharArray();
-        for (int i = 0; i < cs.length; i++) {
-            if (i % 2 == 1) {
-                int num = (cs[i] - '0' + a) % 10;
-                cs[i] = (char)(num + '0');
-            }
+    int length = s.length();
+    char[] cs = s.toCharArray();
+    for (int i = 0; i < length; i++) {
+        if (i % 2 == 1) {
+            int num = (cs[i] - '0' + a) % 10;
+            cs[i] = (char)(num + '0');
         }
-        return new String(cs);
-    } else {
-        return s.substring(s.length() - b, s.length()) + s.substring(0, s.length() - b);
     }
+    String s1 = new String(cs);
+    String s2 = s.substring(length - b, length) + s.substring(0, length - b);
+    dfs(s1, a, b);
+    dfs(s2, a, b);
 }
