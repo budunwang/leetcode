@@ -11,14 +11,12 @@ public int bagOfTokensScore(int[] tokens, int P) {
             break;
         }
         while (left <= right && P >= tokens[left]) {
-            P -= tokens[left];
-            left++;
+            P -= tokens[left++];
             score++;
         }
         max = Math.max(max, score);
-        if (left < right && score > 0) {
-            P += tokens[right];
-            right--;
+        if (score > 0) {
+            P += tokens[right--];
             score--;
         } else {
             break;
