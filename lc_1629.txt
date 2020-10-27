@@ -1,0 +1,20 @@
+1629.Slowest Key
+public char slowestKey(int[] releaseTimes, String keysPressed) {
+    int[] map = new int[26];
+    int prev = 0;
+    for (int i = 0; i < releaseTimes.length; i++) {
+        int dur = releaseTimes[i] - prev;
+        prev = releaseTimes[i];
+        int idx = keysPressed.charAt(i) - 'a';
+        map[idx] = Math.max(map[idx], dur);
+    }
+    int max = 0;
+    char c = 'a';
+    for (int i = 0; i < 26; i++) {
+        if (map[i] >= max) {
+            max = map[i];
+            c = (char)('a' + i);
+        }
+    }
+    return c;
+}
