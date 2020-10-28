@@ -1,0 +1,25 @@
+1630.Arithmetic Subarrays
+public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+    List<Boolean> list = new ArrayList<Boolean>();
+    for (int i = 0; i < l.length; i++) {
+        list.add(isArithmetic(nums, l[i], r[i]));
+    }
+    return list;
+}
+
+public boolean isArithmetic(int[] nums, int left, int right) {
+    if (right - left <= 1) {
+        return true;
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int i = left; i <= right; i++) {
+        list.add(nums[i]);
+    }
+    Collections.sort(list);
+    for (int i = 2; i < list.size(); i++) {
+        if (list.get(i) - list.get(i - 1) != list.get(i - 1) - list.get(i - 2)) {
+            return false;
+        }
+    }
+    return true;
+}
