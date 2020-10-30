@@ -1,5 +1,5 @@
 787.Cheapest Flights Within K Stops
-Djikstra with path record
+Dijkstra with path record
 find min path weight in graph with limited node number
 Record current node number when relaxation
 

@@ -1,6 +1,6 @@
 1631.Path With Minimum Effort
 743
-Dijskra
+Dijkstra
 public int minimumEffortPath(int[][] heights) {
     int row = heights.length;
     int col = heights[0].length;
