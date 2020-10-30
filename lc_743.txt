@@ -14,7 +14,7 @@ public int networkDelayTime(int[][] times, int N, int K) {
         map.get(start).add(new int[] { end, weight });
     }
     int[] visited = new int[101];
-    PriorityQueue<int[]> pq = new  PriorityQueue<int[]>((a, b) -> a[1] - b[1]);
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[1] - b[1]);
     pq.add(new int[] { K, 0 });
     while (!pq.isEmpty()) {
         int[] node = pq.poll();
