@@ -1,0 +1,23 @@
+1638.Count Substrings That Differ by One Character
+count when diff = 1
+public int countSubstrings(String s, String t) {
+    int sum = 0;
+    for (int i = 0; i < s.length(); i++) {
+        for (int j = 0; j < t.length(); j++) {
+            int count = 0;
+            for (int k = 0; i + k < s.length() && j + k < t.length(); k++) {
+                if (s.charAt(i + k) != t.charAt(j + k)) {
+                    if (count == 0) {
+                        count++;
+                        sum++;
+                    } else {
+                        break;
+                    }
+                } else if (count == 1) {
+                    sum++;
+                }
+            }
+        }
+    }
+    return sum;
+}
