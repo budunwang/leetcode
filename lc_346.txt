@@ -1,0 +1,20 @@
+346.Moving Average from Data Stream
+public Queue<Integer> queue;
+public int n;
+public int sum;
+
+/** Initialize your data structure here. */
+public MovingAverage(int size) {
+    queue = new LinkedList<Integer>();
+    n = size;
+    sum = 0;
+}
+
+public double next(int val) {
+    sum += val;
+    queue.offer(val);
+    if (queue.size() > n) {
+        sum -= queue.poll();
+    }
+    return (double) sum / queue.size();
+}
