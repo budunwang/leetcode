@@ -1,0 +1,34 @@
+286.Walls and Gates
+bfs
+public void wallsAndGates(int[][] rooms) {
+    if (rooms.length == 0 || rooms[0].length == 0) {
+        return;
+    }
+    int row = rooms.length;
+    int col = rooms[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    Queue<int[]> queue = new LinkedList<int[]>();
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (rooms[i][j] == 0) {
+                queue.offer(new int[] { i, j });
+            }
+        }
+    }
+    int dis = 1;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            for (int[] dir : dirs) {
+                int n_x = arr[0] + dir[0];
+                int n_y = arr[1] + dir[1];
+                if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && rooms[n_x][n_y] > dis) {
+                    rooms[n_x][n_y] = dis;
+                    queue.offer(new int[] { n_x, n_y });
+                }
+            }
+        }
+        dis++;
+    }
+}
