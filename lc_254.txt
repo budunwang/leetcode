@@ -1,0 +1,20 @@
+254.Factor Combinations
+dfs
+public List<List<Integer>> getFactors(int n) {
+    return dfs(n, 2);
+}
+
+public List<List<Integer>> dfs(int n, int idx) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    for (int i = idx; i * i <= n; i++) {
+        if (n % i == 0) {
+            res.add(new ArrayList<Integer>(Arrays.asList(i, n / i)));
+            List<List<Integer>> lists = dfs(n / i, i);
+            for (List<Integer> list : lists) {
+                list.add(i);
+                res.add(list);
+            }
+        }
+    }
+    return res;
+}
