@@ -1,0 +1,29 @@
+1647.Minimum Deletions to Make Character Frequencies Unique
+public int minDeletions(String s) {
+    int[] arr = new int[26];
+    for (char c : s.toCharArray()) {
+        arr[c - 'a']++;
+    }
+    Arrays.sort(arr);
+    Set<Integer> set = new HashSet<Integer>();
+    Queue<Integer> queue = new LinkedList<Integer>();
+    for (int i = 25; i >= 0 && arr[i] != 0; i--) {
+        if (set.contains(arr[i])) {
+            queue.offer(arr[i]);
+        } else {
+            set.add(arr[i]);
+        }
+    }
+    int sum = 0;
+    int cur = arr[25];
+    while (cur >= 0) {
+        if (!set.contains(cur) && !queue.isEmpty() && queue.peek() > cur) {
+            sum += queue.poll() - cur;
+        }
+        cur--;
+    }
+    while (!queue.isEmpty()) {
+        sum += queue.poll();
+    }
+    return sum;
+}
