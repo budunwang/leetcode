@@ -1,0 +1,22 @@
+408.Valid Word Abbreviation
+public boolean validWordAbbreviation(String word, String abbr) {
+    int idx = 0;
+    int num = 0;
+    for (char c : abbr.toCharArray()) {
+        if (Character.isDigit(c)) {
+            if (c == '0' && num == 0) {
+                return false;
+            }
+            num = num * 10 + (c - '0');
+        } else {
+            idx += num;
+            num = 0;
+            if (idx >= word.length() || word.charAt(idx) != c) {
+                return false;
+            }
+            idx++;
+        }
+    }
+    idx += num;
+    return idx == word.length();
+}
