@@ -1,0 +1,40 @@
+1648.Sell Diminishing-Valued Colored Balls
+binary search
+使用max heap会超时。O(N * NlogN)
+需要使用二分法找到最大的价值，且满足order个数小于等于orders。
+再利用求和公式计算总价值。
+public int maxProfit(int[] inventory, int orders) {
+    int left = 0;
+    int right = (int) 1e9;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (isValid(inventory, mid, orders)) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    long sum = 0;
+    long mod = (long) 1e9 + 7;
+    for (int n : inventory) {
+        if (n > left) {
+            sum = (sum + (long) (left + 1 + n) * (n - left) / 2) % mod;
+            orders -= n - left;
+        }
+    }
+    sum = (sum + (long) left * orders) % mod;
+    return (int) sum;
+}
+
+public boolean isValid(int[] inventory, int min, int orders) {
+    int sum = 0;
+    for (int n : inventory) {
+        if (n >= min) {
+            sum += n - min;
+            if (sum > orders) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
