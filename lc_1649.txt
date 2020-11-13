@@ -1,0 +1,30 @@
+1649.Create Sorted Array through Instructions
+binary indexed tree
+public int[] arr;
+
+public int createSortedArray(int[] instructions) {
+    arr = new int[100001];
+    int mod = (int) 1e9 + 7;
+    int sum = 0;
+    for (int i = 0; i < instructions.length; i++) {
+        sum = (sum + Math.min(get(instructions[i] - 1), i - get(instructions[i]))) % mod;
+        update(instructions[i]);
+    }
+    return sum;
+}
+
+public void update(int idx) {
+    while (idx < arr.length) {
+        arr[idx]++;
+        idx += idx & -idx;
+    }
+}
+
+public int get(int idx) {
+    int sum = 0;
+    while (idx > 0) {
+        sum += arr[idx];
+        idx -= idx & -idx;
+    }
+    return sum;
+}
