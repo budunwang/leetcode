@@ -1,0 +1,25 @@
+1658.Minimum Operations to Reduce X to Zero
+sliding window
+public int minOperations(int[] nums, int x) {
+    int sum = 0;
+    for (int num : nums) {
+        sum += num;
+    }
+    if (sum == x) {
+        return nums.length;
+    }
+    int max = -1;
+    int left = 0;
+    int cur = 0;
+    for (int right = 0; right < nums.length; right++) {
+        cur += nums[right];
+        while (left < right && cur > sum - x) {
+            cur -= nums[left];
+            left++;
+        }
+        if (cur == sum - x) {
+            max = Math.max(max, right - left + 1);
+        }
+    }
+    return max == -1 ? max : nums.length - max;
+}

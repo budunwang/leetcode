@@ -1,0 +1,20 @@
+1656.Design an Ordered Stream
+public Map<Integer, String> map;
+public int ptr;
+
+public OrderedStream(int n) {
+    map = new HashMap<Integer, String>();
+    ptr = 1;
+}
+
+public List<String> insert(int id, String value) {
+    map.put(id, value);
+    List<String> list = new ArrayList<String>();
+    if (ptr == id) {
+        while (map.containsKey(ptr)) {
+            list.add(map.get(ptr));
+            ptr++;
+        }
+    }
+    return list;
+}
