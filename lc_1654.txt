@@ -1,0 +1,36 @@
+1654.Minimum Jumps to Reach Home
+public int minimumJumps(int[] forbidden, int a, int b, int x) {
+    Queue<int[]> queue = new LinkedList<int[]>();
+    queue.offer(new int[] { 0, 0 });
+    Set<Integer> visited = new HashSet<Integer>();
+    visited.add(0);
+    int max = x + a + b;
+    for (int n : forbidden) {
+        visited.add(n);
+        max = Math.max(max, n + a + b);
+    }
+    int sum = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            if (arr[0] == x) {
+                return sum;
+            }
+            if (arr[1] == 0) {
+                int prev = arr[0] - b;
+                if (prev > 0 && !visited.contains(prev)) {
+                    visited.add(prev);
+                    queue.offer(new int[] { prev, 1 });
+                }
+            }
+            int next = arr[0] + a;
+            if (next <= max && !visited.contains(next)) {
+                visited.add(next);
+                queue.offer(new int[] { next, 0 });
+            }
+        }
+        sum++;
+    }
+    return -1;
+}
