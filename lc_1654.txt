@@ -1,4 +1,12 @@
 1654.Minimum Jumps to Reach Home
+bfs
+最远范围
+1.a > b
+max = target or forbidden point + b
+不能超过一次回跳极限b
+2.a < b
+max = target or forbidden point + b + a
+回跳b正好落在forbidden point，不能回跳，只能前跳a。距离是a + b。
 public int minimumJumps(int[] forbidden, int a, int b, int x) {
     Queue<int[]> queue = new LinkedList<int[]>();
     queue.offer(new int[] { 0, 0 });
@@ -17,12 +25,10 @@ public int minimumJumps(int[] forbidden, int a, int b, int x) {
             if (arr[0] == x) {
                 return sum;
             }
-            if (arr[1] == 0) {
-                int prev = arr[0] - b;
-                if (prev > 0 && !visited.contains(prev)) {
-                    visited.add(prev);
-                    queue.offer(new int[] { prev, 1 });
-                }
+            int prev = arr[0] - b;
+            if (arr[1] == 0 && prev > 0 && !visited.contains(prev)) {
+                visited.add(prev);
+                queue.offer(new int[] { prev, 1 });
             }
             int next = arr[0] + a;
             if (next <= max && !visited.contains(next)) {
