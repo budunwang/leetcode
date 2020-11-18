@@ -1,0 +1,18 @@
+1653.Minimum Deletions to Make String Balanced
+count b from left
+count a from right
+get min from count sum
+public int minimumDeletions(String s) {
+    int length = s.length();
+    int[] arr_a = new int[length + 1];
+    int[] arr_b = new int[length + 1];
+    for (int i = 0; i < length; i++) {
+        arr_a[i + 1] = s.charAt(i) != 'a' ? arr_a[i] + 1 : arr_a[i]; 
+        arr_b[length - 1 - i] = s.charAt(length - 1 - i) != 'b' ? arr_b[length - i] + 1 : arr_b[length - i];
+    }
+    int min = length;
+    for (int i = 0; i <= length; i++) {
+        min = Math.min(min, arr_a[i] + arr_b[i]);
+    }
+    return min;
+}
