@@ -1,0 +1,32 @@
+1655.Distribute Repeating Integers
+dfs
+sort quantity and start from the largest one to save time complexity
+public boolean canDistribute(int[] nums, int[] quantity) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int num : nums) {
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+    int[] mapArr = new int[map.size()];
+    int idx = 0;
+    for (int n : map.values()) {
+        mapArr[idx++] = n;
+    }
+    Arrays.sort(quantity);
+    return dfs(mapArr, quantity, quantity.length - 1);
+}
+
+public boolean dfs(int[] map, int[] quantity, int idx) {
+    if (idx == -1) {
+        return true;
+    }
+    for (int i = 0; i < map.length; i++) {
+        if (map[i] >= quantity[idx]) {
+            map[i] -= quantity[idx];
+            if (dfs(map, quantity, idx - 1)) {
+                return true;
+            }
+            map[i] += quantity[idx];
+        }
+    }
+    return false;
+}
