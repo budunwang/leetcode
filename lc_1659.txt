@@ -1,0 +1,43 @@
+1659.Maximize Grid Happiness
+public int getMaxGridHappiness(int m, int n, int introvertsCount, int extrovertsCount) {
+    int[] arr = new int[m * n];
+    return dfs(arr, 0, introvertsCount, extrovertsCount, m, n);
+}
+
+public int dfs(int[] arr, int idx, int i, int e, int m, int n) {
+    if ((i == 0 && e == 0) || idx == arr.length) {
+        return getSum(arr, m, n);
+    }
+    int max = dfs(arr, idx + 1, i, e, m, n);
+    if (i > 0) {
+        arr[idx] = 120;
+        max = Math.max(max, dfs(arr, idx + 1, i - 1, e, m, n));
+        arr[idx] = 0;
+    }
+    if (e > 0) {
+        arr[idx] = 40;
+        max = Math.max(max, dfs(arr, idx + 1, i, e - 1, m, n));
+        arr[idx] = 0;
+    }
+    return max;
+}
+
+public int getSum(int[] arr, int m, int n) {
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    int sum = 0;
+    for (int i = 0; i < arr.length; i++) {
+        int x = i / n;
+        int y = i % n;
+        sum += arr[i];
+        if (arr[i] != 0) {
+            for (int[] dir : dirs) {
+                int n_x = x + dir[0];
+                int n_y = y + dir[1];
+                if (n_x >= 0 && n_x < m && n_y >= 0 && n_y < n && arr[n_x * n + n_y] != 0) {
+                    sum += arr[i] == 120 ? -30 : 20;
+                }
+            }
+        }
+    }
+    return sum;
+}
