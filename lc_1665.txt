@@ -1,0 +1,19 @@
+1665.Minimum Initial Energy to Finish Tasks
+public int minimumEffort(int[][] tasks) {
+    Arrays.sort(tasks, (a, b) -> {
+        int diff_a = a[1] - a[0];
+        int diff_b = b[1] - b[0];
+        if (diff_a != diff_b) {
+            return diff_b - diff_a;
+        } else {
+            return a[1] - b[1];
+        }
+    });
+    int sum = tasks[tasks.length - 1][1];
+    int max = tasks[tasks.length - 1][1];
+    for (int i = 0; i < tasks.length - 1; i++) {
+        sum += tasks[i][0];
+        max = Math.max(max, tasks[i][1]);
+    }
+    return Math.max(max, sum);
+}

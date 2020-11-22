@@ -1,0 +1,11 @@
+1663.Smallest String With A Given Numeric Value
+public String getSmallestString(int n, int k) {
+    StringBuilder sb = new StringBuilder();
+    while (n != 0) {
+        int max = Math.min(26, k - (n - 1));
+        sb.append((char)('a' + max - 1));
+        k -= max;
+        n--;
+    }
+    return sb.reverse().toString();
+}
