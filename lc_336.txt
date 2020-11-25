@@ -6,20 +6,22 @@ public List<List<Integer>> palindromePairs(String[] words) {
     }
     List<List<Integer>> list = new ArrayList<List<Integer>>();
     for (int i = 0; i < words.length; i++) {
-        for (int j = 0; j <= words[i].length(); j++) {
+        for (int j = 0; j < words[i].length(); j++) {
             String s1 = words[i].substring(0, j);
             String s2 = words[i].substring(j, words[i].length());
-            System.out.println(s1 + " + " + s2);
-            if (ispalindrome(s1)) {
+            if (isPalindrome(s1)) {
                 String str = new StringBuilder(s2).reverse().toString();
                 if (map.containsKey(str) && map.get(str) != i) {
                     list.add(Arrays.asList(map.get(str), i));
                 }
             }
-            if (ispalindrome(s2)) {
+            if (isPalindrome(s2)) {
                 String str = new StringBuilder(s1).reverse().toString();
                 if (map.containsKey(str) && map.get(str) != i) {
                     list.add(Arrays.asList(i, map.get(str)));
+                }
+                if (j == 0 && map.containsKey("")) {
+                    list.add(Arrays.asList(map.get(""), i));
                 }
             }
         }
@@ -27,7 +29,7 @@ public List<List<Integer>> palindromePairs(String[] words) {
     return list;
 }
 
-public boolean ispalindrome(String str) {
+public boolean isPalindrome(String str) {
     int left = 0;
     int right = str.length() - 1;
     while (left < right) {
