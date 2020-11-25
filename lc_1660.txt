@@ -1,0 +1,43 @@
+1660.Correct a Binary Tree
+bfs
+public TreeNode correctBinaryTree(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        Map<TreeNode, TreeNode> map = new HashMap<TreeNode, TreeNode>();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                if (map.containsKey(treeNode.left)) {
+                    remove(map, treeNode.left);
+                    return root;
+                }
+                queue.offer(treeNode.left);
+                if (treeNode.left.right != null) {
+                    map.put(treeNode.left.right, treeNode);
+                }
+            }
+            if (treeNode.right != null) {
+                if (map.containsKey(treeNode.right)) {
+                    remove(map, treeNode.right);
+                    return root;
+                }
+                queue.offer(treeNode.right);
+                if (treeNode.right.right != null) {
+                    map.put(treeNode.right.right, treeNode);
+                }
+            }
+        }
+    }
+    return root;
+}
+
+public void remove(Map<TreeNode, TreeNode> map, TreeNode treeNode) {
+    TreeNode tmp = map.get(treeNode);
+    if (tmp.left != null && tmp.left.right == treeNode) {
+        tmp.left = null;
+    } else {
+        tmp.right = null;
+    }
+}
