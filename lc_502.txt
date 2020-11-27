@@ -1,0 +1,32 @@
+502.IPO
+public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> {
+        if (a[1] == b[1]) {
+            return b[0] - a[0];
+        } else {
+            return b[1] - a[1];
+        }
+    });
+    for (int i = 0; i < Profits.length; i++) {
+        pq.offer(new int[] { Profits[i], Capital[i] });
+    }
+    int sum = W;
+    while (k != 0) {
+        List<int[]> list = new ArrayList<int[]>();
+        while (!pq.isEmpty()) {
+            int[] arr = pq.poll();
+            if (arr[1] <= W) {
+                W += arr[0];
+                sum += arr[0];
+                break;
+            } else {
+                list.add(arr);
+            }
+        }
+        for (int[] arr : list) {
+            pq.offer(arr);
+        }
+        k--;
+    }
+    return sum;
+}
