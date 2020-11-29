@@ -1,0 +1,10 @@
+1668.Maximum Repeating Substring
+public int maxRepeating(String sequence, String word) {
+    int sum = 0;
+    String str = word;
+    while (sequence.indexOf(str) != -1 && str.length() <= sequence.length()) {
+        str += word;
+        sum++;
+    }
+    return sum;
+}

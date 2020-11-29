@@ -1,0 +1,67 @@
+1670.Design Front Middle Back Queue
+public Deque<Integer> first;
+public Deque<Integer> last;
+
+public FrontMiddleBackQueue() {
+    first = new LinkedList<Integer>();
+    last = new LinkedList<Integer>();
+}
+
+public void pushFront(int val) {
+    first.offerFirst(val);
+    balance();
+}
+
+public void pushMiddle(int val) {
+    first.offerLast(val);
+    balance();
+}
+
+public void pushBack(int val) {
+    last.offerLast(val);
+    balance();
+}
+
+public int popFront() {
+    int num = -1;
+    if (first.size() != 0) {
+        num = first.pollFirst();
+    } else if (last.size() != 0) {
+        num = last.pollFirst();
+    }
+    balance();
+    return num;
+}
+
+public int popMiddle() {
+    if (first.size() == last.size()) {
+        if (first.size() == 0) {
+            return -1;
+        }
+        return first.pollLast();
+    } else {
+        if (last.size() == 0) {
+            return -1;
+        }
+        return last.pollFirst();
+    }
+}
+
+public int popBack() {
+    int num = -1;
+    if (last.size() != 0) {
+        num = last.pollLast();
+    } else if (first.size() != 0) {
+        num = first.pollLast();
+    }
+    balance();
+    return num;
+}
+
+public void balance() {
+    if (first.size() > last.size()) {
+        last.offerFirst(first.pollLast());
+    } else if (first.size() < last.size() - 1) {
+        first.offerLast(last.pollFirst());
+    }
+}
