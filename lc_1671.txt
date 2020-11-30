@@ -1,0 +1,30 @@
+1671.Minimum Number of Removals to Make Mountain Array
+LIS
+300
+get max sum of left LIS and right LIS
+public int minimumMountainRemovals(int[] nums) {
+    int length = nums.length;
+    int[] dp_l = new int[length];
+    int[] dp_r = new int[length];
+    for (int i = 0; i < length; i++) {
+        dp_l[i] = 1;
+        for (int j = 0; j < i; j++) {
+            if (nums[i] > nums[j]) {
+                dp_l[i] = Math.max(dp_l[i], dp_l[j] + 1);
+            }
+        }
+    }
+    for (int i = length - 1; i >= 0; i--) {
+        dp_r[i] = 1;
+        for (int j = length - 1; j > i; j--) {
+            if (nums[i] > nums[j]) {
+                dp_r[i] = Math.max(dp_r[i], dp_r[j] + 1);
+            }
+        }
+    }
+    int max = 1;
+    for (int i = 1; i < length - 1; i++) {
+        max = Math.max(max, dp_l[i] + dp_r[i] - 1);
+    }
+    return length - max;
+}
