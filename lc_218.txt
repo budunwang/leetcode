@@ -1,4 +1,6 @@
 218.The Skyline Problem
+max heap maintains cur max height
+add point when cur max height is different from prev height
 public List<List<Integer>> getSkyline(int[][] buildings) {
     List<int[]> list = new ArrayList<int[]>();
     for (int[] building : buildings) {
