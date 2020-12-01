@@ -1,0 +1,32 @@
+218.The Skyline Problem
+public List<List<Integer>> getSkyline(int[][] buildings) {
+    List<int[]> list = new ArrayList<int[]>();
+    for (int[] building : buildings) {
+        list.add(new int[] { building[0], building[2] });
+        list.add(new int[] { building[1], -building[2] });
+    }
+    Collections.sort(list, (a, b) -> {
+        if (a[0] != b[0]) {
+            return a[0] - b[0];
+        } else {
+            return b[1] - a[1];    
+        }
+    });
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> b - a);
+    pq.offer(0);
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    int prev = 0;
+    for (int[] arr : list) {
+        if (arr[1] > 0) {
+            pq.offer(arr[1]);
+        } else {
+            pq.remove(-arr[1]);
+        }
+        int curMax = pq.peek();
+        if (prev != curMax) {
+            res.add(Arrays.asList(arr[0], curMax));
+            prev = curMax;
+        }
+    }
+    return res;
+}
