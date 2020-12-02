@@ -1,0 +1,25 @@
+1602.Find Nearest Right Node in Binary Tree
+bfs
+public TreeNode findNearestRightNode(TreeNode root, TreeNode u) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode == u) {
+                if (i == size - 1) {
+                    return null;
+                }
+                return queue.poll();
+            }
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+            }
+        }
+    }
+    return null;
+}

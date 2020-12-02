@@ -1,4 +1,5 @@
 560.Subarray Sum Equals K
+presum + hashmap
 930
 1248
 public int subarraySum(int[] nums, int k) {
