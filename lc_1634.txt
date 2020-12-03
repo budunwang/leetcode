@@ -1,0 +1,31 @@
+1634.Add Two Polynomials Represented as Linked Lists
+public PolyNode addPoly(PolyNode poly1, PolyNode poly2) {
+    PolyNode poly = new PolyNode();
+    PolyNode dummy = poly;
+    while (poly1 != null && poly2 != null) {
+        if (poly1.power == poly2.power) {
+            int n = poly1.coefficient + poly2.coefficient;
+            if (n != 0) {
+                PolyNode next = new PolyNode(n, poly1.power);
+                poly.next = next;
+                poly = poly.next;
+            }
+            poly1 = poly1.next;
+            poly2 = poly2.next;
+        } else if (poly1.power > poly2.power) {
+            poly.next = poly1;
+            poly = poly.next;
+            poly1 = poly1.next;
+        } else {
+            poly.next = poly2;
+            poly = poly.next;
+            poly2 = poly2.next;
+        }
+    }
+    if (poly1 == null) {
+        poly.next = poly2;
+    } else {
+        poly.next = poly1;
+    }
+    return dummy.next;
+}

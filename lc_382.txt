@@ -1,0 +1,26 @@
+382.Linked List Random Node
+398
+public ListNode listNode;
+public Random rand;
+
+/** @param head The linked list's head.
+    Note that the head is guaranteed to be not null, so it contains at least one node. */
+public Solution(ListNode head) {
+    listNode = head;
+    rand = new Random();
+}
+
+/** Returns a random node's value. */
+public int getRandom() {
+    ListNode tmp = listNode;
+    int idx = 0;
+    int val = 0;
+    while (tmp != null) {
+        if (rand.nextInt(idx + 1) == idx) {
+            val = tmp.val;
+        }
+        idx++;
+        tmp = tmp.next;
+    }
+    return val;
+}
