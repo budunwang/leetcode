@@ -1,0 +1,40 @@
+379.Design Phone Directory
+public int[] map;
+public int idx;
+
+/** Initialize your data structure here
+    @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
+public PhoneDirectory(int maxNumbers) {
+    map = new int[maxNumbers];
+    idx = -1;
+}
+
+/** Provide a number which is not assigned to anyone.
+    @return - Return an available number. Return -1 if none is available. */
+public int get() {
+    if (idx != -1) {
+        int tmp = idx;
+        map[idx] = 1;
+        idx = -1;
+        return tmp;
+    }
+    for (int i = 0; i < map.length; i++) {
+        if (map[i] == 0) {
+            map[i] = 1;
+            idx = -1;
+            return i;
+        }
+    }
+    return -1;
+}
+
+/** Check if a number is available or not. */
+public boolean check(int number) {
+    return map[number] == 0;
+}
+
+/** Recycle or release a number. */
+public void release(int number) {
+    map[number] = 0;
+    idx = number;
+}
