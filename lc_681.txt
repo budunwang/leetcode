@@ -1,0 +1,40 @@
+681.Next Closest Time
+public String nextClosestTime(String time) {
+    String[] ss = time.split(":");
+    int curTime = Integer.parseInt(ss[0]) * 60 + Integer.parseInt(ss[1]);
+    Set<Integer> set = new HashSet<Integer>();
+    for (char c : time.toCharArray()) {
+        if (c != ':') {
+            set.add(c - '0');
+        }
+    }
+    int minTime = 1440;
+    int nextTime = 1440;
+    for (int i : set) {
+        for (int j : set) {
+            for (int k : set) {
+                for (int l : set) {
+                    int hour = i * 10 + j;
+                    int minute = k * 10 + l;
+                    int num = hour * 60 + minute;
+                    if (hour < 24 && minute < 60) {
+                        if (num > curTime) {
+                            minTime = Math.min(minTime, num);
+                        } else {
+                            nextTime = Math.min(nextTime, num);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return minTime == 1440 ? toTime(nextTime) : toTime(minTime);
+}
+
+public String toTime(int num) {
+    int hour = num / 60;
+    int minute = num % 60;
+    String h = (hour / 10 == 0 ? "0" : "") + hour;
+    String m = (minute / 10 == 0 ? "0" : "") + minute;
+    return h + ":" + m;
+}
