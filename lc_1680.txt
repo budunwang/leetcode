@@ -1,0 +1,11 @@
+1680.Concatenation of Consecutive Binary Numbers
+public int concatenatedBinary(int n) {
+    long sum = 0;
+    long prev = 1;
+    int mod = (int) 1e9 + 7;
+    for (int i = n; i >= 1; i--) {
+        sum = (sum + prev * i) % mod;
+        prev = (long) Math.pow(2, Integer.toBinaryString(i).length()) * prev % mod;
+    }
+    return (int) sum;
+}
