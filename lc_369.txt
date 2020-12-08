@@ -1,0 +1,19 @@
+369.Plus One Linked List
+public ListNode plusOne(ListNode head) {
+    int carry = reverse(head);
+    if (carry == 1) {
+        ListNode listNode = new ListNode(1);
+        listNode.next = head;
+        return listNode;
+    }
+    return head;
+}
+
+public int reverse(ListNode head) {
+    if (head == null) {
+        return 1;
+    }
+    int sum = reverse(head.next) + head.val;
+    head.val = sum % 10;
+    return sum / 10;
+}
