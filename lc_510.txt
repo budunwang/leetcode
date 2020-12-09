@@ -1,0 +1,23 @@
+510.Inorder Successor in BST II
+public Node min;
+public Set<Node> set;
+
+public Node inorderSuccessor(Node node) {
+    min = null;
+    set = new HashSet<Node>();
+    dfs(node, node.val);
+    return min;
+}
+
+public void dfs(Node node, int num) {
+    if (node == null || set.contains(node)) {
+        return;
+    }
+    set.add(node);
+    if (node.val > num && (min == null || min.val > node.val)) {
+        min = node;
+    }
+    dfs(node.left, num);
+    dfs(node.right, num);
+    dfs(node.parent, num);
+}
