@@ -1,0 +1,53 @@
+742.Closest Leaf in a Binary Tree
+public TreeNode treeNode;
+public Map<TreeNode, List<TreeNode>> map;
+public int target;
+
+public int findClosestLeaf(TreeNode root, int k) {
+    treeNode = new TreeNode();
+    map = new HashMap<TreeNode, List<TreeNode>>();
+    target = k;
+    dfs(root);
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    Set<TreeNode> set = new HashSet<TreeNode>();
+    queue.offer(treeNode);
+    set.add(treeNode);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode tmp = queue.poll();
+            if (tmp.left == null && tmp.right == null) {
+                return tmp.val;
+            }
+            for (TreeNode node : map.get(tmp)) {
+                if (!set.contains(node)) {
+                    set.add(node);
+                    queue.offer(node);
+                }                    
+            }
+        }
+    }
+    return k;
+}
+
+public void dfs(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    if (root.val == target) {
+        treeNode = root;
+    }
+    map.putIfAbsent(root, new ArrayList<TreeNode>());
+    if (root.left != null) {
+        map.get(root).add(root.left);
+        map.putIfAbsent(root.left, new ArrayList<TreeNode>());
+        map.get(root.left).add(root);
+        dfs(root.left);
+    }
+    if (root.right != null) {
+        map.get(root).add(root.right);
+        map.putIfAbsent(root.right, new ArrayList<TreeNode>());
+        map.get(root.right).add(root);
+        dfs(root.right);
+    }
+}
