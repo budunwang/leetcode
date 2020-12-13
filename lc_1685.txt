@@ -1,0 +1,15 @@
+1685.Sum of Absolute Differences in a Sorted Array
+public int[] getSumAbsoluteDifferences(int[] nums) {
+    int length = nums.length;
+    int[] sum = new int[length + 1];
+    for (int i = 0; i < length; i++) {
+        sum[i + 1] = nums[i] + sum[i];
+    }
+    int[] arr = new int[length];
+    for (int i = 0; i < length; i++) {
+        int left = nums[i] * i - sum[i];
+        int right = sum[length] - sum[i + 1] - nums[i] * (length - 1 - i);
+        arr[i] = left + right;
+    }
+    return arr;
+}

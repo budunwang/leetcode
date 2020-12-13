@@ -1,0 +1,19 @@
+1684.Count the Number of Consistent Strings
+public int countConsistentStrings(String allowed, String[] words) {
+    Set<Character> set = new HashSet<Character>();
+    for (char c : allowed.toCharArray()) {
+        set.add(c);
+    }
+    int sum = 0;
+    for (String word : words) {
+        boolean isValid = true;
+        for (char c : word.toCharArray()) {
+            if (!set.contains(c)) {
+                isValid = false;
+                break;
+            }
+        }
+        sum += isValid ? 1 : 0;
+    }
+    return sum;
+}
