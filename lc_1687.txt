@@ -1,0 +1,28 @@
+1687.Delivering Boxes from Storage to Ports
+sliding window
+public int boxDelivering(int[][] boxes, int portsCount, int maxBoxes, int maxWeight) {
+    int length = boxes.length;
+    int left = 0;
+    int curBox = 1;
+    int curWeight = boxes[0][1];
+    int curTrip = 2;
+    int[] dp = new int[length + 1];
+    dp[1] = 2;
+    for (int right = 1; right < length; right++) {
+        curBox += 1;
+        curWeight += boxes[right][1];
+        if (boxes[right][0] != boxes[right - 1][0]) {
+            curTrip += 1;
+        }
+        while (curBox > maxBoxes || curWeight > maxWeight || dp[left + 1] == dp[left]) {
+            curBox -= 1;
+            curWeight -= boxes[left][1];
+            left++;
+            if (boxes[left][0] != boxes[left - 1][0]) {
+                curTrip -= 1;
+            }
+        }
+        dp[right + 1] = dp[left] + curTrip;
+    }
+    return dp[length];
+}
