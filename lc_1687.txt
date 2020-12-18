@@ -1,5 +1,17 @@
 1687.Delivering Boxes from Storage to Ports
-sliding window
+dp + sliding window
+dp[i]:i - 1时所需要的最小次数
+窗口大小
+1.box数量小于等于最大box数量
+2.weight总量小于等于最大weight总量
+3.dp[left] != dp[left + 1]
+尽可能满载box。
+但如果dp[left]与dp[left + 1]相同，即运送box[left]前的次数与运送box[left + 1]前的次数相同时，使用dp[left + 1]是最优解。
+两种可能
+(1)dp[left] + trip[left ~ right]
+(2)dp[left + 1] + trip[left + 1 ~ right]
+当box[left]的port与box[left + 1]的port不同时，那么trip[left ~ right] = trip[left + 1 ~ right] + 1，需要多送一次。
+所以第二种可能的结果在上述情况下会更小。
 public int boxDelivering(int[][] boxes, int portsCount, int maxBoxes, int maxWeight) {
     int length = boxes.length;
     int left = 0;
