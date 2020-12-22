@@ -1,0 +1,20 @@
+910.Smallest Range II
+sort and greedy
+四种可能
+i < j, A[i] < A[j]
+(1)同时加，没变化
+(2)同时减，没变化
+(3)A[i]减，A[j]加，差值更大
+(4)A[i]加，A[j]减，存在最小差值
+排序后，最小差值必然存在于A[i]与A[i + 1]的第四种可能中。
+public int smallestRangeII(int[] A, int K) {
+    int length = A.length;
+    Arrays.sort(A);
+    int res = A[length - 1] - A[0];
+    for (int i = 0; i < length - 1; i++) {
+        int curMax = Math.max(A[length - 1] - K, A[i] + K);
+        int curMin = Math.min(A[0] + K, A[i + 1] - K);
+        res = Math.min(res, curMax - curMin);
+    }
+    return res;
+}
