@@ -1,0 +1,67 @@
+1697.Checking Existence of Edge Length Limited Paths
+Union-find
+(1)edgeList按distance排序
+(2)query按distance排序
+(3)在query时，只将小于当前distance的edgelist的点进行连接
+(4)检查query的点是否连接
+public class UnionFind {
+    private int[] parent;
+    private int[] rank;
+
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int num) {
+        while (parent[num] != num) {
+            parent[num] = parent[parent[num]];
+            num = parent[num]; 
+        }
+        return num;
+    }
+
+    public boolean union(int num1, int num2) {
+        int parent1 = find(num1);
+        int parent2 = find(num2);
+        if (parent1 == parent2) {
+            return false;
+        } else {
+            if (rank[parent1] > rank[parent2]) {
+                parent[parent2] = parent1;
+            } else if (rank[parent1] < rank[parent2]) {
+                parent[parent1] = parent2;
+            } else {
+                parent[parent2] = parent1;
+                rank[parent1]++;
+            }
+        }
+        return true;
+    }
+}
+
+public boolean[] distanceLimitedPathsExist(int n, int[][] edgeList, int[][] queries) {
+    Arrays.sort(edgeList, (a, b) -> a[2] - b[2]);
+    List<int[]> list = new ArrayList<int[]>();
+    for (int i = 0; i < queries.length; i++) {
+        list.add(new int[] { i, queries[i][0], queries[i][1], queries[i][2] });
+    }
+    Collections.sort(list, (a, b) -> a[3] - b[3]);
+    UnionFind unionFind = new UnionFind(n);
+    boolean[] arr = new boolean[queries.length];
+    int idx = 0;
+    for (int i = 0; i < list.size(); i++) {
+        int[] tmp = list.get(i);
+        while (idx < edgeList.length && edgeList[idx][2] < tmp[3]) {
+            unionFind.union(edgeList[idx][0], edgeList[idx][1]);
+            idx++;
+        }
+        if (unionFind.find(tmp[1]) == unionFind.find(tmp[2])) {
+            arr[tmp[0]] = true;
+        }
+    }
+    return arr;
+}
