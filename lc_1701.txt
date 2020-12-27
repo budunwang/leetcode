@@ -1,0 +1,14 @@
+1701.Average Waiting Time
+public double averageWaitingTime(int[][] customers) {
+    double curTime = 0;
+    double sum = 0;
+    for (int[] customer : customers) {
+        if (curTime < customer[0]) {
+            curTime = customer[0] + customer[1];
+        } else {
+            curTime += customer[1];
+        }
+        sum += curTime - customer[0];
+    }
+    return sum / customers.length;
+}
