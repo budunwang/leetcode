@@ -1,0 +1,11 @@
+1704.Determine if String Halves Are Alike
+public boolean halvesAreAlike(String s) {
+    int sum = 0;
+    for (int i = 0; i < s.length(); i++) {
+        char c = Character.toLowerCase(s.charAt(i));
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            sum += i < s.length() / 2 ? 1 : -1;
+        }
+    }
+    return sum == 0;
+}

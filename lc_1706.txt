@@ -1,0 +1,28 @@
+1706.Where Will the Ball Fall
+public int[] findBall(int[][] grid) {
+    int col = grid[0].length;
+    int[] arr = new int[col];
+    for (int i = 0; i < col; i++) {
+        arr[i] = go(grid, 0, i, 0);
+    }
+    return arr;
+}
+
+public int go(int[][] grid, int x, int y, int area) {
+    int row = grid.length;
+    int col = grid[0].length;
+    while (x < row) {
+        int num = grid[x][y];
+        if (area == 0) {
+            y += num;
+            if (y < 0 || y >= col || grid[x][y] == -num) {
+                return -1;
+            }
+            area = 1;
+        } else {
+            x++;
+            area = 0;
+        }  
+    }
+    return y;
+}
