@@ -1,0 +1,30 @@
+1702.Maximum Binary String After Change
+greedy
+至多有一个0。
+计算第一个0后的1个数，得出0所在的位置。
+public String maximumBinaryString(String binary) {
+    char[] cs = binary.toCharArray();
+    int length = cs.length;
+    int first = -1;
+    for (int i = 0; i < length; i++) {
+        if (cs[i] == '0') {
+            first = i;
+            break;
+        }
+    }
+    if (first == -1) {
+        return binary;
+    }
+    int sum = 0;
+    for (int i = first; i < length; i++) {
+        sum += cs[i] == '1' ? 1 : 0;
+    }
+    for (int i = length - 1; i > length - 1 - sum; i--) {
+        cs[i] = '1';
+    }
+    cs[length - 1 - sum] = '0';
+    for (int i = 0; i < length - 1 - sum; i++) {
+        cs[i] = '1';
+    }
+    return new String(cs);
+}
