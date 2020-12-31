@@ -1,0 +1,45 @@
+1595.Minimum Cost to Connect Two Groups of Points
+dp + mask
+dfs两组会超时。
+只需要dfs一组，并用mask标记另一组的连接状态。
+根据连接状态，得出另一组的最小和。
+public Integer[][] dp;
+
+public int connectTwoGroups(List<List<Integer>> cost) {
+    int l1 = cost.size();
+    int l2 = cost.get(0).size();
+    dp = new Integer[l1][1 << l2];
+    int[] minArr = new int[l2];
+    for (int i = 0; i < l2; i++) {
+        minArr[i] = Integer.MAX_VALUE;
+    }
+    for (int i = 0; i < l1; i++) {
+        for (int j = 0; j < l2; j++) {
+            minArr[j] = Math.min(minArr[j], cost.get(i).get(j));   
+        }
+    }
+    return dfs(cost, minArr, 0, 0);
+}
+
+public int dfs(List<List<Integer>> cost, int[] minArr, int mask, int idx) {
+    int l1 = cost.size();
+    int l2 = cost.get(0).size();
+    if (idx == l1) {
+        int sum = 0;
+        for (int i = 0; i < l2; i++) {
+            if ((mask & (1 << i)) == 0) {
+                sum += minArr[i];
+            }
+        }
+        return sum;
+    }
+    if (dp[idx][mask] != null) {
+        return dp[idx][mask];
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < l2; i++) {
+        min = Math.min(min, dfs(cost, minArr, (mask | 1 << i), idx + 1) + cost.get(idx).get(i));
+    }
+    dp[idx][mask] = min;
+    return min;
+}
