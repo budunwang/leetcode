@@ -1,0 +1,74 @@
+1579.Remove Max Number of Edges to Keep Graph Fully Traversable
+Union-find
+先处理共用edge，保证删除不会影响其他连接。
+public class UnionFind {
+    private int[] parent;
+    private int[] rank;
+
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int num) {
+        while (parent[num] != num) {
+            parent[num] = parent[parent[num]];
+            num = parent[num]; 
+        }
+        return num;
+    }
+
+    public boolean union(int num1, int num2) {
+        int parent1 = find(num1);
+        int parent2 = find(num2);
+        if (parent1 == parent2) {
+            return false;
+        } else {
+            if (rank[parent1] > rank[parent2]) {
+                parent[parent2] = parent1;
+            } else if (rank[parent1] < rank[parent2]) {
+                parent[parent1] = parent2;
+            } else {
+                parent[parent2] = parent1;
+                rank[parent1]++;
+            }
+        }
+        return true;
+    }
+}
+
+public int maxNumEdgesToRemove(int n, int[][] edges) {
+    UnionFind aliceUnionFind = new UnionFind(n + 1);
+    UnionFind bobUnionFind = new UnionFind(n + 1);
+    Arrays.sort(edges, (a, b) -> b[0] - a[0]);
+    int sum = 0;
+    int aliceCount = 0;
+    int bobCount = 0;
+    for (int[] edge : edges) {
+        if (edge[0] == 3) {
+            boolean isAliceUnion = aliceUnionFind.union(edge[1], edge[2]);
+            boolean isBobUnion = bobUnionFind.union(edge[1], edge[2]);
+            if (!isAliceUnion && !isBobUnion) {
+                sum++;
+            }
+            aliceCount += isAliceUnion ? 1 : 0;
+            bobCount += isBobUnion ? 1 : 0;
+        } else if (edge[0] == 1) {
+            if (!aliceUnionFind.union(edge[1], edge[2])) {
+                sum++;
+            } else {
+                aliceCount++;
+            }
+        } else if (edge[0] == 2) {
+            if (!bobUnionFind.union(edge[1], edge[2])) {
+                sum++;
+            } else {
+                bobCount++;
+            }
+        }
+    }
+    return aliceCount == n - 1 && bobCount == n - 1 ? sum : -1;
+}
