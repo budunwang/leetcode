@@ -1,0 +1,36 @@
+1639.Number of Ways to Form a Target String Given a Dictionary
+dp
+对words预处理，按index储存字母个数。
+public Long[][] dp;
+public int mod;
+
+public int numWays(String[] words, String target) {
+    dp = new Long[words[0].length()][target.length()];
+    mod = (int) 1e9 + 7;
+    int[][] map = new int[words[0].length()][26];
+    for (String word : words) {
+        for (int i = 0; i < word.length(); i++) {
+            map[i][word.charAt(i) - 'a']++;
+        }
+    }
+    return (int) dfs(map, target, 0, 0);
+}
+
+public long dfs(int[][] map, String target, int mapIdx, int strIdx) {
+    if (strIdx == target.length()) {
+        return 1;
+    }
+    if (mapIdx == map.length) {
+        return 0;
+    }
+    if (dp[mapIdx][strIdx] != null) {
+        return dp[mapIdx][strIdx];
+    }
+    char c = target.charAt(strIdx);
+    long sum = dfs(map, target, mapIdx + 1, strIdx);
+    if (map[mapIdx][c - 'a'] > 0) {
+        sum = (sum + map[mapIdx][c - 'a'] * dfs(map, target, mapIdx + 1, strIdx + 1)) % mod;
+    }
+    dp[mapIdx][strIdx] = sum;
+    return dp[mapIdx][strIdx];
+}
