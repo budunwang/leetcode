@@ -1,0 +1,27 @@
+364.Nested List Weight Sum II
+public int depthSumInverse(List<NestedInteger> nestedList) {
+    int depth = getDepth(nestedList);
+    return dfs(nestedList, depth);
+}
+
+public int dfs(List<NestedInteger> nestedList, int level) {
+    int sum = 0;
+    for (NestedInteger nestedInteger : nestedList) {
+        if (nestedInteger.isInteger()) {
+            sum += nestedInteger.getInteger() * level;
+        } else {
+            sum += dfs(nestedInteger.getList(), level - 1);
+        }
+    }
+    return sum;
+}
+
+public int getDepth(List<NestedInteger> nestedList) {
+    int max = 0;
+    for (NestedInteger nestedInteger : nestedList) {
+        if (!nestedInteger.isInteger()) {
+            max = Math.max(max, getDepth(nestedInteger.getList()));
+        }
+    }
+    return max + 1;
+}
