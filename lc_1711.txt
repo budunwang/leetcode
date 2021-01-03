@@ -1,0 +1,39 @@
+1711.Count Good Meals
+public int countPairs(int[] deliciousness) {
+    int mod = (int) 1e9 + 7;
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    int first = Integer.MIN_VALUE;
+    int second = Integer.MIN_VALUE;
+    for (int n : deliciousness) {
+        map.put(n, map.getOrDefault(n, 0) + 1);
+        if (n > first) {
+            second = first;
+            first = n;
+        } else if (n > second){
+            second = n;
+        }
+    }
+    Set<String> set = new HashSet<String>();
+    long sum = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        int key = entry.getKey();
+        int value = entry.getValue();
+        int pow = 1;
+        for (int i = 1; i < 32 && pow <= first + second; i++) {
+            int num = pow - key;
+            String str = Math.min(key, num) + "_" + Math.max(key, num);
+            if (!set.contains(str)) {
+                set.add(str);
+                if (map.containsKey(num)) {
+                    if (key != num) {
+                        sum = (sum + map.get(num) * value) % mod;
+                    } else {
+                        sum = (sum + (long) value * (value - 1) / 2) % mod;
+                    }
+                }
+            }
+            pow = pow << 1;
+        }
+    }
+    return (int) sum;
+}
