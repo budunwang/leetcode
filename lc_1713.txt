@@ -1,0 +1,23 @@
+1713.Minimum Operations to Make a Subsequence
+public int minOperations(int[] target, int[] arr) {
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int i = 0; i < target.length; i++) {
+        map.put(target[i], i);
+    }
+    int[] dp = new int[arr.length];
+    int max = 0;
+    for (int i = 0; i < arr.length; i++) {
+        int idx = map.getOrDefault(arr[i], -1);
+        if (idx != -1) {
+            dp[i] = 1;
+        }
+        for (int j = 0; j < i; j++) {
+            int prev = map.getOrDefault(arr[j], -1);
+            if (prev < idx) {
+                dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+        }
+        max = Math.max(max, dp[i]);
+    }
+    return target.length - max;
+}
