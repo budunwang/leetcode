@@ -1,30 +1,40 @@
 1713.Minimum Operations to Make a Subsequence
+LIS
+300
+必须使用O(NlogN)，不能使用O(N^2)方法，会超时。
+贪心加二分法。
+二分法寻找最小的大于等于value的key，并替换为新value，保证数组是最小增长的单调递增。
+最小增长的单调递增数组必然是最长的递增数组。
 public int minOperations(int[] target, int[] arr) {
     Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     for (int i = 0; i < target.length; i++) {
         map.put(target[i], i);
     }
-    List<Integer> stack = new ArrayList<Integer>();
-    int max = 0;
+    int[] stack = new int[target.length];
+    int pos = -1;
     for (int i = 0; i < arr.length; i++) {
         if (map.containsKey(arr[i])) {
             int idx = map.get(arr[i]);
-            if (stack.size() == 0 || stack.get(stack.size() - 1) < idx) {
-                stack.add(idx);
+            if (pos == -1 || stack[pos] < idx) {
+                // 初始状态，或出现新最大值
+                // 加入数组末尾
+                stack[++pos] = idx;
             } else {
+                // 二分寻找最小的大于等于value的key，替换为新值，保证该数组最小增长的单调递增
+                // 确保新最大值的加入是最优解
                 int left = 0;
-                int right = stack.size() - 1;
+                int right = pos;
                 while (left < right) {
                     int mid = left + (right - left) / 2;
-                    if (stack.get(mid) < idx) {
+                    if (stack[mid] < idx) {
                         left = mid + 1;
                     } else {
                         right = mid;
                     }
                 }
-                stack.set(left, idx);
+                stack[left] = idx;
             }
         }
     }
-    return target.length - stack.size();
+    return target.length - pos - 1;
 }
