@@ -4,20 +4,27 @@ public int minOperations(int[] target, int[] arr) {
     for (int i = 0; i < target.length; i++) {
         map.put(target[i], i);
     }
-    int[] dp = new int[arr.length];
+    List<Integer> stack = new ArrayList<Integer>();
     int max = 0;
     for (int i = 0; i < arr.length; i++) {
-        int idx = map.getOrDefault(arr[i], -1);
-        if (idx != -1) {
-            dp[i] = 1;
-        }
-        for (int j = 0; j < i; j++) {
-            int prev = map.getOrDefault(arr[j], -1);
-            if (prev < idx) {
-                dp[i] = Math.max(dp[i], dp[j] + 1);
+        if (map.containsKey(arr[i])) {
+            int idx = map.get(arr[i]);
+            if (stack.size() == 0 || stack.get(stack.size() - 1) < idx) {
+                stack.add(idx);
+            } else {
+                int left = 0;
+                int right = stack.size() - 1;
+                while (left < right) {
+                    int mid = left + (right - left) / 2;
+                    if (stack.get(mid) < idx) {
+                        left = mid + 1;
+                    } else {
+                        right = mid;
+                    }
+                }
+                stack.set(left, idx);
             }
         }
-        max = Math.max(max, dp[i]);
     }
-    return target.length - max;
+    return target.length - stack.size();
 }
