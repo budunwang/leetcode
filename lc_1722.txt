@@ -1,0 +1,79 @@
+1722.Minimize Hamming Distance After Swap Operations
+Union-find
+public class UnionFind {
+    private int[] parent;
+    private int[] rank;
+
+    public UnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int num) {
+        while (parent[num] != num) {
+            parent[num] = parent[parent[num]];
+            num = parent[num]; 
+        }
+        return num;
+    }
+
+    public boolean union(int num1, int num2) {
+        int parent1 = find(num1);
+        int parent2 = find(num2);
+        if (parent1 == parent2) {
+            return false;
+        } else {
+            if (rank[parent1] > rank[parent2]) {
+                parent[parent2] = parent1;
+            } else if (rank[parent1] < rank[parent2]) {
+                parent[parent1] = parent2;
+            } else {
+                parent[parent2] = parent1;
+                rank[parent1]++;
+            }
+        }
+        return true;
+    }
+}
+
+public int minimumHammingDistance(int[] source, int[] target, int[][] allowedSwaps) {
+    int length = source.length;
+    UnionFind unionFind = new UnionFind(length);
+    for (int[] arr : allowedSwaps) {
+        unionFind.union(arr[0], arr[1]);
+    }
+    Map<Integer, Set<Integer>> map = new HashMap<Integer, Set<Integer>>();
+    for (int i = 0; i < length; i++) {
+        if (!map.containsKey(source[i])) {
+            map.put(source[i], new HashSet<Integer>());
+        }
+        map.get(source[i]).add(i);
+    }
+    int sum = 0;
+    for (int i = 0; i < length; i++) {
+        if (target[i] == source[i] && map.get(source[i]).contains(i)) {
+            map.get(source[i]).remove(i);
+            continue;
+        }
+        if (!map.containsKey(target[i])) {
+            sum++;
+            continue;
+        }
+        Set<Integer> set = map.get(target[i]);
+        boolean isConnected = false;
+        for (int idx : set) {
+            if (unionFind.find(idx) == unionFind.find(i)) {
+                isConnected = true;
+                set.remove(idx);
+                break;
+            }
+        }
+        if (!isConnected) {
+            sum++;
+        }
+    }
+    return sum;
+}

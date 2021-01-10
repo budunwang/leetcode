@@ -17,10 +17,6 @@ public ListNode deleteNodes(ListNode head, int m, int n) {
             tmp = tmp.next;
             i++;
         }
-        if (tmp == null || i < n) {
-            head.next = null;
-            break;
-        }
         head.next = tmp;
         head = head.next;
     }
