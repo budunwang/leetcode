@@ -1,0 +1,31 @@
+1717.Maximum Score From Removing Substrings
+greedy
+优先处理收益大的字符对
+public int maximumGain(String s, int x, int y) {
+    int length = s.length();
+    char c1 = x > y ? 'a' : 'b';
+    char c2 = x > y ? 'b' : 'a';
+    int max = Math.max(x, y);
+    int min = Math.min(x, y);
+    int sum = 0;
+    Deque<Character> stack1 = new ArrayDeque<Character>();
+    for (int i = 0; i < length; i++) {
+        char c = s.charAt(i);
+        if (c == c2 && !stack1.isEmpty() && stack1.getLast() == c1) {
+            stack1.pollLast();
+            sum += max;
+        } else {
+            stack1.add(c);
+        }
+    }
+    Deque<Character> stack2 = new ArrayDeque<Character>();
+    for (char c : stack1) {
+        if (c == c1 && !stack2.isEmpty() && stack2.getLast() == c2) {
+            stack2.pollLast();
+            sum += min;
+        } else {
+            stack2.add(c);
+        }
+    }
+    return sum;
+}
