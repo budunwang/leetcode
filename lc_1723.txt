@@ -1,0 +1,35 @@
+1723.Find Minimum Time to Finish All Jobs
+dfs
+必须剪枝。
+逆序排序，获得最大值。
+排除大于最大值的分支。
+去除重复元素。
+public int min;
+
+public int minimumTimeRequired(int[] jobs, int k) {
+    min = Integer.MAX_VALUE;
+    Arrays.sort(jobs);
+    int[] arr = new int[k];
+    dfs(jobs, arr, jobs.length - 1, 0);
+    return min;
+}
+
+public void dfs(int[] jobs, int[] arr, int idx, int curMax) {
+    if (idx == -1) {
+        min = Math.min(min, curMax);
+        return;
+    }
+    if (curMax >= min) {
+        return;
+    }
+    Set<Integer> set = new HashSet<Integer>();
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] + jobs[idx] >= min || set.contains(arr[i])) {
+            continue;
+        }
+        set.add(arr[i]);
+        arr[i] += jobs[idx];
+        dfs(jobs, arr, idx - 1, Math.max(curMax, arr[i]));
+        arr[i] -= jobs[idx];
+    }
+}
