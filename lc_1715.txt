@@ -1,0 +1,8 @@
+1715.Count Apples and Oranges
+SQL
+IFNULL空值转换
+SELECT
+    SUM((Boxes.apple_count + IFNULL(Chests.apple_count, 0))) as apple_count,
+    SUM((Boxes.orange_count  + IFNULL(Chests.orange_count, 0))) as orange_count
+FROM
+    Boxes LEFT JOIN Chests ON Boxes.chest_id = Chests.chest_id;
