@@ -1,0 +1,25 @@
+1570.Dot Product of Two Sparse Vectors
+Map<Integer, Integer> map;
+
+SparseVector(int[] nums) {
+    map = new HashMap<Integer, Integer>();
+    for (int i = 0; i < nums.length; i++) {
+        if (nums[i] != 0) {
+            map.put(i, nums[i]);
+        }
+    }
+}
+
+public Map<Integer, Integer> getMap() {
+    return map;
+}
+
+// Return the dotProduct of two sparse vectors
+public int dotProduct(SparseVector vec) {
+    Map<Integer, Integer> vecMap = vec.getMap();
+    int sum = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        sum += entry.getValue() * vecMap.getOrDefault(entry.getKey(), 0);
+    }
+    return sum;
+}
