@@ -1,0 +1,19 @@
+1726.Tuple with Same Product
+public int tupleSameProduct(int[] nums) {
+    int length = nums.length;
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int i = 0; i < length; i++) {
+        for (int j = i + 1; j < length; j++) {
+            int product = nums[i] * nums[j];
+            map.put(product, map.getOrDefault(product, 0) + 1);
+        }
+    }
+    int sum = 0;
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        int value = entry.getValue();
+        if (value > 1) {
+            sum += value * (value - 1) / 2 * 8;
+        }
+    }
+    return sum;
+}
