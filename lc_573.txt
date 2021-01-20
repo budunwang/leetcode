@@ -1,0 +1,15 @@
+573.Squirrel Simulation
+sum = sum(2 * tree_dis) - (2 * tree_dis[i]) + tree_dis[i] + squirrel_dis[i]
+    = sum(2 * tree_dis) - (tree_dis[i] - squirrel_dis[i])
+Max(tree_dis[i] - squirrel_dis[i]) => Min(sum)
+public int minDistance(int height, int width, int[] tree, int[] squirrel, int[][] nuts) {
+    int sum = 0;
+    int max = Integer.MIN_VALUE;
+    for (int i = 0; i < nuts.length; i++) {
+        int squirrelDis = Math.abs(nuts[i][0] - squirrel[0]) + Math.abs(nuts[i][1] - squirrel[1]);
+        int treeDis = Math.abs(nuts[i][0] - tree[0]) + Math.abs(nuts[i][1] - tree[1]);
+        max = Math.max(max, treeDis - squirrelDis);
+        sum += 2 * treeDis;
+    }
+    return sum - max;
+}
