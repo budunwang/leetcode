@@ -1,0 +1,12 @@
+1495.Friendly Movies Streamed Last Month
+SQL
+SELECT 
+    DISTINCT Content.title
+FROM 
+    Content LEFT JOIN TVProgram 
+    ON Content.content_id = TVProgram.content_id 
+WHERE 
+    Content.Kids_content = 'Y'
+    AND Content.content_type = 'Movies'
+    AND month(TVProgram.program_date) = 6 
+    AND year(TVProgram.program_date) = 2020;
