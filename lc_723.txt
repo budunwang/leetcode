@@ -1,0 +1,47 @@
+723.Candy Crush
+public int[][] candyCrush(int[][] board) {
+    int row = board.length;
+    int col = board[0].length;
+    boolean isExist = false;
+    while (true) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                int num = Math.abs(board[i][j]);
+                if (num == 0) {
+                    continue;
+                }
+                if (i + 2 < row && Math.abs(board[i + 1][j]) == num && Math.abs(board[i + 2][j]) == num) {
+                    int idx = i;
+                    isExist = true;
+                    while (idx < row && Math.abs(board[idx][j]) == num) {
+                        board[idx++][j] = -num;
+                    }
+                }
+                if (j + 2 < col && Math.abs(board[i][j + 1]) == num && Math.abs(board[i][j + 2]) == num) {
+                    int idx = j;
+                    isExist = true;
+                    while (idx < col && Math.abs(board[i][idx]) == num) {
+                        board[i][idx++] = -num;
+                    }
+                }
+            }
+        }
+        if (isExist) {
+            for (int i = 0; i < col; i++) {
+                int idx = row - 1;
+                for (int j = row - 1; j >= 0; j--) {
+                    if (board[j][i] > 0) {
+                        board[idx--][i] = board[j][i];
+                    }
+                }
+                for (int j = idx; j >= 0; j--) {
+                    board[j][i] = 0;
+                }
+            }
+            isExist = false;
+        } else {
+            break;
+        }
+    }
+    return board;
+}
