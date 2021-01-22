@@ -1,0 +1,40 @@
+855.Exam Room
+public TreeSet<Integer> treeSet;
+public int n;
+
+public ExamRoom(int N) {
+    treeSet = new TreeSet<Integer>();
+    n = N - 1;
+}
+
+public int seat() {
+    // only one seat
+    if (treeSet.size() == 1) {
+        int cur = treeSet.first();
+        int seat = cur > n - cur ? 0 : n;
+        treeSet.add(seat);
+        return seat;
+    }
+    // for first seat
+    int prev = -1;
+    int seat = 0;
+    int max = Integer.MIN_VALUE;
+    for (int i : treeSet) {
+        int curMax = (i - prev) / 2;
+        if (curMax > max) {
+            seat = prev == -1 ? 0 : prev + curMax;
+            max = curMax;
+        }
+        prev = i;
+    }
+    // for last seat
+    if (max == 0) {
+        seat = n;
+    }
+    treeSet.add(seat);
+    return seat;
+}
+
+public void leave(int p) {
+    treeSet.remove(p);
+}
