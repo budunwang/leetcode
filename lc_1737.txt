@@ -1,0 +1,27 @@
+1737.Change Minimum Characters to Satisfy One of Three Conditions
+public int minCharacters(String a, String b) {
+    int[] arr1 = getMap(a);
+    int[] arr2 = getMap(b);
+    int sum1 = a.length();
+    int sum2 = b.length();
+    int min = Integer.MAX_VALUE;
+    int curSum1 = 0;
+    int curSum2 = 0;
+    for (int i = 0; i < 26; i++) {
+        if (i < 25) {
+            curSum1 += arr1[i];
+            curSum2 += arr2[i];
+            min = Math.min(min, Math.min(sum1 - curSum1 + curSum2, sum2 - curSum2 + curSum1));
+        }
+        min = Math.min(min, sum1 - arr1[i] + sum2 - arr2[i]);
+    }
+    return min;
+}
+
+public int[] getMap(String str) {
+    int[] arr = new int[26];
+    for (char c : str.toCharArray()) {
+        arr[c - 'a']++;
+    }
+    return arr;
+}

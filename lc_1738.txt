@@ -1,0 +1,18 @@
+1738.Find Kth Largest XOR Coordinate Value
+public int kthLargestValue(int[][] matrix, int k) {
+    int row = matrix.length;
+    int col = matrix[0].length;
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+    for (int i = 0; i < row; i++) {
+        int sum = 0;
+        for (int j = 0; j < col; j++) {
+            sum ^= matrix[i][j];
+            matrix[i][j] = i > 0 ? sum ^ matrix[i - 1][j] : sum;
+            pq.offer(matrix[i][j]);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+    }
+    return pq.poll();
+}
