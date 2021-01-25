@@ -1,0 +1,22 @@
+1734.Decode XORed Permutation
+encoded[1] ^ encoded[3] ^ ... ^ encoded[(n + 1) / 2] 
+= arr[1] ^ arr[2] ^ arr[3] ^ ... ^ arr[n]
+= arr[0] ^ arr[0] ^ arr[1] ^ arr[2] ^ arr[3] ^ ... ^ arr[n]
+= arr[0] ^ (1 ^ 2 ^ ... ^ n)
+arr[0] = (1 ^ 2 ^ ... ^ n) ^ (encoded[1] ^ encoded[3] ^ ... ^ encoded[(n + 1) / 2])
+public int[] decode(int[] encoded) {
+    int length = encoded.length;
+    int num = 0;
+    for (int i = 1; i <= length + 1; i++) {
+        num ^= i;
+    }
+    for (int i = 1; i < length; i += 2) {
+        num ^= encoded[i];
+    }
+    int[] arr = new int[length + 1];
+    arr[0] = num;
+    for (int i = 1; i <= length; i++) {
+        arr[i] = encoded[i - 1] ^ arr[i - 1]; 
+    }
+    return arr;
+}
