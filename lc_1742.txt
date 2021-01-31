@@ -1,0 +1,20 @@
+1742.Maximum Number of Balls in a Box
+public int countBalls(int lowLimit, int highLimit) {
+    int[] arr = new int[46];
+    int max = 0;
+    for (int i = lowLimit; i <= highLimit; i++) {
+        int count = getCount(i);
+        arr[count]++;
+        max = Math.max(max, arr[count]);
+    }
+    return max;
+}
+
+public int getCount(int num) {
+    int sum = 0;
+    while (num != 0) {
+        sum += num % 10;
+        num /= 10;
+    }
+    return sum;
+}
