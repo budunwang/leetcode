@@ -18,7 +18,7 @@ public int[] restoreArray(int[][] adjacentPairs) {
             break;
         }
     }
-    int length = (adjacentPairs.length * 2- 2) / 2 + 2;
+    int length = adjacentPairs.length + 1;
     int[] arr = new int[length];
     arr[0] = start;
     arr[1] = map.get(start).get(0);
