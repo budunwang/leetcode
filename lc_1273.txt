@@ -1,0 +1,27 @@
+1273.Delete Tree Nodes
+public int deleteTreeNodes(int nodes, int[] parent, int[] value) {
+    Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+    for (int i = 0; i < nodes; i++) {
+        if (!map.containsKey(parent[i])) {
+            map.put(parent[i], new ArrayList<Integer>());
+        }
+        map.get(parent[i]).add(i);
+    }
+    return dfs(map, value, map.get(-1).get(0))[1];
+}
+
+public int[] dfs(Map<Integer, List<Integer>> map, int[] value, int idx) {
+    int sum = value[idx];
+    int remain = 1;
+    if (map.containsKey(idx)) {
+        for (int n : map.get(idx)) {
+            int[] arr = dfs(map, value, n);
+            sum += arr[0];
+            remain += arr[1];
+        }
+    }
+    if (sum == 0) {
+        remain = 0;
+    }
+    return new int[] { sum, remain };
+}
