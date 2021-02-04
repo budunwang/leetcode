@@ -1,0 +1,3 @@
+603.Consecutive Available Seats
+SQL
+SELECT DISTINCT t1.seat_id FROM cinema t1 JOIN cinema t2 ON ABS(t1.seat_id - t2.seat_id) = 1 AND t1.free = 1 AND t2.free = 1 ORDER BY seat_id ASC;

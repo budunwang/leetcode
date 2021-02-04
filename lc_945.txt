@@ -1,0 +1,16 @@
+945.Minimum Increment to Make Array Unique
+greedy
+public int minIncrementForUnique(int[] A) {
+    Arrays.sort(A);
+    int cur = 0;
+    int sum = 0;
+    for (int a : A) {
+        if (cur > a) {
+            sum += cur - a;
+            cur++;
+        } else {
+            cur = a + 1;
+        }
+    }
+    return sum;
+}
