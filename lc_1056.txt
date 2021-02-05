@@ -1,0 +1,18 @@
+1056.Confusing Number
+public boolean confusingNumber(int N) {
+    int num = 0;
+    int tmp = N;
+    while (N != 0) {
+        int n = N % 10;
+        if (n != 0 && n != 1 && n != 6 && n != 8 && n != 9) {
+            return false;
+        } else if (n == 6) {
+            n = 9;
+        } else if (n == 9) {
+            n = 6;
+        }
+        num = num * 10 + n;
+        N /= 10;
+    }
+    return tmp != num;
+}
