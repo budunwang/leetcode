@@ -1,0 +1,13 @@
+1753.Maximum Score From Removing Stones
+public int maximumScore(int a, int b, int c) {
+    int[] arr = new int[] {a, b, c};
+    Arrays.sort(arr);
+    if (arr[0] == 0) {
+        return Math.min(arr[1], arr[2]);
+    }
+    if (arr[1] == arr[2]) {
+        return 1 + maximumScore(arr[0] - 1, arr[1], arr[2] - 1);
+    }
+    int min = Math.min(arr[2] - arr[1], arr[0]);
+    return min + maximumScore(arr[0] - min, arr[1], arr[2] - min);
+}
