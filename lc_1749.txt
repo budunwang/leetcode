@@ -1,0 +1,16 @@
+1749.Maximum Absolute Sum of Any Subarray
+presum
+presum[j] - presum[i] = nums[i + 1] + nums[i + 2] + ... + nums[j]
+Max(nums[0] + nums[1] + ... + nums[length - 1]) = presum_max - presum_min
+public int maxAbsoluteSum(int[] nums) {
+    int length = nums.length;
+    int sum = 0;
+    int max = 0;
+    int min = 0;
+    for (int i = 0; i < length; i++) {
+        sum += nums[i];
+        max = Math.max(max, sum);
+        min = Math.min(min, sum);
+    }
+    return max - min;
+}
