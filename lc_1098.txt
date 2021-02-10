@@ -1,0 +1,10 @@
+1098.Unpopular Books
+SQL
+SELECT
+    book_id, name
+FROM 
+    books
+WHERE 
+    book_id NOT IN
+    (SELECT book_id FROM Orders WHERE dispatch_date >= '2018-06-23' GROUP BY book_id HAVING SUM(quantity) >= 10)
+    AND available_from <= '2019-05-23';
