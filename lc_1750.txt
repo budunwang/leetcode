@@ -1,0 +1,17 @@
+1750.Minimum Length of String After Deleting Similar Ends
+public int minimumLength(String s) {
+    char[] cs = s.toCharArray();
+    int left = 0;
+    int right = cs.length - 1;
+    while (left < right && cs[left] == cs[right]) {
+        while (left + 1 < cs.length && cs[left] == cs[left + 1]) {
+            left++;
+        }
+        while (right - 1 >= 0 && cs[right] == cs[right - 1]) {
+            right--;
+        }
+        left++;
+        right--;
+    }
+    return left <= right ? right - left + 1 : 0;
+}
