@@ -1,0 +1,17 @@
+1758.Minimum Changes To Make Alternating Binary String
+public int minOperations(String s) {
+    char[] cs = s.toCharArray();
+    int sum1 = 0;
+    int sum2 = 0;
+    for (int i = 0; i < cs.length; i++) {
+        int n = cs[i] - '0';
+        if (n == 0) {
+            sum1 += i % 2;
+            sum2 += i % 2 == 0 ? 1 : 0;
+        } else {
+            sum1 += i % 2 == 1 ? 0 : 1;
+            sum2 += i % 2;
+        }
+    }
+    return Math.min(sum1, sum2);
+}
