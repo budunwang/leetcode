@@ -1,0 +1,22 @@
+1760.Minimum Limit of Balls in a Bag
+binary search
+875
+间接二分搜索
+最小的除数，等价于找到最大的小于等于maxOperations的operation。
+public int minimumSize(int[] nums, int maxOperations) {
+    int left = 1;
+    int right = (int) 1e9;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += (nums[i] - 1) / mid;
+        }
+        if (sum > maxOperations) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return left;
+}

@@ -1,0 +1,24 @@
+1761.Minimum Degree of a Connected Trio in a Graph
+排序搜索，去除重复计算
+public int minTrioDegree(int n, int[][] edges) {
+    int[][] map = new int[n + 1][n + 1];
+    int[] degree = new int[n + 1];
+    for (int[] edge : edges) {
+        map[edge[0]][edge[1]] = 1;
+        map[edge[1]][edge[0]] = 1;
+        degree[edge[0]]++;
+        degree[edge[1]]++;
+    }
+    int min = Integer.MAX_VALUE;
+    for (int i = 1; i <= n; i++) {
+        for (int j = i + 1; j <= n; j++) {
+            for (int k = j + 1; k <= n; k++) {
+                if (map[i][j] == 1 && map[i][k] == 1 && map[j][k] == 1) {
+                    int sum = degree[i] + degree[j] + degree[k] - 6;
+                    min = Math.min(min, sum);
+                }
+            }
+        }
+    }
+    return min == Integer.MAX_VALUE ? -1 : min;
+}
