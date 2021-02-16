@@ -1,0 +1,11 @@
+1490.Clone N-ary Tree
+public Node cloneTree(Node root) {
+    if (root == null) {
+        return root;
+    }
+    Node node = new Node(root.val);
+    for (Node n : root.children) {
+        node.children.add(cloneTree(n));
+    }
+    return node;
+}
