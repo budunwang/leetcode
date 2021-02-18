@@ -1,5 +1,5 @@
 403.Frog Jump
-dfs + memo
+1.dfs + memo
 public Boolean[][] dp;
 
 public boolean canCross(int[] stones) {
@@ -24,5 +24,23 @@ public boolean dfs(int[] stones, int idx, int k) {
         }
     }
     dp[idx][k] = false;
+    return false;
+}
+2.dp
+public boolean canCross(int[] stones) {
+    int length = stones.length;
+    boolean[][] dp = new boolean[length][length];
+    dp[0][1] = true;
+    for (int i = 1; i < length; i++) {
+        for (int j = 0; j < i; j++) {
+            int diff = stones[i] - stones[j];
+            if (diff < length) {
+                dp[i][diff] = dp[j][diff - 1] || dp[j][diff] || (diff + 1 < length && dp[j][diff + 1]);
+                if (i == length - 1 && dp[i][diff]) {
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 }
