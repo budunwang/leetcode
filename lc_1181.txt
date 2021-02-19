@@ -1,0 +1,27 @@
+1181.Before and After Puzzle
+public List<String> beforeAndAfterPuzzles(String[] phrases) {
+    Map<String, List<Integer>> map = new HashMap<String, List<Integer>>(); 
+    for (int i = 0; i < phrases.length; i++) {
+        String[] ss = phrases[i].split("\\s+");
+        String first = ss[0];
+        if (!map.containsKey(first)) {
+            map.put(first, new ArrayList<Integer>());
+        }
+        map.get(first).add(i);
+    }
+    Set<String> set = new HashSet<String>();
+    for (int i = 0; i < phrases.length; i++) {
+        String[] ss = phrases[i].split("\\s+");
+        String last = ss[ss.length - 1];
+        if (map.containsKey(last)) {
+            for (Integer n : map.get(last)) {
+                if (i != n) {
+                    set.add(phrases[i] + phrases[n].substring(last.length()));
+                }
+            }
+        }
+    }
+    List<String> list = new ArrayList<String>(set);
+    Collections.sort(list);
+    return list;
+}
