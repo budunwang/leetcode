@@ -1,0 +1,28 @@
+1763.Longest Nice Substring
+public String longestNiceSubstring(String s) {
+    int left = 0;
+    int right = -1;
+    for (int i = 0; i < s.length(); i++) {
+        Set<Character> set = new HashSet<Character>();
+        for (int j = i; j >= 0; j--) {
+            char c = s.charAt(j);
+            set.add(c);
+            if (isValid(set) && i - j > right - left) {
+                left = j;
+                right = i;
+            }
+        }
+    }
+    return s.substring(left, right + 1);
+}
+
+public boolean isValid(Set<Character> set) {
+    for (int i = 0; i < 26; i++) {
+        char c_lower = (char)('a' + i);
+        char c_upper = Character.toUpperCase(c_lower);
+        if (set.contains(c_lower) ^ set.contains(c_upper))  {
+            return false;
+        }
+    }
+    return true;
+}
