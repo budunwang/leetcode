@@ -1,0 +1,34 @@
+1765.Map of Highest Peak
+public int[][] highestPeak(int[][] isWater) {
+    int row = isWater.length;
+    int col = isWater[0].length;
+    int[][] dirs = new int[][] {{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }};
+    Queue<int[]> queue = new LinkedList<int[]>();
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (isWater[i][j] == 1) {
+                queue.offer(new int[] { i, j });
+            }
+        }
+    }
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int[] arr = queue.poll();
+            for (int[] dir : dirs) {
+                int n_x = arr[0] + dir[0];
+                int n_y = arr[1] + dir[1];
+                if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && isWater[n_x][n_y] == 0) {
+                    queue.offer(new int[] { n_x, n_y });
+                    isWater[n_x][n_y] = isWater[arr[0]][arr[1]] + 1;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            isWater[i][j]--;
+        }
+    }
+    return isWater;
+}
