@@ -1,0 +1,24 @@
+1771.Maximize Palindrome Length From Subsequences
+516
+dp
+求最长回文子串，同时保证该子串左边在word1，右边在word2
+public int longestPalindrome(String word1, String word2) {
+    String str = word1 + word2;
+    int length = str.length();
+    int[][] dp = new int[length][length];
+    int max = 0;
+    for (int i = length - 1; i >= 0; i--) {
+        dp[i][i] = 1;
+        for (int j = i + 1; j < length; j++) {
+            if (str.charAt(i) == str.charAt(j)) {
+                dp[i][j] = dp[i + 1][j - 1] + 2;
+                if (i < word1.length() && j >= word1.length()) {
+                    max = Math.max(max, dp[i][j]);
+                }
+            } else {
+                dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return max;
+}
