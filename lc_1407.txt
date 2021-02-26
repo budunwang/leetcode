@@ -1,0 +1,14 @@
+1407.Top Travellers
+SQL
+SELECT
+    Users.name, IFNULL(SUM(Rides.distance), 0) travelled_distance
+FROM
+    Users
+LEFT JOIN
+    Rides
+ON
+    Users.id = Rides.user_id
+GROUP BY
+    Users.id
+ORDER BY
+    travelled_distance DESC, name ASC;
