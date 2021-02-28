@@ -1,0 +1,19 @@
+1773.Count Items Matching a Rule
+public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+    int sum = 0;
+    for (List<String> item : items) {
+        String type = item.get(0);
+        String color = item.get(1);
+        String name = item.get(2);
+        if (ruleKey.equals("type") && ruleValue.equals(type)) {
+            sum++;
+        }
+        if (ruleKey.equals("color") && ruleValue.equals(color)) {
+            sum++;
+        }
+        if (ruleKey.equals("name") && ruleValue.equals(name)) {
+            sum++;
+        }
+    }
+    return sum;
+}
