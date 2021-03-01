@@ -1,0 +1,40 @@
+1775.Equal Sum Arrays With Minimum Number of Operations
+greedy
+设nums1总和小于nums2总和
+为了使变化次数尽可能小，应保证每一次变化值尽可能大，即nums1增加的值越大，nums2减少的值越大
+public int minOperations(int[] nums1, int[] nums2) {
+    int sum1 = 0;
+    for (int num : nums1) {
+        sum1 += num;
+    }
+    int sum2 = 0;
+    for (int num : nums2) {
+        sum2 += num;
+    }
+    if (sum1 == sum2) {
+        return 0;
+    }
+    if (sum1 > sum2) {
+        return minOperations(nums2, nums1);
+    }
+    int[] arr = new int[6];
+    for (int num : nums1) {
+        arr[6 - num]++;
+    }
+    for (int num : nums2) {
+        arr[num - 1]++;
+    }
+    int diff = sum2 - sum1;
+    int count = 0;
+    for (int i = 5; i >= 0; i--) {
+        while (diff > 0 && arr[i] != 0) {
+            count++;
+            arr[i]--;
+            diff -= i;
+        }
+        if (diff <= 0) {
+            return count;
+        }
+    }
+    return -1;
+}
