@@ -1,0 +1,15 @@
+1198.Find Smallest Common Element in All Rows
+public int smallestCommonElement(int[][] mat) {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[] count = new int[10001];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            count[mat[i][j]]++;
+            if (count[mat[i][j]] == row) {
+                return mat[i][j];
+            }
+        }
+    }
+    return -1;
+}
