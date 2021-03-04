@@ -1,0 +1,17 @@
+663.Equal Tree Partition
+public Set<Integer> set;
+
+public boolean checkEqualTree(TreeNode root) {
+    set = new HashSet<Integer>();
+    int sum = root.val + getSum(root.left) + getSum(root.right);
+    return sum % 2 == 0 && set.contains(sum / 2);
+}
+
+public int getSum(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int sum = root.val + getSum(root.left) + getSum(root.right);
+    set.add(sum);
+    return sum;
+}
