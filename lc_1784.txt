@@ -1,0 +1,17 @@
+1784.Check if Binary String Has at Most One Segment of Ones
+public boolean checkOnesSegment(String s) {
+    int sum = 0;
+    int count = 0;
+    for (char c : s.toCharArray()) {
+        if (c == '0') {
+            sum += count > 0 ? 1 : 0;
+            count = 0;
+        } else {
+            count++;
+        }
+        if (sum == 1 && count == 1) {
+            return false;
+        }
+    }
+    return true;
+}
