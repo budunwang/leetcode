@@ -1,0 +1,26 @@
+1781.Sum of Beauty of All Substrings
+public int beautySum(String s) {
+    char[] cs = s.toCharArray();
+    int sum = 0;
+    for (int i = 0; i < cs.length; i++) {
+        int[] map = new int[26];
+        map[cs[i] - 'a']++;
+        for (int j = i + 1; j < cs.length; j++) {
+            map[cs[j] - 'a']++;
+            sum += getDiff(map);
+        }
+    }
+    return sum;
+}
+
+public int getDiff(int[] arr) {
+    int min = Integer.MAX_VALUE;
+    int max = Integer.MIN_VALUE;
+    for (int n : arr) {
+        if (n != 0) {
+            min = Math.min(min, n);
+            max = Math.max(max, n);
+        }
+    }
+    return max - min;
+}

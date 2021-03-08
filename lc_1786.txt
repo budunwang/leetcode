@@ -1,0 +1,55 @@
+1786.Number of Restricted Paths From First to Last Node
+Dijkstra + dfs
+Dijkstra计算出到n的最短距离
+dfs遍历出结果
+public int mod;
+public Long[] dp;
+
+public int countRestrictedPaths(int n, int[][] edges) {
+    mod = (int) 1e9 + 7;
+    dp = new Long[n + 1];
+    Map<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
+    int[] dis = new int[n + 1];
+    for (int i = 0; i < n; i++) {
+        map.put(i + 1, new ArrayList<int[]>());
+        dis[i + 1] = Integer.MAX_VALUE;
+    }
+    for (int[] edge : edges) {
+        map.get(edge[0]).add(new int[] { edge[1], edge[2] });
+        map.get(edge[1]).add(new int[] { edge[0], edge[2] });
+    }
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[1] - b[1]);
+    pq.offer(new int[] { n, 0 });
+    dis[n] = 0;
+    while (!pq.isEmpty()) {
+        int[] arr = pq.poll();
+        List<int[]> list = map.get(arr[0]);
+        for (int[] tmp : list) {
+            int next_idx = tmp[0];
+            int next_weight = tmp[1];
+            if (dis[next_idx] > arr[1] + next_weight) {
+                dis[next_idx] = arr[1] + next_weight;
+                pq.offer(new int[] { next_idx, arr[1] + next_weight });
+            }
+        }
+    }
+    return (int) dfs(map, dis, 1);
+}
+
+public long dfs(Map<Integer, List<int[]>> map, int[] dis, int idx) {
+    if (idx == dis.length - 1) {
+        return 1;
+    }
+    if (dp[idx] != null) {
+        return dp[idx];
+    }
+    long sum = 0;
+    List<int[]> list = map.get(idx);
+    for (int[] tmp : list) {
+        if (dis[idx] > dis[tmp[0]]) {
+            sum = (sum + dfs(map, dis, tmp[0])) % mod;
+        }
+    }
+    dp[idx] = sum;
+    return sum;
+}
