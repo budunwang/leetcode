@@ -1,0 +1,18 @@
+1533.Find the Index of the Large Integer
+public int getIndex(ArrayReader reader) {
+    int left = 0;
+    int right = reader.length() - 1;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        int tmp = (right - left + 1) % 2 == 0 ? mid : mid - 1;
+        int res = reader.compareSub(left, tmp, mid + 1, right);
+        if (res == 0) {
+            return mid;
+        } else if (res < 0) {
+            left = mid + 1; 
+        } else {
+            right = mid;
+        }
+    }
+    return left;
+}
