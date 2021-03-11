@@ -1,0 +1,16 @@
+1180.Count Substrings with Only One Distinct Letter
+public int countLetters(String S) {
+    int sum = 0;
+    int cur = 0;
+    char prev = ' ';
+    for (char c : S.toCharArray()) {
+        if (c == prev) {
+            cur++;
+        } else {
+            prev = c;
+            cur = 1;
+        }
+        sum += cur;
+    }
+    return sum;
+}
