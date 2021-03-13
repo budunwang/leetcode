@@ -1,0 +1,21 @@
+340.Longest Substring with At Most K Distinct Characters
+sliding window
+public int lengthOfLongestSubstringKDistinct(String s, int k) {
+    int[] map = new int[256];
+    int max = 0;
+    int cur = 0;
+    int left = 0;
+    for (int right = 0; right < s.length(); right++) {
+        cur += map[s.charAt(right)] == 0 ? 1 : 0;
+        map[s.charAt(right)]++;
+        while (cur > k) {
+            map[s.charAt(left)]--;
+            if (map[s.charAt(left)] == 0) {
+                cur--;
+            }
+            left++;
+        }
+        max = Math.max(max, right - left + 1);
+    }
+    return max;
+}
