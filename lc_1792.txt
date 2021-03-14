@@ -1,0 +1,18 @@
+1792.Maximum Average Pass Ratio
+greedy
+public double maxAverageRatio(int[][] classes, int extraStudents) {
+    PriorityQueue<double[]> pq = new PriorityQueue<double[]>((a, b) -> ((b[0] + 1) / (b[1] + 1) - b[0] / b[1]) > ((a[0] + 1) / (a[1] + 1) - a[0] / a[1]) ? 1 : -1);
+    for (int[] n : classes) {
+        pq.offer(new double[] { n[0], n[1] });
+    }
+    for (int i = 0; i < extraStudents; i++) {
+        double[] n = pq.poll();
+        pq.offer(new double[] { n[0] + 1, n[1] + 1 });
+    }
+    double sum = 0;
+    while (!pq.isEmpty()) {
+        double[] n = pq.poll();
+        sum += n[0] / n[1];
+    }
+    return sum / classes.length;
+}
