@@ -1,0 +1,21 @@
+1793.Maximum Score of a Good Subarray
+public int maximumScore(int[] nums, int k) {
+    int left = k;
+    int right = k;
+    int min = nums[k];
+    int max = nums[k];
+    while (left != 0 || right != nums.length - 1) {
+        if (left == 0) {
+            right++;
+        } else if (right == nums.length - 1) {
+            left--;
+        } else if (nums[left - 1] > nums[right + 1]) {
+            left--;
+        } else {
+            right++;
+        }
+        min = Math.min(min, Math.min(nums[left], nums[right]));
+        max = Math.max(max, min * (right - left + 1));
+    }
+    return max;
+}
