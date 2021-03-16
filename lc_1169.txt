@@ -1,0 +1,47 @@
+1169.Invalid Transactions
+public List<String> invalidTransactions(String[] transactions) {
+    Map<String, Map<Integer, String>> map = new HashMap<String, Map<Integer, String>>();
+    Map<String, Integer> sameTimeMap = new HashMap<String, Integer>();
+    Set<String> set = new HashSet<String>();
+    for (String str : transactions) {
+        String[] ss = str.split(",");
+        String tmp = ss[0] + "_" + ss[1];
+        sameTimeMap.put(tmp, sameTimeMap.getOrDefault(tmp, 0) + 1);
+        if (sameTimeMap.get(tmp) > 1) {
+            continue;
+        }
+        if (!map.containsKey(ss[0])) {
+            map.put(ss[0], new HashMap<Integer, String>());
+        }
+        map.get(ss[0]).put(Integer.valueOf(ss[1]), str);
+    }
+    for (Map.Entry<String, Map<Integer, String>> entry : map.entrySet()) {
+        String name = entry.getKey();
+        Map<Integer, String> timeMap = entry.getValue();
+        for (int t0 : timeMap.keySet()) {
+            for (int t1 : timeMap.keySet()) {
+                if (t0 < t1 && t0 + 60 >= t1 && !timeMap.get(t0).split(",")[3].equals(timeMap.get(t1).split(",")[3])) {
+                    if (sameTimeMap.get(name + "_" + t0) <= 1 && Integer.valueOf(timeMap.get(t0).split(",")[2]) <= 1000) {
+                        set.add(timeMap.get(t0));
+                    }
+                    if (sameTimeMap.get(name + "_" + t1) <= 1 && Integer.valueOf(timeMap.get(t1).split(",")[2]) <= 1000) {
+                        set.add(timeMap.get(t1));
+                    }
+                }
+            }
+        }
+    }
+    List<String> list = new ArrayList<String>(set);
+    for (String str : transactions) {
+        String[] ss = str.split(",");
+        if (Integer.valueOf(ss[2]) > 1000) {
+            list.add(str);
+            continue;
+        }
+        String tmp = ss[0] + "_" + ss[1];
+        if (sameTimeMap.get(tmp) > 1) {
+            list.add(str);
+        }
+    }
+    return list;
+}
