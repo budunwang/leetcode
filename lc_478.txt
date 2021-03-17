@@ -1,0 +1,17 @@
+478.Generate Random Point in a Circle
+如果直接对半径进行随机，中间面积随机概率大于外部面积随机概率。
+public double r;
+public double x;
+public double y;
+
+public Solution(double radius, double x_center, double y_center) {
+    r = radius;
+    x = x_center;
+    y = y_center;
+}
+
+public double[] randPoint() {
+    double rr = r * Math.sqrt(Math.random());
+    double deg = 2 * Math.PI * Math.random();
+    return new double[] { x + Math.cos(deg) * rr, y + Math.sin(deg) * rr };
+}
