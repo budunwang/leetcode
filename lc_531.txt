@@ -1,0 +1,24 @@
+531.Lonely Pixel I
+public int findLonelyPixel(char[][] picture) {
+    int row = picture.length;
+    int col = picture[0].length;
+    int[] rows = new int[row];
+    int[] cols = new int[col];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (picture[i][j] == 'B') {
+                rows[i]++;
+                cols[j]++;
+            }
+        }
+    }
+    int sum = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (picture[i][j] == 'B' && rows[i] == 1 && cols[j] == 1) {
+                sum++;
+            }
+        }
+    }
+    return sum;
+}
