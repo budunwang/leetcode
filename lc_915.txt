@@ -1,0 +1,16 @@
+915.Partition Array into Disjoint Intervals
+public int partitionDisjoint(int[] A) {
+    int length = A.length;
+    int idx = 0;
+    int curMax = A[0];
+    int prevMax = A[0];
+    for (int i = 1; i < length; i++) {
+        if (prevMax > A[i]) {
+            prevMax = curMax;
+            idx = i;
+        } else {
+            curMax = Math.max(curMax, A[i]);
+        }
+    }
+    return idx + 1;
+}
