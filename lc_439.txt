@@ -1,0 +1,18 @@
+439.Ternary Expression Parser
+public String parseTernary(String expression) {
+    if (expression.length() == 1 || expression.charAt(1) != '?') {
+        return expression;
+    }
+    char c = expression.charAt(0);
+    int idx = 2;
+    int count = 0;
+    while (idx < expression.length() && (expression.charAt(idx) != ':' || count != 0)) {
+        if (expression.charAt(idx) == '?') {
+            count++;
+        } else if (expression.charAt(idx) == ':') {
+            count--;   
+        }
+        idx++;
+    }
+    return c == 'T' ? parseTernary(expression.substring(2, idx)) : parseTernary(expression.substring(idx + 1));
+}
