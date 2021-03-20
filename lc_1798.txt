@@ -1,0 +1,13 @@
+1798.Maximum Number of Consecutive Values You Can Make
+public int getMaximumConsecutive(int[] coins) {
+    Arrays.sort(coins);
+    int sum = 1;
+    for (int i = 0; i < coins.length; i++) {
+        if (coins[i] <= sum) {
+            sum += coins[i];
+        } else {
+            break;
+        }
+    }
+    return sum;
+}
