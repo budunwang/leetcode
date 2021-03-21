@@ -1,0 +1,26 @@
+1802.Maximum Value at a Given Index in a Bounded Array
+binary search
+最小值至少为1，所以递减数列的和应该与maxSum - n比较，不是与maxSum比较。
+求最大的小于等于maxSum - m的数，应返回left - 1，最后补加上最小值1。
+public int maxValue(int n, int index, int maxSum) {
+    int left = 0;
+    int right = (int) 1e9;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        long sum = getSum(n, index, mid);
+        if (sum <= maxSum - n) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return left;
+}
+
+public long getSum(int n, int index, int i) {
+    long left = Math.max(i - index, 0);
+    long leftSum = (long)(i + left) * (i - left + 1) / 2;
+    long right = Math.max(i - (n - 1 - index), 0);
+    long rightSum = (long)(i + right) * (i - right + 1) / 2;
+    return leftSum + rightSum - i;
+}
