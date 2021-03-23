@@ -1,0 +1,36 @@
+1799.Maximize Score After N Operations
+public int maxScore(int[] nums) {
+    return dfs(nums, nums.length / 2);
+}
+
+public int dfs(int[] nums, int idx) {
+    if (idx == 0) {
+        return 0;
+    }
+    int length = nums.length;
+    int max = 0;
+    int n1 = 0;
+    int n2 = 0;
+    for (int i = 0; i < length; i++) {
+        for (int j = i + 1; j < length; j++) {
+            if (nums[i] != 0 && nums[j] != 0) {
+                int num = gcd(nums[i], nums[j]);
+                if (num > max) {
+                    max = num;
+                    n1 = i;
+                    n2 = j;
+                }
+            }
+        }
+    }
+    nums[n1] = 0;
+    nums[n2] = 0;
+    return idx * max + dfs(nums, idx - 1);
+}
+
+public int gcd(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
