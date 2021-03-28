@@ -1,0 +1,35 @@
+1808.Maximize Number of Nice Divisors
+math
+求和为n时的数组所组成的最大积。
+数只为2和3。超过3的数的乘积必然小于该数拆分为2和3的积。
+至多2个2。3个2的乘积小于2个3的乘积。
+public int maxNiceDivisors(int primeFactors) {
+    int mod = (int) 1e9 + 7;
+    if (primeFactors <= 3) {
+        return primeFactors;
+    }
+    int n = primeFactors % 3;
+    if (n == 0) {
+        return (int) (pow(3, primeFactors / 3) % mod);
+    }
+    if (n == 1) {
+        return (int) (pow(3, (primeFactors - 4) / 3) * 4 % mod);
+    }
+    return (int) (pow(3, (primeFactors / 3)) * 2 % mod);
+}
+
+public long pow(int num, int powNum) {
+    int mod = (int) 1e9 + 7;
+    if (powNum == 0) {
+        return 1;
+    }
+    if (powNum == 1) {
+        return num;
+    }
+    long half = pow(num, powNum / 2);
+    if (powNum % 2 == 0) {
+        return half * half % mod;
+    } else {
+        return num * half * half % mod;
+    }
+}
