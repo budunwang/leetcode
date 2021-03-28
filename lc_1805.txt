@@ -1,0 +1,15 @@
+1805.Number of Different Integers in a String
+public int numDifferentIntegers(String word) {
+    String[] ss = word.split("\\D");
+    Set<String> set = new HashSet<String>();
+    for (String s : ss) {
+        if (!s.equals("")) {
+            int i = 0;
+            while (i != s.length() && s.charAt(i) == '0') {
+                i++;
+            }
+            set.add(s.substring(i));
+        }
+    }
+    return set.size();
+}
