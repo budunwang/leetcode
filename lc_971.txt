@@ -1,0 +1,27 @@
+971.Flip Binary Tree To Match Preorder Traversal
+public List<Integer> list;
+public int idx;
+
+public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
+    list = new ArrayList<Integer>();
+    idx = 0;
+    if (dfs(root, voyage)) {
+        return list;
+    }
+    return Arrays.asList(-1);
+}
+
+public boolean dfs(TreeNode root, int[] voyage) {
+    if (root == null || idx == voyage.length) {
+        return true;
+    }
+    if (root.val != voyage[idx]) {
+        return false;
+    }
+    idx++;
+    if (root.left != null && root.left.val != voyage[idx]) {
+        list.add(root.val);
+        return dfs(root.right, voyage) && dfs(root.left, voyage);
+    }
+    return dfs(root.left, voyage) && dfs(root.right, voyage);
+}
