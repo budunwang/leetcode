@@ -1,0 +1,14 @@
+1134.Armstrong Number
+public boolean isArmstrong(int n) {
+    int tmp = n;
+    List<Integer> list = new ArrayList<Integer>();
+    while (n != 0) {
+        list.add(n % 10);
+        n /= 10;
+    }
+    int k = list.size();
+    for (int num : list) {
+        tmp -= Math.pow(num, k);
+    }
+    return tmp == 0;
+}
