@@ -1,0 +1,26 @@
+354.Russian Doll Envelopes
+300
+LIS
+public int maxEnvelopes(int[][] envelopes) {
+    int length = envelopes.length;
+    Arrays.sort(envelopes, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+    int[] dp = new int[length];
+    int cur = 0;
+    for (int i = 0; i < length; i++) {
+        int left = 0;
+        int right = cur;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (dp[mid] < envelopes[i][1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        dp[left] = envelopes[i][1];
+        if (left >= cur) {
+            cur++;
+        }
+    }
+    return cur;
+}
