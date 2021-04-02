@@ -1,0 +1,50 @@
+545.Boundary of Binary Tree
+public List<Integer> list;
+
+public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+    list = new ArrayList<Integer>();
+    list.add(root.val);
+    if (root.left == null && root.right == null) {
+        return list;
+    }
+    getLeft(root.left);
+    getLeaf(root);
+    getRight(root.right);
+    return list;
+}
+
+public void getLeft(TreeNode treeNode) {
+    if (treeNode == null || (treeNode.left == null && treeNode.right == null)) {
+        return;
+    }
+    list.add(treeNode.val);
+    if (treeNode.left != null) {
+        getLeft(treeNode.left);
+    } else {
+        getLeft(treeNode.right);
+    }
+}
+
+public void getRight(TreeNode treeNode) {
+    if (treeNode == null || (treeNode.left == null && treeNode.right == null)) {
+        return;
+    }
+    if (treeNode.right != null) {
+        getRight(treeNode.right);
+    } else {
+        getRight(treeNode.left);
+    }
+    list.add(treeNode.val);
+}
+
+public void getLeaf(TreeNode treeNode) {
+    if (treeNode == null) {
+        return;
+    }
+    if (treeNode.left == null && treeNode.right == null) {
+        list.add(treeNode.val);
+        return;
+    }
+    getLeaf(treeNode.left);
+    getLeaf(treeNode.right);
+}
