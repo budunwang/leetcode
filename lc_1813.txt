@@ -1,0 +1,18 @@
+1813.Sentence Similarity III
+public boolean areSentencesSimilar(String sentence1, String sentence2) {
+    String[] ss1 = sentence1.split("\\s");
+    String[] ss2 = sentence2.split("\\s");
+    return ss1.length > ss2.length ? check(ss1, ss2) : check(ss2, ss1);
+}
+
+public boolean check(String[] ss1, String[] ss2) {
+    int left = 0;
+    while (left < ss2.length && ss1[left].equals(ss2[left])) {
+        left++;
+    }
+    int right = 0;
+    while (ss2.length - 1 - right >= 0 && ss1[ss1.length - 1 - right].equals(ss2[ss2.length - 1 - right])) {
+        right++;
+    }
+    return left > ss2.length - 1 - right;
+}
