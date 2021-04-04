@@ -1,0 +1,21 @@
+1814.Count Nice Pairs in an Array
+public int countNicePairs(int[] nums) {
+    int mod = (int) 1e9 + 7;
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    long sum = 0;
+    for (int num : nums) {
+        int diff = num - getRev(num);
+        map.put(diff, map.getOrDefault(diff, 0) + 1);
+        sum = (sum + map.get(diff) - 1) % mod;
+    }
+    return (int) sum;
+}
+
+public int getRev(int num) {
+    int sum = 0;
+    while (num != 0) {
+        sum = sum * 10 + num % 10;
+        num /= 10;
+    }
+    return sum;
+}
