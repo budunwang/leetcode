@@ -1,0 +1,53 @@
+622.Design Circular Queue
+public int[] arr;
+public int size;
+public int start;
+public int end;
+
+public MyCircularQueue(int k) {
+    arr = new int[k];
+    size = 0;
+    start = 0;
+    end = 0;
+}
+
+public boolean enQueue(int value) {
+    if (isFull()) {
+        return false;
+    }
+    size++;
+    arr[end] = value;
+    end = (end + 1) % arr.length;
+    return true;
+}
+
+public boolean deQueue() {
+    if (isEmpty()) {
+        return false;
+    }
+    size--;
+    start = (start + 1) % arr.length;
+    return true;
+}
+
+public int Front() {
+    if (isEmpty()) {
+        return -1;
+    }
+    return arr[start];
+}
+
+public int Rear() {
+    if (isEmpty()) {
+        return -1;
+    }
+    return arr[(end - 1 + arr.length) % arr.length];
+}
+
+public boolean isEmpty() {
+    return size == 0;
+}
+
+public boolean isFull() {
+    return size == arr.length;
+}
