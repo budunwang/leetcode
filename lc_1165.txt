@@ -1,0 +1,14 @@
+1165.Single-Row Keyboard
+public int calculateTime(String keyboard, String word) {
+    int[] map = new int[26];
+    for (int i = 0; i < keyboard.length(); i++) {
+        map[keyboard.charAt(i) - 'a'] = i;
+    }
+    int prev = 0;
+    int sum = 0;
+    for (char c : word.toCharArray()) {
+        sum += Math.abs(map[c - 'a'] - prev);
+        prev = map[c - 'a'];
+    }
+    return sum;
+}
