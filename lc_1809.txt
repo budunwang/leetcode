@@ -1,0 +1,13 @@
+1809.Ad-Free Sessions
+SQL
+SELECT
+    session_id
+FROM
+    Playback a
+LEFT JOIN
+    Ads b
+ON
+    a.customer_id = b.customer_id
+    AND b.timestamp BETWEEN a.start_time AND a.end_time
+WHERE
+    ad_id IS NULL;
