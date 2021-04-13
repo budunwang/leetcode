@@ -1,0 +1,64 @@
+1804.Implement Trie II (Prefix Tree)
+trie
+public class Node {
+    Node[] children;
+    int count;
+    int subCount;
+    Node() {
+        this.children = new Node[26];
+        this.count = 0;
+        this.subCount = 0;
+    }
+}
+
+public Node root;
+
+public Trie() {
+    root = new Node();
+}
+
+public void insert(String word) {
+    Node node = root;
+    for (char c : word.toCharArray()) {
+        if (node.children[c - 'a'] == null) {
+            node.children[c - 'a'] = new Node();
+        }
+        node = node.children[c - 'a'];
+        node.subCount++;
+    }
+    node.count++;
+}
+
+public int countWordsEqualTo(String word) {
+    Node node = root;
+    for (char c : word.toCharArray()) {
+        if (node.children[c - 'a'] == null) {
+            return 0;
+        }
+        node = node.children[c - 'a'];
+    }
+    return node.count;
+}
+
+public int countWordsStartingWith(String prefix) {
+    Node node = root;
+    for (char c : prefix.toCharArray()) {
+        if (node.children[c - 'a'] == null) {
+            return 0;
+        }
+        node = node.children[c - 'a'];
+    }
+    return node.subCount;
+}
+
+public void erase(String word) {
+    Node node = root;
+    for (char c : word.toCharArray()) {
+        if (node.children[c - 'a'] == null) {
+            return;
+        }
+        node = node.children[c - 'a'];
+        node.subCount--;
+    }
+    node.count--;
+}
