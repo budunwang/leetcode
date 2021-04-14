@@ -1,0 +1,25 @@
+1257.Smallest Common Region
+public String findSmallestRegion(List<List<String>> regions, String region1, String region2) {
+    Map<String, String> map = new HashMap<String, String>();
+    for (List<String> list : regions) {
+        for (int i = 1; i < list.size(); i++) {
+            map.put(list.get(i), list.get(0));
+        }
+    }
+    Set<String> set = new HashSet<String>();
+    set.add(region1);
+    while (map.containsKey(region1)) {
+        region1 = map.get(region1);
+        set.add(region1);
+    }
+    if (set.contains(region2)) {
+        return region2;
+    }
+    while (map.containsKey(region2)) {
+        region2 = map.get(region2);
+        if (set.contains(region2)) {
+            return region2;
+        }
+    }
+    return null;
+}

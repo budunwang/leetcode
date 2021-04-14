@@ -1,33 +1,36 @@
 1087.Brace Expansion
-List<String> list;
-
 public String[] expand(String s) {
-    list = new ArrayList<String>();
-    dfs(s, 0, "");
-    String[] ss = new String[list.size()];
-    for (int i = 0; i < list.size(); i++) {
-        ss[i] = list.get(i);
+    if (s.length() == 0) {
+        return new String[] {""};
     }
-    return ss;
-}
-
-public void dfs(String s, int idx, String str) {
-    if (idx == s.length()) {
-        list.add(str);
-        return;
-    }
-    if (s.charAt(idx) == '{') {
-        int i = idx + 1;
-        while (i != s.length() && s.charAt(i) != '}') {
+    char[] cs = s.toCharArray();
+    if (cs[0] == '{') {
+        int i = 1;
+        while (i < cs.length && cs[i] != '}') {
             i++;
         }
-        String[] ss = s.substring(idx + 1, i).split(",");
+        String[] ss = s.substring(1, i).split(",");
         Arrays.sort(ss);
-        for (String tmp : ss) {
-            dfs(s, i + 1, str + tmp);
+        String[] list = expand(s.substring(i + 1));
+        String[] res = new String[ss.length * list.length];
+        int l = 0;
+        for (int j = 0; j < ss.length; j++) {
+            for (int k = 0; k < list.length; k++) {
+                res[l] = ss[j] + list[k];
+                l++;
+            }
         }
+        return res;
     } else {
-        str += s.charAt(idx);
-        dfs(s, idx + 1, str);
+        int i = 0;
+        while (i < cs.length && cs[i] != '{') {
+            i++;
+        }
+        String str = s.substring(0, i);
+        String[] list = expand(s.substring(i));
+        for (int j = 0; j < list.length; j++) {
+            list[j] = str + list[j];
+        }
+        return list;
     }
 }
