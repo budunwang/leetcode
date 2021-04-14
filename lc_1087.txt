@@ -1,0 +1,33 @@
+1087.Brace Expansion
+List<String> list;
+
+public String[] expand(String s) {
+    list = new ArrayList<String>();
+    dfs(s, 0, "");
+    String[] ss = new String[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+        ss[i] = list.get(i);
+    }
+    return ss;
+}
+
+public void dfs(String s, int idx, String str) {
+    if (idx == s.length()) {
+        list.add(str);
+        return;
+    }
+    if (s.charAt(idx) == '{') {
+        int i = idx + 1;
+        while (i != s.length() && s.charAt(i) != '}') {
+            i++;
+        }
+        String[] ss = s.substring(idx + 1, i).split(",");
+        Arrays.sort(ss);
+        for (String tmp : ss) {
+            dfs(s, i + 1, str + tmp);
+        }
+    } else {
+        str += s.charAt(idx);
+        dfs(s, idx + 1, str);
+    }
+}
