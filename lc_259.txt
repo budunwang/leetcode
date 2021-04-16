@@ -1,0 +1,20 @@
+259.3Sum Smaller
+two pointer
+public int threeSumSmaller(int[] nums, int target) {
+    int length = nums.length;
+    Arrays.sort(nums);
+    int count = 0;
+    for (int i = 0; i < length; i++) {
+        int left = i + 1;
+        int right = length - 1;
+        while (right > left) {
+            if (nums[i] + nums[left] + nums[right] >= target) {
+                right--;
+            } else {
+                count += right - left;
+                left++;
+            }
+        }
+    }
+    return count;
+}
