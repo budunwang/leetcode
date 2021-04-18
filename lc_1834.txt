@@ -1,0 +1,36 @@
+1834.Single-Threaded CPU
+public int[] getOrder(int[][] tasks) {
+    int[][] arr = new int[tasks.length][3];
+    for (int i = 0; i < tasks.length; i++) {
+        arr[i] = new int[] { tasks[i][0], tasks[i][1], i };
+    }
+    Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> {
+        if (a[1] == b[1]) {
+            return a[2] - b[2];
+        } else {
+            return a[1] - b[1];
+        }
+    });
+    int idx = 0;
+    int curAvailable = arr[0][0];
+    int[] res = new int[tasks.length];
+    int i = 0;
+    while (idx < arr.length) {
+        while (idx < arr.length && curAvailable >= arr[idx][0]) {
+            pq.offer(arr[idx]);
+            idx++;
+        }
+        if (!pq.isEmpty()) {
+            int[] task = pq.poll();
+            curAvailable += task[1];
+            res[i++] = task[2];
+        } else {
+            curAvailable = arr[idx][0];
+        }
+    }
+    while (!pq.isEmpty()) {
+        res[i++] = pq.poll()[2];
+    }
+    return res;
+}
