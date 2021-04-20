@@ -1,0 +1,15 @@
+630.Course Schedule III
+greedy
+public int scheduleCourse(int[][] courses) {
+    Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> b - a);
+    int curDay = 0;
+    for (int[] course : courses) {
+        curDay += course[0];
+        pq.offer(course[0]);
+        if (curDay > course[1]) {
+            curDay -= pq.poll();
+        }
+    }
+    return pq.size();
+}
