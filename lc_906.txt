@@ -1,0 +1,38 @@
+906.Super Palindromes
+public int superpalindromesInRange(String left, String right) {
+    long l = Long.parseLong(left);
+    long r = Long.parseLong(right);
+    List<Long> list = new ArrayList<Long>();
+    for (int i = 1; i <= 9; i++) {
+        list.add((long) i);
+    }
+    for (int i = 1; i < 10000; i++) {
+        String leftStr = String.valueOf(i);
+        String rightStr = new StringBuilder(leftStr).reverse().toString();
+        list.add(Long.parseLong(leftStr + rightStr));
+        for (int j = 0; j < 10; j++) {
+            list.add(Long.parseLong(leftStr + j + rightStr));
+        }
+    }
+    int sum = 0;
+    for (Long num : list) {
+        long tmp = num * num;
+        if (tmp >= l && tmp <= r && isPalindrome(String.valueOf(tmp))) {
+            sum++;
+        }
+    }
+    return sum;
+}
+
+public Boolean isPalindrome(String str) {
+    int left = 0;
+    int right = str.length() - 1;
+    while (left < right) {
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
