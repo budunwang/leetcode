@@ -1,0 +1,30 @@
+866.Prime Palindrome
+Math
+偶数长度的回文数必被11整除。
+所以只需要列举奇数长度的回文数。
+public int primePalindrome(int N) {
+    if (N >= 8 && N <= 11) {
+        return 11;
+    }
+    for (int i = 1; i < 100000; i++) {
+        String left = String.valueOf(i);
+        String right = new StringBuilder(left).reverse().toString();
+        int num = Integer.parseInt(left + right.substring(1));
+        if (num >= N && isPrime(num)) {
+            return num;
+        }
+    }
+    return 0;
+}
+
+public boolean isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
