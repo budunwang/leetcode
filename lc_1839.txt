@@ -1,0 +1,19 @@
+1839.Longest Substring Of All Vowels in Order
+public int longestBeautifulSubstring(String word) {
+    char[] cs = word.toCharArray();
+    int start = 0;
+    int count = 1;
+    int max = 0;
+    for (int i = 1; i < cs.length; i++) {
+        if (cs[i] < cs[i - 1]) {
+            start = i;
+            count = 1;
+        } else if (cs[i] > cs[i - 1]) {
+            count++;
+        }
+        if (count == 5) {
+            max = Math.max(max, i - start + 1);
+        }
+    }
+    return max;
+}
