@@ -1,0 +1,76 @@
+1135.Connecting Cities With Minimum Cost
+Minimum Spanning Tree(MST)
+1.Kruskal
+Union-find + greedy
+public class UnionFind {
+    private int[] parent;
+
+    public UnionFind(int size) {
+        parent = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    public int find(int num) {
+        while (parent[num] != num) {
+            parent[num] = parent[parent[num]];
+            num = parent[num];
+        }
+        return num;
+    }
+
+    public boolean union(int num1, int num2) {
+        int p1 = find(num1);
+        int p2 = find(num2);
+        if (p1 == p2) {
+            return false;
+        }
+        parent[p2] = p1;
+        return true;
+    }
+}
+
+public int minimumCost(int N, int[][] connections) {
+    UnionFind unionFind = new UnionFind(N + 1);
+    Arrays.sort(connections, (a, b) -> a[2] - b[2]);
+    int sum = 0;
+    int count = 0;
+    for (int i = 0; i < connections.length; i++) {
+        if (unionFind.union(connections[i][0], connections[i][1])) {
+            sum += connections[i][2];
+            count++;
+        }
+    }
+    return count == N - 1 ? sum : -1;
+}
+
+2.Prim
+greedy
+public int minimumCost(int N, int[][] connections) {
+    Map<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
+    for (int[] connection : connections) {
+        map.putIfAbsent(connection[0], new ArrayList<int[]>());
+        map.get(connection[0]).add(new int[] { connection[1], connection[2] });
+        map.putIfAbsent(connection[1], new ArrayList<int[]>());
+        map.get(connection[1]).add(new int[] { connection[0], connection[2] });
+    }
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[1] - b[1]);
+    pq.offer(new int[] { 1, 0 });
+    Set<Integer> set = new HashSet<Integer>();
+    int sum = 0;
+    while (!pq.isEmpty() && set.size() != N) {
+        int[] arr = pq.poll();
+        if (set.contains(arr[0])) {
+            continue;
+        }
+        set.add(arr[0]);
+        sum += arr[1];
+        for (int[] t : map.get(arr[0])) {
+            if (!set.contains(t[0])) {
+                pq.offer(t);
+            }
+        }
+    }
+    return set.size() == N ? sum : -1;
+}
