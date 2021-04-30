@@ -1,0 +1,47 @@
+745.Prefix and Suffix Search
+trie
+public class Node {
+    Node[] children;
+    int idx;
+    
+    Node() {
+        this.children = new Node[27];
+        this.idx = -1;
+    }
+}
+
+public Node root;
+
+public WordFilter(String[] words) {
+    root = new Node();
+    for (int i = 0; i < words.length; i++) {
+        String word = words[i];
+        String str = word + "{" + word;
+        for (int j = 0; j < word.length(); j++) {
+            Node node = root;
+            for (int k = j; k < str.length(); k++) {
+                char c = str.charAt(k);
+                if (node.children[c - 'a'] == null) {
+                    node.children[c - 'a'] = new Node();
+                }
+                node = node.children[c - 'a'];
+                if (k > word.length()) {
+                    node.idx = i;
+                }
+            }
+        }
+    }
+}
+
+public int f(String prefix, String suffix) {
+    String str = suffix + "{" + prefix;
+    Node node = root;
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (node.children[c - 'a'] == null) {
+            return -1;
+        }
+        node = node.children[c - 'a'];
+    }
+    return node.idx;
+}
