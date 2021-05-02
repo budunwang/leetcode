@@ -1,0 +1,18 @@
+1849.Splitting a String Into Descending Consecutive Values
+public boolean splitString(String s) {
+    return dfs(s, 0, null, 0);
+}
+
+public boolean dfs(String s, int idx, Long prev, int count) {
+    if (idx == s.length()) {
+        return count > 1;
+    }
+    long cur = 0;
+    for (int i = idx; i < s.length(); i++) {
+        cur = cur * 10 + (s.charAt(i) - '0');
+        if ((prev == null || (prev != 0 && prev - cur == 1)) && dfs(s, i + 1, cur, count + 1)) {
+            return true;
+        }
+    }
+    return false;
+}
