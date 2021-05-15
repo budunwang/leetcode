@@ -1,0 +1,27 @@
+1861.Rotating the Box
+public char[][] rotateTheBox(char[][] box) {
+    int row = box.length;
+    int col = box[0].length;
+    char[][] res = new char[col][row];
+    for (int i = 0; i < col; i++) {
+        for (int j = 0; j < row; j++) {
+            res[i][j] = '.';
+        }
+    }
+    for (int i = row - 1; i >= 0; i--) {
+        int idx = col - 1;
+        int j = col - 1;
+        while (j >= 0) {
+            if (box[i][j] == '#') {
+                res[idx][row - i - 1] = '#';
+                idx--;
+            } else if (box[i][j] == '*') {
+                idx = j;
+                res[idx][row - i - 1] = '*';
+                idx--;
+            }
+            j--;
+        }
+    }
+    return res;
+}

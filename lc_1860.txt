@@ -1,0 +1,14 @@
+1860.Incremental Memory Leak
+public int[] memLeak(int memory1, int memory2) {
+    int[] arr = new int[] { memory1, memory2 };
+    int idx = 0;
+    while (Math.max(arr[0], arr[1]) >= idx) {
+        if (arr[0] >= arr[1]) {
+            arr[0] -= idx;
+        } else {
+            arr[1] -= idx;
+        }
+        idx++;
+    }
+    return new int[] { idx, arr[0], arr[1] };
+}

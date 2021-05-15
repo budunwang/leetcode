@@ -1,0 +1,9 @@
+1859.Sorting the Sentence
+public String sortSentence(String s) {
+    String[] ss = s.split("\\s+");
+    String[] arr = new String[ss.length];
+    for (String str : ss) {
+        arr[str.charAt(str.length() - 1) - '0' - 1] = str.substring(0, str.length() - 1);
+    }
+    return String.join(" ", arr);
+}
