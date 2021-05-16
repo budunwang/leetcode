@@ -1,0 +1,33 @@
+1864.Minimum Number of Swaps to Make the Binary String Alternating
+public int minSwaps(String s) {
+    StringBuilder str0 = new StringBuilder();
+    StringBuilder str1 = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+        if (i % 2 == 0) {
+            str0.append('0');
+            str1.append('1');
+        } else {
+            str0.append('1');
+            str1.append('0');
+        }
+    }
+    int sum0 = getSwap(s, str0.toString());
+    int sum1 = getSwap(s, str1.toString());
+    int min = Math.min(sum0, sum1);
+    return min == Integer.MAX_VALUE ? -1 : min;
+}
+
+public int getSwap(String s, String target) {
+    int sum0 = 0;
+    int sum1 = 0;
+    for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) != target.charAt(i)) {
+            if (s.charAt(i) == '0') {
+                sum0++;
+            } else {
+                sum1++;
+            }
+        }
+    }
+    return sum0 == sum1 ? sum0 : Integer.MAX_VALUE;
+}

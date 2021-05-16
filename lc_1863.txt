@@ -1,0 +1,15 @@
+1863.Sum of All Subset XOR Totals
+public int subsetXORSum(int[] nums) {
+    int length = nums.length;
+    int sum = 0;
+    for (int i = 0; i < (1 << length); i++) {
+        int num = 0;
+        for (int j = 0; j < length; j++) {
+            if (((1 << j) & i) != 0) {
+                num ^= nums[j];
+            }
+        }
+        sum += num;
+    }
+    return sum;
+}
