@@ -1,0 +1,29 @@
+1870.Minimum Speed to Arrive on Time
+binary search
+public int minSpeedOnTime(int[] dist, double hour) {
+    int left = 0;
+    int right = (int) 1e7;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        double cur = getHour(dist, mid);
+        if (cur > hour) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return getHour(dist, left) <= hour ? left : -1;
+}
+
+public double getHour(int[] dist, int speed) {
+    double hour = 0;
+    for (int i = 0; i < dist.length; i++) {
+        double time = dist[i] / (double) speed;
+        if (i == dist.length - 1) {
+            hour += time;
+        } else {
+            hour += Math.ceil(time);
+        }
+    }
+    return hour;
+}

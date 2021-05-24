@@ -1,0 +1,25 @@
+1871.Jump Game VII
+public boolean canReach(String s, int minJump, int maxJump) {
+    if (s.charAt(s.length() - 1) == '1') {
+        return false;
+    }
+    List<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) == '0') {
+            list.add(i);
+        }
+    }
+    int left = 0;
+    int right = 0;
+    for (int i = 0; i < list.size(); i++) {
+        int idx = list.get(i);
+        if (idx >= left && idx <= right) {
+            left = idx + minJump;
+            right = Math.min(s.length() - 1, idx + maxJump);
+        }
+        if (s.length() - 1 >= left && s.length() - 1 <= right) {
+            return true;
+        }
+    }
+    return false;
+}
