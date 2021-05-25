@@ -6,8 +6,8 @@ public int stoneGameVIII(int[] stones) {
     }
     int[] dp = new int[length];
     dp[length - 2] = stones[length - 1];
-    for (int i = length - 2; i > 0; i--) {
-        dp[i - 1] = Math.max(dp[i], stones[i] - dp[i]);
+    for (int i = length - 3; i >= 0; i--) {
+        dp[i] = Math.max(dp[i + 1], stones[i + 1] - dp[i + 1]);
     }
     return dp[0];
 }
