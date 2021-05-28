@@ -1,0 +1,26 @@
+1840.Maximum Building Height
+n = 10^9，遍历n会超时
+restrictions.length = 10^5，只能通过遍历restrictions获得最大高度
+因为只能递增1，height[j] = Math.max(height[j], height[i] + (j - i))，j > i
+左右各遍历一次，可以获得restrictions的最大高度。
+最大高度必然是restrictions的之间的中间值，即(height[i] + height[j]) / 2 + (j - i) / 2，j > i
+public int maxBuilding(int n, int[][] restrictions) {
+    int[][] arr = new int[restrictions.length + 2][2];
+    for (int i = 0; i < restrictions.length; i++) {
+        arr[i] = restrictions[i];
+    }
+    arr[arr.length - 2] = new int[] { 1, 0 };
+    arr[arr.length - 1] = new int[] { n, n - 1 };
+    Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+    for (int i = 1; i < arr.length; i++) {
+        arr[i][1] = Math.min(arr[i][1], arr[i - 1][1] + (arr[i][0] - arr[i - 1][0]));
+    }
+    for (int i = arr.length - 2; i >= 0; i--) {
+        arr[i][1] = Math.min(arr[i][1], arr[i + 1][1] + (arr[i + 1][0] - arr[i][0]));
+    }
+    int max = 0;
+    for (int i = 1; i < arr.length; i++) {
+        max = Math.max(max, (arr[i - 1][1] + arr[i][1] + arr[i][0] - arr[i - 1][0]) / 2);
+    }
+    return max;
+}
