@@ -1,0 +1,26 @@
+1876.Substrings of Size Three with Distinct Characters
+public int countGoodSubstrings(String s) {
+    int left = 0;
+    int sum = 0;
+    int[] map = new int[26];
+    for (int right = 0; right < s.length(); right++) {
+        map[s.charAt(right) - 'a']++;
+        while (right - left >= 3) {
+            map[s.charAt(left) - 'a']--;
+            left++;
+        }
+        if (right >= 2 && isValid(map)) {
+            sum++;
+        }
+    }
+    return sum;
+}
+
+public boolean isValid(int[] map) {
+    for (int n : map) {
+        if (n >= 2) {
+            return false;
+        }
+    }
+    return true;
+}
