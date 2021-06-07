@@ -1,0 +1,39 @@
+1886.Determine Whether Matrix Can Be Obtained By Rotation
+public boolean findRotation(int[][] mat, int[][] target) {
+    for (int i = 0; i <= 3; i++) {
+        if (isEqual(mat, target)) {
+            return true;
+        }
+        rotate(mat);
+    }
+    return false;
+}
+
+public void rotate(int[][] matrix) {
+    int length = matrix.length;
+    for (int i = 0; i < length / 2; i++) {
+        for (int j = 0; j < length; j++) {
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[length - 1 - i][j];
+            matrix[length - 1 - i][j] = tmp;
+        }
+    }
+    for (int i = 0; i < length; i++) {
+        for (int j = i + 1; j < length; j++) {
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = tmp;
+        }
+    }
+}
+
+public boolean isEqual(int[][] a, int[][] b) {
+    for (int i = 0; i < a.length; i++) {
+        for (int j = 0; j < a[0].length; j++) {
+            if (a[i][j] != b[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

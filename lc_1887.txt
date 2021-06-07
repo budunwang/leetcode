@@ -1,0 +1,16 @@
+1887.Reduction Operations to Make the Array Elements Equal
+public int reductionOperations(int[] nums) {
+    int[] map = new int[500001];
+    for (int num : nums) {
+        map[num]++;
+    }
+    int sum = 0;
+    int count = 0;
+    for (int i = 1; i < 500001; i++) {
+        if (map[i] != 0) {
+            sum += count * map[i];
+            count++;
+        }
+    }
+    return sum;
+}
