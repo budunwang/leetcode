@@ -1,0 +1,43 @@
+1888.Minimum Number of Flips to Make the Binary String Alternating
+public int minFlips(String s) {
+    String str = s + s;
+    int c0 = 0;
+    int c1 = 0;
+    int min = s.length();
+    int left = 0;
+    for (int right = 0; right < str.length(); right++) {
+        if (right % 2 == 0) {
+            if (str.charAt(right) == '0') {
+                c1++;
+            } else {
+                c0++;
+            }
+        } else {
+            if (str.charAt(right) == '0') {
+                c0++;
+            } else {
+                c1++;
+            }
+        }
+        while (right - left >= s.length()) {
+            if (left % 2 == 0) {
+                if (str.charAt(left) == '0') {
+                    c1--;
+                } else {
+                    c0--;
+                }
+            } else {
+                if (str.charAt(left) == '0') {
+                    c0--;
+                } else {
+                    c1--;
+                }
+            }
+            left++;
+        }
+        if (right - left == s.length() - 1) {
+            min = Math.min(min, Math.min(c0, c1));
+        }
+    }
+    return min;
+}
