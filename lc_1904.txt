@@ -1,0 +1,19 @@
+1904.The Number of Full Rounds You Have Played
+public int numberOfRounds(String startTime, String finishTime) {
+    int start = getTime(startTime);
+    int end = getTime(finishTime);
+    if (end < start) {
+        end += 24 * 60;
+    }
+    int sum = 0;
+    for (int i = start; i <= end; i++) {
+        if (i % 15 == 0 && (i - 15) >= start) {
+            sum++;
+        }
+    }
+    return sum;
+}
+
+public int getTime(String time) {
+    return ((time.charAt(0) - '0') * 10 + (time.charAt(1) - '0')) * 60 + ((time.charAt(3) - '0') * 10 + (time.charAt(4) - '0'));
+}

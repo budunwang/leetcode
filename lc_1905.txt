@@ -1,0 +1,33 @@
+1905.Count Sub Islands
+public int countSubIslands(int[][] grid1, int[][] grid2) {
+    int row = grid1.length;
+    int col = grid1[0].length;
+    int sum = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (grid1[i][j] == 1 && grid2[i][j] == 1) {
+                grid2[i][j] = 0;
+                if (dfs(grid1, grid2, i, j)) {
+                    sum++;
+                }
+            }
+        }
+    }
+    return sum;
+}
+
+public boolean dfs(int[][] grid1, int[][] grid2, int x, int y) {
+    int row = grid1.length;
+    int col = grid1[0].length;
+    int[][] dirs = new int[][] {{ 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 }};
+    boolean isValid = true;
+    for (int[] dir : dirs) {
+        int n_x = x + dir[0];
+        int n_y = y + dir[1];
+        if (n_x >= 0 && n_x < row && n_y >= 0 && n_y < col && grid2[n_x][n_y] == 1) {
+            grid2[n_x][n_y] = 0;
+            isValid &= grid1[n_x][n_y] == 1 & dfs(grid1, grid2, n_x, n_y);
+        }
+    }
+    return isValid;
+}
